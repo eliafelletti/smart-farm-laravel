@@ -1,0 +1,4 @@
+Appunti Viste
+Le viste disponibili saranno due:
+- admin: potrà visualizzare lo stato di tutte le farm clienti presso la start-up;
+- utente: potrà visualizzare unicamente lo stato della propria farm.
