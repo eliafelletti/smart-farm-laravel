@@ -1,0 +1,6 @@
+Misure da tenere sotto controllo
+- luminosità
+- quantità di CO2 emessa
+- temperatura
+- umidità
+- (plus) quantità di fertilizzante
