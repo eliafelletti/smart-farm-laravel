@@ -1,0 +1,19 @@
+Specifica del problema
+
+La nostra start-up offre la possibilità di rendere smart la propria serra, in modo da avere costantemente sotto controllo
+lo stato delle piante e della serra in generale. Permette di tenere traccia di tutte le attività svolte in serra (semine,
+fertilizzazioni, raccolte, ecc...) su un calendario dedicato. Infine offre una dashboard di monitoring del microclima all'interno
+della serra, con controllo di:
+- luminosità;
+- quantità di CO2;
+- temperatura;
+- umidità.
+
+Sono presenti all'interno del DB tutte le smart-farm prese in carico dai clienti, queste sono descritte da: id, nome, indirizzo,
+dimensione, mail, telefono. Inoltre collegato alla singola smart-farm è anche presente un calendario che tiene traccia di tutte le 
+operazioni svolte in tutte le serre, divise per serra. All'interno della smart-farm possono essere presenti due o più serre,
+descritte dalle seguenti caratteristiche: tipo di coltura, quantità di piante, data di semina, data raccolta teorica, data raccolta
+effettiva. All'interno della singola serra sono presenti dei sistemi di rilevazione avanzati delle caratteristiche ambientali citate
+in precedenza, memorizzate all'interno di un'entità Misure, che ha: id, timestamp, luminosità, CO2, temperatura, umidità. Il proprietario
+della singola smart-farm è il cliente che si rivolge alla nostra start-up per digitalizzare la gestione delle serre, questo proprietario
+è descritto da: nome, cognome, CF, data di nascita, luogo di nascita, cellulare, indirizzo.
