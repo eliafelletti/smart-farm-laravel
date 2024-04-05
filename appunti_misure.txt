@@ -3,4 +3,5 @@ Misure da tenere sotto controllo
 - quantità di CO2
 - temperatura
 - umidità
+- livello irrigazione
 - (plus) quantità di fertilizzante

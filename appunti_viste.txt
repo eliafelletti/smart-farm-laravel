@@ -1,4 +1,6 @@
 Appunti Viste
 Le viste disponibili saranno due:
 - admin: potrà visualizzare lo stato di tutte le farm clienti presso la start-up;
-- utente: potrà visualizzare unicamente lo stato della propria farm.
+- utente: potrà visualizzare unicamente lo stato della propria farm;
+- fornitore/partner: potrà visualizzare tutte le tecnologie da lui offerte, inoltre potrà vedere dati
+sull'utilizzo delle tecnologie proprietarie.

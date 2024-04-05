@@ -7,6 +7,7 @@ della serra, con controllo di:
 - luminosità;
 - quantità di CO2;
 - temperatura;
+- irrigazione;
 - umidità.
 
 Sono presenti all'interno del DB tutte le smart-farm prese in carico dai clienti, queste sono descritte da: id, nome, indirizzo,
@@ -16,4 +17,8 @@ descritte dalle seguenti caratteristiche: tipo di coltura, quantità di piante, 
 effettiva. All'interno della singola serra sono presenti dei sistemi di rilevazione avanzati delle caratteristiche ambientali citate
 in precedenza, memorizzate all'interno di un'entità Misure, che ha: id, timestamp, luminosità, CO2, temperatura, umidità. Il proprietario
 della singola smart-farm è il cliente che si rivolge alla nostra start-up per digitalizzare la gestione delle serre, questo proprietario
-è descritto da: nome, cognome, CF, data di nascita, luogo di nascita, cellulare, indirizzo.
+è descritto da: id, nome, cognome, CF, data di nascita, luogo di nascita, cellulare, indirizzo, mail.
+Saranno disponibili determinate tecnologie offerte dalla piattaforma, queste ultime saranno caraterizzate da: id, nome, tipologia; sono
+offerte da aziende fornitrici/partner identificate da: id, nome, indirizzo, telefono, fax, mail. Da notare, inoltre, che le tecnologie
+saranno legate alle misurazioni, perché relative a determinate cratteristiche di raccoglimento del microclima, ed infine saranno
+utilizzate all'interno della serra o della smart-farm proprietaria.
