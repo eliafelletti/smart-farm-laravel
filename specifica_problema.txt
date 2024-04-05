@@ -13,12 +13,23 @@ della serra, con controllo di:
 Sono presenti all'interno del DB tutte le smart-farm prese in carico dai clienti, queste sono descritte da: id, nome, indirizzo,
 dimensione, mail, telefono. Inoltre collegato alla singola smart-farm è anche presente un calendario che tiene traccia di tutte le 
 operazioni svolte in tutte le serre, divise per serra. All'interno della smart-farm possono essere presenti due o più serre,
-descritte dalle seguenti caratteristiche: tipo di coltura, quantità di piante, data di semina, data raccolta teorica, data raccolta
+descritte dalle seguenti caratteristiche: id, tipo di coltura, quantità di piante, data di semina, data raccolta teorica, data raccolta
 effettiva. All'interno della singola serra sono presenti dei sistemi di rilevazione avanzati delle caratteristiche ambientali citate
-in precedenza, memorizzate all'interno di un'entità Misure, che ha: id, timestamp, luminosità, CO2, temperatura, umidità. Il proprietario
-della singola smart-farm è il cliente che si rivolge alla nostra start-up per digitalizzare la gestione delle serre, questo proprietario
-è descritto da: id, nome, cognome, CF, data di nascita, luogo di nascita, cellulare, indirizzo, mail.
+in precedenza, memorizzate all'interno di un'entità Misure, che ha: id, timestamp, luminosità, CO2, temperatura, irrigazione, umidità.
+Il proprietario della singola smart-farm è il cliente che si rivolge alla nostra start-up per digitalizzare la gestione delle serre,
+questo proprietario è descritto da: id, nome, cognome, CF, data di nascita, luogo di nascita, telefono, indirizzo, mail.
 Saranno disponibili determinate tecnologie offerte dalla piattaforma, queste ultime saranno caraterizzate da: id, nome, tipologia; sono
 offerte da aziende fornitrici/partner identificate da: id, nome, indirizzo, telefono, fax, mail. Da notare, inoltre, che le tecnologie
 saranno legate alle misurazioni, perché relative a determinate cratteristiche di raccoglimento del microclima, ed infine saranno
 utilizzate all'interno della serra o della smart-farm proprietaria.
+
+Vincoli relazioni modello ER:
+DETIENE 1:1                     ->  lato smart-farm, questa è detenuta da un solo proprietario, cioè il socio di maggioranza
+                                    (qualora ci fossero più soci) 
+                                ->  lato proprietario, può detenere una sola smart-farm perché dato che siamo una start-up
+                                    lavoriamo con piccoli proprietari, per il momento
+
+EFFETTUANO N:M, UTILIZZA N:M    ->  il vincolo presente è dato dal fatto che quando un cliente si rivolge alla nostra start-up è
+                                    obbligato ad acquistare il pacchetto completo di rilevazione delle misure
+
+FORNISCONO 1:N                  ->  ogni singola teconolgia è acquistata da una sola azienda fornitrice
