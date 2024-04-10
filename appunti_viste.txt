@@ -1,6 +1,9 @@
 Appunti Viste
-Le viste disponibili saranno due:
+Le viste disponibili saranno tre:
 - admin: potrà visualizzare lo stato di tutte le farm clienti presso la start-up;
-- utente: potrà visualizzare unicamente lo stato della propria farm;
+- utente/proprietario: potrà visualizzare unicamente lo stato della propria farm;
 - fornitore/partner: potrà visualizzare tutte le tecnologie da lui offerte, inoltre potrà vedere dati
 sull'utilizzo delle tecnologie proprietarie.
+
+All'interno del progetto, sarà possibile distinguere i diversi utenti attraverso un atributo 'livello',
+questo nella table users messa a disposizione dal tool di autenticazione di Laravel.
