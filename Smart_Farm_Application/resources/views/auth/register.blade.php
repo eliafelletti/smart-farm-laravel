@@ -61,6 +61,23 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="level" class="col-md-4 col-form-label text-md-end">{{ __('User Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="level" class="form-control @error('password') is-invalid @enderror" name="level" required autocomplete="user-type">
+                                    <option value="1">Owner</option>
+                                    <option value="2">Supplier Company</option>
+                                </select>
+
+                                @error('level')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
