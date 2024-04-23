@@ -1,7 +1,9 @@
 Misure da tenere sotto controllo
-- luminosità
-- quantità di CO2
-- temperatura
-- umidità
-- livello irrigazione
+- luminosità [lx]
+- quantità di CO2 [g]
+- temperatura [°C]
+- umidità [%]
+- livello irrigazione [ml]
 - (plus) quantità di fertilizzante
+
+Lux [lx]: https://www.growshopitalia.com/manuali-e-risorse/par-spettro-luminoso
