@@ -8,11 +8,23 @@ use Illuminate\Http\Request;
 class MeasureController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $measures = Measure::all();
+
+        return view('measure.index', compact('measures'));
     }
 
     /**

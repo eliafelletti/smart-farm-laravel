@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SupplierCompany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SupplierCompanyController extends Controller
 {
@@ -12,7 +13,9 @@ class SupplierCompanyController extends Controller
      */
     public function index()
     {
-        //
+        $supplier_companies = SupplierCompany::all();
+
+        return view('supplier_company.index', compact('supplier_companies'));
     }
 
     /**
@@ -20,7 +23,7 @@ class SupplierCompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('supplier_company.create');
     }
 
     /**
@@ -28,7 +31,28 @@ class SupplierCompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'nome' => 'required|string|max:255',
+            'mail' => 'required|email|max:255',
+            'telefono' => 'required|string|max:10',
+            'fax' => 'nullable|string|max:14',
+            'via' => 'required|string|max:255',
+            'civico' => 'required|string|max:255',
+            'citta' => 'required|string|max:255',
+            'cap' => 'required|string|max:255'
+        ]);
+
+        if($validator->fails()){
+            return redirect('/supplier_company/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        SupplierCompany::create($input);
+
+        return redirect('/supplier_company');
     }
 
     /**
@@ -44,7 +68,7 @@ class SupplierCompanyController extends Controller
      */
     public function edit(SupplierCompany $supplierCompany)
     {
-        //
+        return view('supplier_company.edit', compact('supplierCompany'));
     }
 
     /**
@@ -52,7 +76,28 @@ class SupplierCompanyController extends Controller
      */
     public function update(Request $request, SupplierCompany $supplierCompany)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'nome' => 'required|string|max:255',
+            'mail' => 'required|email|max:255',
+            'telefono' => 'required|string|max:10',
+            'fax' => 'nullable|string|max:14',
+            'via' => 'required|string|max:255',
+            'civico' => 'required|string|max:255',
+            'citta' => 'required|string|max:255',
+            'cap' => 'required|string|max:255'
+        ]);
+
+        if($validator->fails()){
+            return redirect('/supplier_company/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $supplierCompany->update($input);
+
+        return redirect('/supplier_company');
     }
 
     /**
@@ -60,6 +105,11 @@ class SupplierCompanyController extends Controller
      */
     public function destroy(SupplierCompany $supplierCompany)
     {
-        //
+        $supplierCompany->delete();
+
+        return response()->json([
+            'message'=>'Azienda fornitrice eliminata con successo',
+            'data'=>$supplierCompany
+        ], 200);
     }
 }

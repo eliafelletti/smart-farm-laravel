@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Technology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TechnologyController extends Controller
 {
@@ -12,7 +13,9 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+
+        return view('technology.index', compact('technologies'));
     }
 
     /**
@@ -28,7 +31,25 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'nome' => 'required|string|max:255',
+            'tipologia' => 'required|string|max:255',
+        ]);
+
+        if($validator->fails()){
+            return redirect('/technology')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $technology=Technology::create($input);
+
+        return response()->json([
+            'message' =>'Tecnologia aggiunta con successo',
+            'data' => $technology
+        ], 200);
     }
 
     /**
@@ -52,7 +73,25 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, Technology $technology)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'nome' => 'required|string|max:255',
+            'tipologia' => 'required|string|max:255',
+        ]);
+
+        if($validator->fails()){
+            return redirect('/technology')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $technology->update($input);
+
+        return response()->json([
+            'message' =>'Tecnologia modificata con successo',
+            'data' => $technology
+        ], 200);
     }
 
     /**
@@ -60,6 +99,11 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+
+        return response()->json([
+            'message'=>'Tecnologia eliminata con successo',
+            'data'=>$technology
+        ], 200);
     }
 }

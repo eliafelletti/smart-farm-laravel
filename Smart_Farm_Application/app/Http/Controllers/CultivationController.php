@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Cultivation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CultivationController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $cultivations = Cultivation::all();
+        
+        return view('cultivation.index', compact('cultivations'));
     }
 
     /**
@@ -28,7 +41,24 @@ class CultivationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'tipologia' => 'required|string|max:255',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect('/cultivation')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $new = Cultivation::create($input);
+        
+        return response()->json([
+            'message' => 'created',
+            'data' => $new
+        ], 200);
     }
 
     /**
@@ -52,7 +82,24 @@ class CultivationController extends Controller
      */
     public function update(Request $request, Cultivation $cultivation)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'tipologia' => 'required|string|max:255',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect('/cultivation')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $cultivation->update($input);
+        
+        return response()->json([
+            'message' => 'updated',
+            'data' => $cultivation
+        ], 200);
     }
 
     /**
@@ -60,6 +107,11 @@ class CultivationController extends Controller
      */
     public function destroy(Cultivation $cultivation)
     {
-        //
+        $cultivation->delete();
+
+        return response()->json([
+            'message' => 'deleted',
+            'data' => $cultivation
+        ], 200);
     }
 }

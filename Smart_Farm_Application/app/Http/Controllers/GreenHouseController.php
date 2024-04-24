@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\GreenHouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GreenHouseController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $greenHouses = GreenHouse::all();
+
+        return view('green_house.index', compact('greenHouses'));
     }
 
     /**
@@ -28,7 +41,24 @@ class GreenHouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'numero_piante' => 'required|string|max:255',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect('/green_house')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $new = GreenHouse::create($input);
+        
+        return response()->json([
+            'message' => 'created',
+            'data' => $new
+        ], 200);
     }
 
     /**
@@ -52,7 +82,24 @@ class GreenHouseController extends Controller
      */
     public function update(Request $request, GreenHouse $greenHouse)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'numero_piante' => 'required|string|max:255',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect('/green_house')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $greenHouse->update($input);
+        
+        return response()->json([
+            'message' => 'updated',
+            'data' => $greenHouse
+        ], 200);
     }
 
     /**
@@ -60,6 +107,11 @@ class GreenHouseController extends Controller
      */
     public function destroy(GreenHouse $greenHouse)
     {
-        //
+        $greenHouse->delete();
+
+        return response()->json([
+            'message' => 'deleted',
+            'data' => $greenHouse
+        ], 200);
     }
 }
