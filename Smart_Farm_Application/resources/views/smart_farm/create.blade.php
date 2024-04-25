@@ -27,7 +27,7 @@
                 <input type="text" id="nome" name="nome" class="form-control" value="{{ old('nome') }}">
                 <div class="form-text">Inserisci il nome della smart-farm</div>
                 
-                <label for="dimensione" class="form-label mt-3">Dimensione</label>
+                <label for="dimensione" class="form-label mt-3">Dimensione [m2]</label>
                 <input type="number" id="dimensione" name="dimensione" class="form-control" max="99999999" step="0.01" value="{{ old('dimensione') }}">
                 <div class="form-text">Inserisci la dimensione della smart-farm</div>
 
@@ -54,6 +54,14 @@
                 <label for="cap" class="form-label mt-3">CAP</label>
                 <input type="text" id="cap" name="cap" class="form-control" value="{{ old('cap') }}">
                 <div class="form-text">Inserisci il CAP della smart-farm</div>
+
+                <label for="id_proprietario" class="form-label mt-3">Proprietario</label>
+                <select id="id_proprietario" name="id_proprietario" class="form-control">
+                    @foreach($owners as $owner)
+                        <option value="{{ $owner->id }}">{{ $owner->nome }} {{ $owner->cognome }}</option>
+                    @endforeach
+                </select>
+                <div class="form-text">Inserisci il proprietario della smart-farm</div>
 
                 <hr />
                 <input type="submit" class="btn btn-primary mb-3" value="Aggiungi" />	

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GreenHouse;
 use App\Models\Measure;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,10 @@ class MeasureController extends Controller
      */
     public function index()
     {
-        $measures = Measure::all();
+        $measures = Measure::all()->sortBy('timestamp');
+        $greenHouses = GreenHouse::all();
 
-        return view('measure.index', compact('measures'));
+        return view('measure.index', compact('measures', 'greenHouses'));
     }
 
     /**

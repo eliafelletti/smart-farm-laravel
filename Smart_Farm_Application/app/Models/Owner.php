@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\SmartFarm;
 
 class Owner extends Model
 {
@@ -28,5 +30,11 @@ class Owner extends Model
         'created_at' => 'datetime:Y-m-d',
         'updated_at' => 'datetime:Y-m-d',
     ];
+
+    public function detiene() : HasOne
+    {
+        //(Model_di_riferimento)
+        return ($this)->hasOne(SmartFarm::class);
+    }
 
 }

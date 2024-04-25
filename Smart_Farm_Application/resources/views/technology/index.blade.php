@@ -9,20 +9,38 @@
                 {{ csrf_field() }}
 
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <fieldset>
                             <label>Nome</label>
                             <input class="form-control" name="nome" id="technology-name" />
                         </fieldset>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <fieldset>
                             <label>Tipologia</label>
-                            <input class="form-control" name="tipologia" id="technology-type" />
+                            <select class="form-control" name="tipologia" id="technology-type">
+                                <option value="CO2">CO2</option>
+                                <option value="Irrigazione">Irrigazione</option>
+                                <option value="Luminosità">Luminosità</option>
+                                <option value="Temperatura">Temperatura</option>
+                                <option value="Umidità">Umidità</option>
+                            </select>
                         </fieldset>
                     </div>
-                    <div class="col-md-2">
+
+                    <div class="col-md-3">
+                        <fieldset>
+                            <label>Azienda Fornitrice</label>
+                            <select class="form-control" name="id_azienda_fornitrice" id="id_azienda_fornitrice">
+                                @foreach($supplierCompanies as $sComp)
+                                    <option value="{{ $sComp->id }}">{{ $sComp->nome }}</option>
+                                @endforeach
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-3">
                         <fieldset>
                             <input type="submit" id="btn-aggiungi" class="btn btn-primary mt-4 float-end" value="Aggiungi" />
                         </fieldset>
@@ -38,6 +56,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Tipologia</th>
+                <th scope="col">Azienda Fornitrice</th>
                 <th scope="col">Ultima modifica</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -50,6 +69,11 @@
                     <td>{{ $technology->id }}</td>
                     <td>{{ $technology->nome }}</td>
                     <td>{{ $technology->tipologia }}</td>
+                    <td>{{ $technology->azienda_fornitrice->nome }}</td>
+
+                    <!-- Colonna nascosta contenente id della azienda fornitrice -->
+                    <td id="{{ $technology->id }}" hidden="true">{{ $technology->azienda_fornitrice->id }}</td>
+
                     <td>{{ $technology->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
                         <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $technology->id }}">Modifica</a>
@@ -72,6 +96,8 @@
 
             let nome = $('#technology-name').val();
             let tipologia = $('#technology-type').val();
+            let id_azienda_fornitrice = $('#id_azienda_fornitrice').val();
+            let nome_azienda_fornitrice = $('#id_azienda_fornitrice option[value="' + id_azienda_fornitrice + '"]').text();
             let token = $('input[name="_token"]').val();
 
             $.ajax({
@@ -81,6 +107,7 @@
                 data: {
                     'nome': nome,
                     'tipologia': tipologia,
+                    'id_azienda_fornitrice': id_azienda_fornitrice,
                     '_token': token 
                 },
                 success: function(response){
@@ -89,6 +116,8 @@
                     var NewColId = $('<td/>',{ text: response.data.id });
                     var NewColName = $('<td/>',{ text: response.data.nome });
                     var NewColTipologia = $('<td/>',{ text: response.data.tipologia });
+                    var NewColFornitrice = $('<td/>',{ text: nome_azienda_fornitrice });
+                    var NewColIDFornitrice = $('<td/>', {text: response.data.id_azienda_fornitrice}).attr('hidden', true).attr('id', response.data.id);
                     var NewColUltimaModifica = $('<td/>',{ text: response.data.updated_at });
 
                     var date = new Date(response.data.updated_at);
@@ -121,7 +150,7 @@
 
                     /* CREO NUOVA RIGA E AGGIUNGO I CAMPI CREATI PRECEDENTEMENTE */
                     var NewRow = $('<tr/>').attr('data-id',response.data.id);
-                    NewRow.append(NewColId).append(NewColName).append(NewColTipologia).append(NewColUltimaModifica).append(NewColAzioniModifica).append(NewColAzioniDelete).append(NewColAzioniUpdate);
+                    NewRow.append(NewColId).append(NewColName).append(NewColTipologia).append(NewColFornitrice).append(NewColIDFornitrice).append(NewColUltimaModifica).append(NewColAzioniModifica).append(NewColAzioniDelete).append(NewColAzioniUpdate);
 
                     /* AGGIUNGO EFFETTIVAMENTE LA RIGA ALLA TABELLA */
                     $('tbody').append(NewRow);
@@ -129,6 +158,7 @@
                     /* SVUOTO I CAMPI DEL FORM (passando valori assumono effetto di setter) */
                     $('#technology-name').val('');
                     $('#technology-type').val('');
+                    $('#id_azienda_fornitrice').val('');
                 },
                 error: function(response, status){
                     console.log('error');
@@ -168,12 +198,15 @@
             let token = $('input[name="_token"]').val();
 
             var row = $(this).closest("tr"); //estraggo la linea corrente
-            var nome=row.find("td:eq(1)").text(); // seleziono il nome corrente
-            var tipologia=row.find("td:eq(2)").text(); // seleziono la tipologia corrente
+            var nome = row.find("td:eq(1)").text(); // seleziono il nome corrente
+            var tipologia = row.find("td:eq(2)").text(); // seleziono la tipologia corrente
+            var nome_azienda_fornitrice = row.find("td:eq(3)").text(); // seleziono il nome dell'azienda fornitrice corrente
+            var id_azienda_fornitrice = row.find("td:eq(4)").text().trim(); // seleziono l'id dell'azienda fornitrice corrente
 
             //setto i valori già esistenti
             $('#technology-name').val(nome);
             $('#technology-type').val(tipologia);
+            $('#id_azienda_fornitrice').val(id_azienda_fornitrice);
 
             //alterno i bottoni e disabilito l'aggiunta
             row.find('.btn-modifica').attr("hidden", true);
@@ -187,6 +220,8 @@
             let id = $(this).attr('data-id');
             let nome = $('#technology-name').val();
             let tipologia = $('#technology-type').val();
+            let id_azienda_fornitrice = $('#id_azienda_fornitrice').val();
+            let nome_azienda_fornitrice = $('#id_azienda_fornitrice option[value="' + id_azienda_fornitrice + '"]').text();
             let token = $('input[name="_token"]').val();
 
             $.ajax({
@@ -196,6 +231,7 @@
                 data: {
                     'nome': nome,
                     'tipologia': tipologia,
+                    'id_azienda_fornitrice': id_azienda_fornitrice,
                     '_token': token,
                 },
                 success: function (response) {
@@ -208,10 +244,12 @@
                     // svuoto i campi
                     $('#technology-name').val('');
                     $('#technology-type').val('');
+                    $('#id_azienda_fornitrice').val('');
 
                     // aggiorno con i nuovi valori
                     $('tr[data-id="'+response.data.id+'"]').find('td:eq(1)').text(nome);
                     $('tr[data-id="'+response.data.id+'"]').find('td:eq(2)').text(tipologia);
+                    $('tr[data-id="'+response.data.id+'"]').find('td:eq(3)').text(nome_azienda_fornitrice);
                 },
                 error: function(response, status){
                     console.log('error');

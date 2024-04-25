@@ -21,6 +21,7 @@
             <th scope="col">Civico</th>
             <th scope="col">Citta</th>
             <th scope="col">CAP</th>
+            <th scope="col">Proprietario</th>
             <th scope="col">Ultima modifica</th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -39,6 +40,7 @@
                 <td>{{ $smFarm->civico }}</td>      
                 <td>{{ $smFarm->citta }}</td>
                 <td>{{ $smFarm->cap }}</td>
+                <td>{{ $smFarm->proprietario->nome }} {{ $smFarm->proprietario->cognome }}</td>
 
                 <td>{{ $smFarm->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SupplierCompany;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -9,13 +10,24 @@ use Illuminate\Support\Facades\Validator;
 class TechnologyController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $technologies = Technology::all();
+        $supplierCompanies = SupplierCompany::all();
 
-        return view('technology.index', compact('technologies'));
+        return view('technology.index', compact('technologies', 'supplierCompanies'));
     }
 
     /**
@@ -36,6 +48,7 @@ class TechnologyController extends Controller
         $validator = Validator::make($input, [
             'nome' => 'required|string|max:255',
             'tipologia' => 'required|string|max:255',
+            'id_azienda_fornitrice' => 'required|integer'
         ]);
 
         if($validator->fails()){
@@ -78,6 +91,7 @@ class TechnologyController extends Controller
         $validator = Validator::make($input, [
             'nome' => 'required|string|max:255',
             'tipologia' => 'required|string|max:255',
+            'id_azienda_fornitrice' => 'required|integer'
         ]);
 
         if($validator->fails()){

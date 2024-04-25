@@ -27,6 +27,14 @@
                 <input type="text" id="numero_piante" name="numero_piante" class="form-control" value="{{ old('numero_piante') }}">
                 <div class="form-text">Inserisci il numero di piante presenti nella serra</div>
 
+                <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di appartenenza</label>
+                <select id="id_smart_farm" name="id_smart_farm" class="form-control">
+                    @foreach($smartFarms as $smFarm)
+                        <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
+                    @endforeach
+                </select>
+                <div class="form-text">Inserisci la smart-farm a cui appartiene la serra</div>
+
                 <hr />
                 <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />	
 
@@ -43,6 +51,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Numero Piante</th>
+            <th scope="col">Smart-Farm</th>
             <th scope="col">Ultima modifica</th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -55,6 +64,10 @@
             <tr data-id='{{ $gHouse->id }}'>
                 <td>{{ $gHouse->id }}</td>      
                 <td>{{ $gHouse->numero_piante }}</td>
+                <td>{{ $gHouse->smart_farm->nome }}</td>
+
+                <!-- Colonna nascosta contenente id della smart-farm -->
+                <td id="{{ $gHouse->id }}" hidden="true">{{ $gHouse->smart_farm->id }}</td>
                 
                 <td>{{ $gHouse->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
@@ -79,6 +92,8 @@
         event.preventDefault();
 
         let numero_piante = $('#numero_piante').val();
+        let id_smart_farm = $('#id_smart_farm').val();
+        let nome_smart_farm = $('#id_smart_farm option[value="' + id_smart_farm + '"]').text();
         let token = $('input[name="_token"]').val();
 
         $.ajax({
@@ -87,6 +102,7 @@
             dataType: 'json',
             data: {
                 'numero_piante': numero_piante,
+                'id_smart_farm': id_smart_farm,
                 '_token': token
             },
             success: function(response){
@@ -94,6 +110,8 @@
 
                 var newColId = $('<td/>', {text: response.data.id});
                 var newColNumPiante = $('<td/>', {text: response.data.numero_piante});
+                var newColSmartFarm = $('<td/>', {text: nome_smart_farm});
+                var newColIDSmartFarm = $('<td/>', {text: response.data.id_smart_farm}).attr('hidden', true).attr('id', response.data.id);
 
                 var date = new Date(response.data.updated_at);
                 var time = new Date();
@@ -123,6 +141,8 @@
                 var newRow = $('<tr/>').attr('data-id', response.data.id);
                 newRow.append(newColId)
                         .append(newColNumPiante)
+                        .append(newColSmartFarm)
+                        .append(newColIDSmartFarm)
                         .append(newColData)
                         .append(newColModifica)
                         .append(newColDelete)
@@ -131,6 +151,7 @@
                 $('tbody').append(newRow);
 
                 $('#numero_piante').val('');
+                $('#id_smart_farm').val('');
             },
             error: function(response, status){
                 console.log('error');
@@ -170,9 +191,14 @@
         var row = $(this).closest("tr");
         // Selezione della tipologia corrente
         var num_piante = row.find("td:eq(1)").text();
+        // Selezione del nome della smart farm corrente
+        var smart_farm = row.find("td:eq(2)").text();
+        // Selezione dell'id della smart farm corrente
+        var id_smart_farm = row.find("td:eq(3)").text().trim();
 
         // Set dei valori già esistenti
         $('#numero_piante').val(num_piante);
+        $('#id_smart_farm').val(id_smart_farm);
 
         // Modifica visibilità bottoni
         row.find('.btn-modifica').attr("hidden", true);
@@ -185,6 +211,8 @@
 
         let id = $(this).attr('data-id');
         let num_piante = $('#numero_piante').val();
+        let id_smart_farm = $('#id_smart_farm').val();
+        let nome_smart_farm = $('#id_smart_farm option[value="' + id_smart_farm + '"]').text();
         let token = $('input[name="_token"]').val();
         
         $.ajax({
@@ -193,6 +221,7 @@
             dataType: "json",
             data: {
                 'numero_piante': num_piante,
+                'id_smart_farm': id_smart_farm,
                 '_token': token,
             },
             success: function(response){
@@ -205,9 +234,11 @@
 
                 // Svuotamento dei campi
                 $('#numero_piante').val('');
+                $('#id_smart_farm').val('');
 
                 // Aggiornamento con nuovi valori
                 $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(num_piante);
+                $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(nome_smart_farm);
             },
             error: function(response, status){
                 console.log('error');

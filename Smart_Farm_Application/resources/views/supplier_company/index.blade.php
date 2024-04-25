@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Azienda fornitrice</h1>
+    <h1>Aziende fornitrici</h1>
     <hr>
     <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end">Inserisci nuova azienda fornitrice</a>
     <div style="clear:both;"></div>
@@ -21,6 +21,7 @@
                 <th scope="col">CAP</th>
                 <th scope="col">Ultima modifica</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,8 @@
                     <td>{{ $company->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
                         <a href='{{ url("supplier_company/$company->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                    </td>
+                    <td>
                         <a href='{{ url("supplier_company/$company->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $company->id }}">Elimina</a>
                         <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
                     </td>

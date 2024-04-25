@@ -35,4 +35,4 @@ EFFETTUANO N:M, UTILIZZA N:M    ->  il vincolo presente è dato dal fatto che qu
 FORNISCONO 1:N                  ->  ogni singola teconolgia è acquistata da una sola azienda fornitrice
 
 COLTIVA N:M                     ->  il proprietario inserisce un nuovo evento (semina o raccolta) riguardante una certa coltura all'interno
-                                    di una determinata serra
+                                    di una determinata serra, serra che conterrà solamente quella coltura

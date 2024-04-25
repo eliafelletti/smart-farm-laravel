@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Owner;
 use App\Models\SmartFarm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +34,9 @@ class SmartFarmController extends Controller
      */
     public function create()
     {
-        return view('smart_farm.create');
+        $owners = Owner::all();
+
+        return view('smart_farm.create', compact('owners'));
     }
 
     /**
@@ -52,6 +55,7 @@ class SmartFarmController extends Controller
             'civico' => 'required|string|max:255',
             'citta' => 'required|string|max:255',
             'cap' => 'required|string|max:5',
+            'id_proprietario' => 'required|integer'
         ]);
  
         if ($validator->fails()) {
@@ -78,7 +82,9 @@ class SmartFarmController extends Controller
      */
     public function edit(SmartFarm $smartFarm)
     {
-        return view('smart_farm.edit', compact('smartFarm'));
+        $owners = Owner::all();
+
+        return view('smart_farm.edit', compact('smartFarm', 'owners'));
     }
 
     /**
@@ -97,6 +103,7 @@ class SmartFarmController extends Controller
             'civico' => 'required|string|max:255',
             'citta' => 'required|string|max:255',
             'cap' => 'required|string|max:5',
+            'id_proprietario' => 'required|integer'
         ]);
  
         if ($validator->fails()) {

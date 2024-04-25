@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GreenHouse;
+use App\Models\SmartFarm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,8 +25,9 @@ class GreenHouseController extends Controller
     public function index()
     {
         $greenHouses = GreenHouse::all();
+        $smartFarms = SmartFarm::all();
 
-        return view('green_house.index', compact('greenHouses'));
+        return view('green_house.index', compact('greenHouses', 'smartFarms'));
     }
 
     /**
@@ -45,6 +47,7 @@ class GreenHouseController extends Controller
 
         $validator = Validator::make($input, [
             'numero_piante' => 'required|string|max:255',
+            'id_smart_farm' => 'required|integer'
         ]);
  
         if ($validator->fails()) {
@@ -86,6 +89,7 @@ class GreenHouseController extends Controller
 
         $validator = Validator::make($input, [
             'numero_piante' => 'required|string|max:255',
+            'id_smart_farm' => 'required|integer'
         ]);
  
         if ($validator->fails()) {
