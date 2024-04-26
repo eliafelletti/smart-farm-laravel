@@ -57,6 +57,9 @@
                                 <a class="nav-link" aria-current="page" href="{{ url('/measure') }}">{{ __('Misure') }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{ url('/realized_measure') }}">{{ __('Misure Realizzate') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ url('/owner') }}">{{ __('Proprietari') }}</a>
                             </li>
                         </ul>

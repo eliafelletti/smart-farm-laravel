@@ -52,3 +52,7 @@ Route::get('/supplier_company/{supplier_company}/destroy', [App\Http\Controllers
 Route::resource('/technology', App\Http\Controllers\TechnologyController::class)->except('destroy');
 
 Route::get('/technology/{technology}/destroy', [App\Http\Controllers\TechnologyController::class, 'destroy']);
+
+Route::resource('/realized_measure', App\Http\Controllers\RealizedMeasureController::class)->except('destroy');
+
+Route::get('/realized_measure/{realized_measure}/destroy', [App\Http\Controllers\RealizedMeasureController::class, 'destroy']);

@@ -2,3 +2,5 @@ https://www.sfarm.it/
 https://www.smartius.it/digital-industry/agricoltura-40-smart-farming-big-data-ia/#esempi-di-tecnologie-di-smart-farming
 https://www.growshopitalia.com/manuali-e-risorse/par-spettro-luminoso
 https://www.misureambientali.it/contents/it/d2066546993_Pagina-176.html
+
+https://medium.com/@prevailexcellent/laravel-many-to-many-relationship-complete-tutorial-16025acd5450
