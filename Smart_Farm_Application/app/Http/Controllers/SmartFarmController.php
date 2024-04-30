@@ -6,6 +6,7 @@ use App\Models\Owner;
 use App\Models\SmartFarm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class SmartFarmController extends Controller
 {
@@ -25,8 +26,18 @@ class SmartFarmController extends Controller
     public function index()
     {
         $smartFarms = SmartFarm::all();
-        
-        return view('smart_farm.index', compact('smartFarms'));
+
+        if ( Auth::user()->level == 0 ){
+            
+            return view('smart_farm.index', compact('smartFarms'));
+        }else if( Auth::user()->level == 1 ){
+            foreach($smartFarms as $smartFarm){
+                if( $smartFarm->proprietario()->where('mail', Auth::user()->mail) ){
+                    
+                    return view('smart_farm.index', compact('smartFarm'));
+                }
+            }
+        }
     }
 
     /**

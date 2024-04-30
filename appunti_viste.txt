@@ -9,8 +9,13 @@ All'interno del progetto, sarà possibile distinguere i diversi utenti attravers
 questo nella table users messa a disposizione dal tool di autenticazione di Laravel.
 
 Vista admin         ->  CRUD completa su tutte le relazioni;
-Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sulle coltivazioni e sulle colture,
+Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sui raccolti realizzati, sulle colture e su misure realizzate,
                         CRU su propietario, 
-                        R su tecnologie, misure e utilizza;
+                        R su tecnologie, misure e tecnologie utilizzate;
 Vista fornitore     ->  CRU su azienda fornitrice,
                         R su tecnologie e utilizza.
+
+Level:
+0 -> ADMIN
+1 -> OWNER
+2 -> SUPPLIER COMPANY

@@ -29,9 +29,13 @@
 
                 <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di appartenenza</label>
                 <select id="id_smart_farm" name="id_smart_farm" class="form-control">
-                    @foreach($smartFarms as $smFarm)
-                        <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
-                    @endforeach
+                    @if ( Auth::user()->level == 0 )
+                        @foreach($smartFarms as $smFarm)
+                            <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
+                        @endforeach
+                    @elseif( Auth::user()->level == 1 )
+                        <option value="{{ $smartFarm->id }}">{{ $smartFarm->nome }}</option>
+                    @endif
                 </select>
                 <div class="form-text">Inserisci la smart-farm a cui appartiene la serra</div>
 

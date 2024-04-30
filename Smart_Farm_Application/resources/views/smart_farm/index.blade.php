@@ -1,10 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Smart-Farms</h1>
+@if ( Auth::user()->level == 0 )
+    <h1>Smart-Farms</h1>
+@elseif ( Auth::user()->level == 1 )
+    <h1>Smart-Farm</h1>
+@endif
 <hr/>
 
-<a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end">Creazione nuova smart-farm</a>
+@if ( empty($smartFarm) )
+    <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end">Creazione nuova smart-farm</a>
+@else
+    <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end disabled">Creazione nuova smart-farm</a>
+@endif
 <div style="clear:both;"></div>
 <hr/>
 
@@ -29,28 +37,51 @@
     </thead>
 
     <tbody>
-        @foreach ($smartFarms as $smFarm)
-            <tr data-id="{{ $smFarm->id }}">
-                <td>{{ $smFarm->id }}</td>      
-                <td>{{ $smFarm->nome }}</td>
-                <td>{{ $smFarm->dimensione }}</td>
-                <td>{{ $smFarm->telefono }}</td>
-                <td>{{ $smFarm->mail }}</td>
-                <td>{{ $smFarm->via }}</td>
-                <td>{{ $smFarm->civico }}</td>      
-                <td>{{ $smFarm->citta }}</td>
-                <td>{{ $smFarm->cap }}</td>
-                <td>{{ $smFarm->proprietario->nome }} {{ $smFarm->proprietario->cognome }}</td>
+        @if ( Auth::user()->level == 0 )
+            @foreach ($smartFarms as $smFarm)
+                <tr data-id="{{ $smFarm->id }}">
+                    <td>{{ $smFarm->id }}</td>      
+                    <td>{{ $smFarm->nome }}</td>
+                    <td>{{ $smFarm->dimensione }}</td>
+                    <td>{{ $smFarm->telefono }}</td>
+                    <td>{{ $smFarm->mail }}</td>
+                    <td>{{ $smFarm->via }}</td>
+                    <td>{{ $smFarm->civico }}</td>      
+                    <td>{{ $smFarm->citta }}</td>
+                    <td>{{ $smFarm->cap }}</td>
+                    <td>{{ $smFarm->proprietario->nome }} {{ $smFarm->proprietario->cognome }}</td>
 
-                <td>{{ $smFarm->updated_at->format('d/m/Y H:i:s') }}</td>
+                    <td>{{ $smFarm->updated_at->format('d/m/Y H:i:s') }}</td>
+                    <td>
+                        <a href='{{ url("/smart_farm/$smFarm->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                    </td>
+                    <td>
+                        <a href='{{ url("/smart_farm/$smFarm->id/destroy") }}' data-id="{{ $smFarm->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
+                    </td>
+                </tr>
+            @endforeach
+        @elseif ( Auth::user()->level == 1 )
+            <tr data-id="{{ $smartFarm->id }}">
+                <td>{{ $smartFarm->id }}</td>      
+                <td>{{ $smartFarm->nome }}</td>
+                <td>{{ $smartFarm->dimensione }}</td>
+                <td>{{ $smartFarm->telefono }}</td>
+                <td>{{ $smartFarm->mail }}</td>
+                <td>{{ $smartFarm->via }}</td>
+                <td>{{ $smartFarm->civico }}</td>      
+                <td>{{ $smartFarm->citta }}</td>
+                <td>{{ $smartFarm->cap }}</td>
+                <td>{{ $smartFarm->proprietario->nome }} {{ $smartFarm->proprietario->cognome }}</td>
+
+                <td>{{ $smartFarm->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
-                    <a href='{{ url("/smart_farm/$smFarm->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                    <a href='{{ url("/smart_farm/$smartFarm->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
                 </td>
                 <td>
-                    <a href='{{ url("/smart_farm/$smFarm->id/destroy") }}' data-id="{{ $smFarm->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
+                    <a href='{{ url("/smart_farm/$smartFarm->id/destroy") }}' data-id="{{ $smartFarm->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
                 </td>
             </tr>
-        @endforeach
+        @endif
     </tbody>
 
 </table>

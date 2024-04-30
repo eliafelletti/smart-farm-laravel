@@ -6,6 +6,7 @@ use App\Models\GreenHouse;
 use App\Models\SmartFarm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class GreenHouseController extends Controller
 {
@@ -27,7 +28,28 @@ class GreenHouseController extends Controller
         $greenHouses = GreenHouse::all();
         $smartFarms = SmartFarm::all();
 
-        return view('green_house.index', compact('greenHouses', 'smartFarms'));
+        if ( Auth::user()->level == 0 ){
+            
+            return view('green_house.index', compact('greenHouses', 'smartFarms'));
+        }else if( Auth::user()->level == 1 ){
+            $smartFarm = null;
+            $gHouses = [];
+
+            foreach($smartFarms as $sFarm){
+                if( $sFarm->proprietario()->where('mail', Auth::user()->mail) ){
+                    $smartFarm = $sFarm;
+                }
+            }
+
+            foreach($greenHouses as $gHouse){
+                if( GreenHouse::with(['smart_farm', 'smart_farm.proprietario'])->where('mail', Auth::user()->mail) ){
+                    array_push($gHouses, $gHouse);
+                }
+            }
+            $greenHouses = $gHouse;
+
+            return view('green_house.index', compact('greenHouses', 'smartFarm'));
+        }   
     }
 
     /**

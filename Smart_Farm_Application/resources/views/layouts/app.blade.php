@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!--  Favicon -->
+    <link rel="icon" type="image/x-icon" href=" {{ URL::asset('icons/thermometer-sun.svg') }} ">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -38,36 +41,66 @@
                     <!-- Left Side Of Navbar -->
                     @if ( Auth::user() )
                         <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/smart_farm') }}">{{ __('Smart-Farms') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/green_house') }}">{{ __('Serre') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/cultivation') }}">{{ __('Colture') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/supplier_company') }}">{{ __('Aziende Fornitrici') }}</a>
-                            </li>
+
+                            @if ( Auth::user()->level == 0 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/smart_farm') }}">{{ __('Smart-Farms') }}</a>
+                                </li>
+                            @elseif ( Auth::user()->level == 1 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/smart_farm') }}">{{ __('Smart-Farm') }}</a>
+                                </li>
+                            @endif
+
+                            @if ( Auth::user()->level == 0 || Auth::user()->level == 1 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/green_house') }}">{{ __('Serre') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/cultivation') }}">{{ __('Colture') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/realized_crop') }}">{{ __('Raccolti Realizzati') }}</a>
+                                </li>
+                            @endif
+
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ url('/technology') }}">{{ __('Tecnologie') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/measure') }}">{{ __('Misure') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/realized_measure') }}">{{ __('Misure Realizzate') }}</a>
-                            </li>
+                            
+                            @if ( Auth::user()->level == 0 || Auth::user()->level == 1 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/measure') }}">{{ __('Misure') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/realized_measure') }}">{{ __('Misure Realizzate') }}</a>
+                                </li>
+                            @endif
+
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ url('/used_technology') }}">{{ __('Tecnologie Utilizzate') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/owner') }}">{{ __('Proprietari') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/realized_crop') }}">{{ __('Raccolti Realizzati') }}</a>
-                            </li>
+
+                            @if ( Auth::user()->level == 0 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/supplier_company') }}">{{ __('Aziende Fornitrici') }}</a>
+                                </li>
+                            @elseif ( Auth::user()->level == 2 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/supplier_company') }}">{{ __('I Tuoi Dati') }}</a>
+                                </li>
+                            @endif
+
+                            @if ( Auth::user()->level == 0 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/owner') }}">{{ __('Proprietari') }}</a>
+                                </li>
+                            @elseif ( Auth::user()->level == 1 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/owner') }}">{{ __('I Tuoi Dati') }}</a>
+                                </li>
+                            @endif
+            
                         </ul>
                     @endif
 
