@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Serre</h1>
+<h1>Tecnologie Utilizzate</h1>
 <hr/>
 
 @if ($errors->any())
@@ -16,27 +16,31 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form action="{{ route('green_house.store') }}" method="POST">
+        <form action="{{ route('used_technology.store') }}" method="POST">
             {{ csrf_field() }}
             
             <fieldset>
                 
-                <legend>Informazioni serra</legend>
+                <legend>Informazioni tecnologie utilizzate</legend>
                 
-                <label for="numero_piante" class="form-label mt-3">Numero piante</label>
-                <input type="text" id="numero_piante" name="numero_piante" class="form-control" value="{{ old('numero_piante') }}">
-                <div class="form-text">Inserisci il numero di piante presenti nella serra</div>
+                <label for="id_tecnologia" class="form-label mt-3">Tecnologia di riferimento</label>
+                <select id="id_tecnologia" name="id_tecnologia" class="form-control">
+                    @foreach($technologies as $tech)
+                        <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
+                    @endforeach
+                </select>
+                <div class="form-text">Inserisci la tecnologia associata ad una determinata smart-farm</div>
 
-                <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di appartenenza</label>
+                <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di riferimento</label>
                 <select id="id_smart_farm" name="id_smart_farm" class="form-control">
                     @foreach($smartFarms as $smFarm)
                         <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
                     @endforeach
                 </select>
-                <div class="form-text">Inserisci la smart-farm a cui appartiene la serra</div>
+                <div class="form-text">Inserisci la smart-farm di cui si vuole registare la tecnologia utilizzata</div>
 
                 <hr />
-                <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />	
+                <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
 
             </fieldset>
 
@@ -50,7 +54,7 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Numero Piante</th>
+            <th scope="col">Tecnologia</th>
             <th scope="col">Smart-Farm</th>
             <th scope="col">Ultima modifica</th>
             <th scope="col"></th>
@@ -60,24 +64,26 @@
     </thead>
 
     <tbody>
-        @foreach ($greenHouses as $gHouse)
-            <tr data-id='{{ $gHouse->id }}'>
-                <td>{{ $gHouse->id }}</td>      
-                <td>{{ $gHouse->numero_piante }}</td>
-                <td>{{ $gHouse->smart_farm->nome }}</td>
+        @foreach($usedTechnologies as $uTech)
+            <tr data-id='{{ $uTech->id }}'>
+                <td>{{ $uTech->id }}</td>
+                <td>{{ $uTech->tecnologia->nome }}</td>
+                <td>{{ $uTech->smart_farm->nome }}</td>
 
-                <!-- Colonna nascosta contenente id della smart-farm -->
-                <td id="{{ $gHouse->id }}" hidden="true">{{ $gHouse->smart_farm->id }}</td>
+                <!-- Colonna nascosta contenente id della tecnologia -->
+                <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia }}</td>
+                <!-- Colonna nascosta contenente id della misura -->
+                <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm }}</td>
                 
-                <td>{{ $gHouse->updated_at->format('d/m/Y H:i:s') }}</td>
+                <td>{{ $uTech->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
-                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $gHouse->id }}">Modifica</a>
+                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
                 </td>
                 <td>
-                    <a href='{{ url("/green_house/$gHouse->id/destroy") }}' data-id="{{ $gHouse->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
+                    <a href='{{ url("/realized_measure/$uTech->id/destroy") }}' data-id="{{ $uTech->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
                 </td>
                 <td>
-                    <a class="btn btn-primary btn-sm btn-update" data-id="{{ $gHouse->id }}" hidden="true">Applica modifiche</a>
+                    <a class="btn btn-primary btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
                 </td>
             </tr>
         @endforeach
@@ -91,17 +97,18 @@
     $('#btn-aggiungi').bind('click', function(event){
         event.preventDefault();
 
-        let numero_piante = $('#numero_piante').val();
+        let id_tecnologia = $('#id_tecnologia').val();
+        let nome_tecnologia = $('#id_tecnologia option[value="' + id_tecnologia + '"]').text();
         let id_smart_farm = $('#id_smart_farm').val();
         let nome_smart_farm = $('#id_smart_farm option[value="' + id_smart_farm + '"]').text();
         let token = $('input[name="_token"]').val();
 
         $.ajax({
-            url: '/green_house',
+            url: '/used_technology',
             type: 'POST',
             dataType: 'json',
             data: {
-                'numero_piante': numero_piante,
+                'id_tecnologia': id_tecnologia,
                 'id_smart_farm': id_smart_farm,
                 '_token': token
             },
@@ -109,9 +116,10 @@
                 console.log(response);
 
                 var newColId = $('<td/>', {text: response.data.id});
-                var newColNumPiante = $('<td/>', {text: response.data.numero_piante});
-                var newColSmartFarm = $('<td/>', {text: nome_smart_farm});
-                var newColIDSmartFarm = $('<td/>', {text: response.data.id_smart_farm}).attr('hidden', true).attr('id', response.data.id);
+                var newColTec = $('<td/>', {text: nome_tecnologia});
+                var newColSFarm = $('<td/>', {text: nome_smart_farm});
+                var newColIDTec = $('<td/>', {text: response.data.id_tecnologia}).attr('hidden', true).attr('id', response.data.id + "_tec");
+                var newColIDSFarm = $('<td/>', {text: response.data.id_smart_farm}).attr('hidden', true).attr('id', response.data.id + "_sFarm");
 
                 var date = new Date(response.data.updated_at);
                 var time = new Date();
@@ -140,9 +148,10 @@
 
                 var newRow = $('<tr/>').attr('data-id', response.data.id);
                 newRow.append(newColId)
-                        .append(newColNumPiante)
-                        .append(newColSmartFarm)
-                        .append(newColIDSmartFarm)
+                        .append(newColTec)
+                        .append(newColSFarm)
+                        .append(newColIDTec)
+                        .append(newColIDSFarm)
                         .append(newColData)
                         .append(newColModifica)
                         .append(newColDelete)
@@ -150,7 +159,7 @@
 
                 $('tbody').append(newRow);
 
-                $('#numero_piante').val('');
+                $('#id_tecnologia').val('');
                 $('#id_smart_farm').val('');
             },
             error: function(response, status){
@@ -166,7 +175,7 @@
         let token = $('input[name="_token"]').val();
 
         $.ajax({
-            url: '/green_house/' + id + '/destroy',
+            url: '/used_technology/' + id + '/destroy',
             type: 'GET',
             dataType: 'json',
             data: {
@@ -189,15 +198,17 @@
 
         // Estrazione della linea corrente
         var row = $(this).closest("tr");
-        // Selezione del numero di piante corrente
-        var num_piante = row.find("td:eq(1)").text();
-        // Selezione del nome della smart farm corrente
+        // Selezione del nome della tecnologia corrente
+        var tecnologia = row.find("td:eq(1)").text();
+        // Selezione del nome della smart-farm corrente
         var smart_farm = row.find("td:eq(2)").text();
-        // Selezione dell'id della smart farm corrente
-        var id_smart_farm = row.find("td:eq(3)").text().trim();
+        // Selezione dell'id della tecnologia corrente
+        var id_tecnologia = row.find("td:eq(3)").text().trim();
+        // Selezione dell'id della smart-farm corrente
+        var id_smart_farm = row.find("td:eq(4)").text().trim();
 
         // Set dei valori già esistenti
-        $('#numero_piante').val(num_piante);
+        $('#id_tecnologia').val(id_tecnologia);
         $('#id_smart_farm').val(id_smart_farm);
 
         // Modifica visibilità bottoni
@@ -210,17 +221,18 @@
         event.preventDefault();
 
         let id = $(this).attr('data-id');
-        let num_piante = $('#numero_piante').val();
+        let id_tecnologia = $('#id_tecnologia').val();
+        let nome_tecnologia = $('#id_tecnologia option[value="' + id_tecnologia + '"]').text();
         let id_smart_farm = $('#id_smart_farm').val();
         let nome_smart_farm = $('#id_smart_farm option[value="' + id_smart_farm + '"]').text();
         let token = $('input[name="_token"]').val();
         
         $.ajax({
             type: "PATCH",
-            url: "/green_house/" + id,
+            url: "/used_technology/" + id,
             dataType: "json",
             data: {
-                'numero_piante': num_piante,
+                'id_tecnologia': id_tecnologia,
                 'id_smart_farm': id_smart_farm,
                 '_token': token,
             },
@@ -233,11 +245,11 @@
                 $('#btn-aggiungi').attr('disabled', false);
 
                 // Svuotamento dei campi
-                $('#numero_piante').val('');
+                $('#id_tecnologia').val('');
                 $('#id_smart_farm').val('');
 
                 // Aggiornamento con nuovi valori
-                $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(num_piante);
+                $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_tecnologia);
                 $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(nome_smart_farm);
             },
             error: function(response, status){

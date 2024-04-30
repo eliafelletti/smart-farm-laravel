@@ -8,7 +8,7 @@
 
     <thead>
         <tr>
-            <!-- <th scope="col">#</th> -->
+            <th scope="col">#</th>
             <th scope="col">Timestamp</th>
             <th scope="col">Temperatura [°C]</th>
             <th scope="col">Umidità [%]</th>
@@ -22,7 +22,7 @@
     <tbody>
         @foreach ($measures as $measure)
             <tr>
-                <!-- <td>{{ $measure->id }}</td> -->
+                <td>{{ $measure->id }}</td>
                 <td>{{ $measure->timestamp->format('d/m/Y H:i:s') }}</td>    
                 <td>{{ $measure->temperatura }}</td>
                 <td>{{ $measure->umidita }}</td>

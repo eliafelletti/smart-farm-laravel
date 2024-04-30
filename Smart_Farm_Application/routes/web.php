@@ -56,3 +56,11 @@ Route::get('/technology/{technology}/destroy', [App\Http\Controllers\TechnologyC
 Route::resource('/realized_measure', App\Http\Controllers\RealizedMeasureController::class)->except('destroy');
 
 Route::get('/realized_measure/{realized_measure}/destroy', [App\Http\Controllers\RealizedMeasureController::class, 'destroy']);
+
+Route::resource('/used_technology', App\Http\Controllers\UsedTechnologyController::class)->except('destroy');
+
+Route::get('/used_technology/{used_technology}/destroy', [App\Http\Controllers\UsedTechnologyController::class, 'destroy']);
+
+Route::resource('/realized_crop', App\Http\Controllers\RealizedCropController::class)->except('destroy');
+
+Route::get('/realized_crop/{realized_crop}/destroy', [App\Http\Controllers\RealizedCropController::class, 'destroy']);

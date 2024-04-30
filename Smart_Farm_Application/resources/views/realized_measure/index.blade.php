@@ -67,12 +67,13 @@
         @foreach($realizedMeasures as $rMeasure)
             <tr data-id='{{ $rMeasure->id }}'>
                 <td>{{ $rMeasure->id }}</td>
-                <td>{{ $rMeasure->id_tecnologia }}</td>
-                <td>{{ $rMeasure->id_misura }}</td>
+                <td>{{ $rMeasure->tecnologia->nome }}</td>
+                <td>{{ $rMeasure->misura->id }} [{{ $rMeasure->misura->serra->smart_farm->nome }} ({{ $rMeasure->misura->id_serra }})]</td>
 
-                <!-- Colonna nascosta contenente id della smart-farm -->
-                <!-- <td id="{{ $rMeasure->id }}" hidden="true">{{ $rMeasure->id }}</td> -->
-                <!--                                               $rMeasure->relation->id -->
+                <!-- Colonna nascosta contenente id della tecnologia -->
+                <td id="{{ $rMeasure->id }}_tec" hidden="true">{{ $rMeasure->id_tecnologia }}</td>
+                <!-- Colonna nascosta contenente id della misura -->
+                <td id="{{ $rMeasure->id }}_mis" hidden="true">{{ $rMeasure->id_misura }}</td>
                 
                 <td>{{ $rMeasure->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
@@ -97,8 +98,9 @@
         event.preventDefault();
 
         let id_tecnologia = $('#id_tecnologia').val();
+        let nome_tecnologia = $('#id_tecnologia option[value="' + id_tecnologia + '"]').text();
         let id_misura = $('#id_misura').val();
-        //let nome_smart_farm = $('#id_smart_farm option[value="' + id_smart_farm + '"]').text();
+        let nome_misura = $('#id_misura option[value="' + id_misura + '"]').text();
         let token = $('input[name="_token"]').val();
 
         $.ajax({
@@ -114,9 +116,10 @@
                 console.log(response);
 
                 var newColId = $('<td/>', {text: response.data.id});
-                var newColTec = $('<td/>', {text: response.data.id_tecnologia});
-                var newColMisura = $('<td/>', {text: response.data.id_misura});
-                //var newColIDSmartFarm = $('<td/>', {text: response.data.id_smart_farm}).attr('hidden', true).attr('id', response.data.id);
+                var newColTec = $('<td/>', {text: nome_tecnologia});
+                var newColMisura = $('<td/>', {text: nome_misura});
+                var newColIDTec = $('<td/>', {text: response.data.id_tecnologia}).attr('hidden', true).attr('id', response.data.id + "_tec");
+                var newColIDMis = $('<td/>', {text: response.data.id_misura}).attr('hidden', true).attr('id', response.data.id + "_mis");
 
                 var date = new Date(response.data.updated_at);
                 var time = new Date();
@@ -147,6 +150,8 @@
                 newRow.append(newColId)
                         .append(newColTec)
                         .append(newColMisura)
+                        .append(newColIDTec)
+                        .append(newColIDMis)
                         .append(newColData)
                         .append(newColModifica)
                         .append(newColDelete)
@@ -193,12 +198,14 @@
 
         // Estrazione della linea corrente
         var row = $(this).closest("tr");
-        // Selezione della tipologia corrente
-        var id_tecnologia = row.find("td:eq(1)").text();
-        // Selezione del nome della smart farm corrente
-        var id_misura = row.find("td:eq(2)").text();
-        // Selezione dell'id della smart farm corrente
-        //var id_smart_farm = row.find("td:eq(3)").text().trim();
+        // Selezione del nome della tecnologia corrente
+        var tecnologia = row.find("td:eq(1)").text();
+        // Selezione del nome della misura corrente
+        var misura = row.find("td:eq(2)").text();
+        // Selezione dell'id della tecnologia corrente
+        var id_tecnologia = row.find("td:eq(3)").text().trim();
+        // Selezione dell'id della misura corrente
+        var id_misura = row.find("td:eq(4)").text().trim();
 
         // Set dei valori già esistenti
         $('#id_tecnologia').val(id_tecnologia);
@@ -215,8 +222,9 @@
 
         let id = $(this).attr('data-id');
         let id_tecnologia = $('#id_tecnologia').val();
+        let nome_tecnologia = $('#id_tecnologia option[value="' + id_tecnologia + '"]').text();
         let id_misura = $('#id_misura').val();
-        //let nome_smart_farm = $('#id_smart_farm option[value="' + id_smart_farm + '"]').text();
+        let nome_misura = $('#id_misura option[value="' + id_misura + '"]').text();
         let token = $('input[name="_token"]').val();
         
         $.ajax({
@@ -241,8 +249,8 @@
                 $('#id_misura').val('');
 
                 // Aggiornamento con nuovi valori
-                $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(id_tecnologia);
-                $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(id_misura);
+                $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_tecnologia);
+                $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(nome_misura);
             },
             error: function(response, status){
                 console.log('error');

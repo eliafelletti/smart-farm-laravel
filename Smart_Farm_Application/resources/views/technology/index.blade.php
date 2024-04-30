@@ -2,53 +2,49 @@
 
 @section('content')
     <h1>Tecnologie</h1>
+    <hr/>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     
-    <div class="row mt-4 mb-4">
-		<div class="col-md-12">
+    <div class="row">
+		<div class="col-md-6">
             <form action="{{ route('technology.store') }}" method="POST">
                 {{ csrf_field() }}
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <fieldset>
-                            <label>Nome</label>
-                            <input class="form-control" name="nome" id="technology-name" />
-                        </fieldset>
-                    </div>
+                <fieldset>
+                    <legend> Informazioni tecnologie </legend>
 
-                    <div class="col-md-3">
-                        <fieldset>
-                            <label>Tipologia</label>
-                            <select class="form-control" name="tipologia" id="technology-type">
-                                <option value="CO2">CO2</option>
-                                <option value="Irrigazione">Irrigazione</option>
-                                <option value="Luminosità">Luminosità</option>
-                                <option value="Temperatura">Temperatura</option>
-                                <option value="Umidità">Umidità</option>
-                            </select>
-                        </fieldset>
-                    </div>
+                    <label for="technology-name" class="form-label mt-3">Nome tecnologia</label>
+                    <input type="text" name="nome" id="technology-name"  class="form-control" value="{{ old('nome') }}">
+                    <div class="form-text">Inserisci il nome della tecnologia che potrà essere usata in serra</div>
 
-                    <div class="col-md-3">
-                        <fieldset>
-                            <label>Azienda Fornitrice</label>
-                            <select class="form-control" name="id_azienda_fornitrice" id="id_azienda_fornitrice">
-                                @foreach($supplierCompanies as $sComp)
-                                    <option value="{{ $sComp->id }}">{{ $sComp->nome }}</option>
-                                @endforeach
-                            </select>
-                        </fieldset>
-                    </div>
+                    <label for="technology-type" class="form-label mt-3">Tipologia tecnologia</label>
+                    <select id="technology-type" name="tipologia" class="form-control">
+                        <option value="CO2">CO2</option>
+                        <option value="Irrigazione">Irrigazione</option>
+                        <option value="Luminosità">Luminosità</option>
+                        <option value="Temperatura">Temperatura</option>
+                        <option value="Umidità">Umidità</option>
+                    </select>
+                    <div class="form-text">Inserisci la tipologia della tecnologia che potrà essere usata in serra</div>
 
-                    <div class="col-md-3">
-                        <fieldset>
-                            <input type="submit" id="btn-aggiungi" class="btn btn-primary mt-4 float-end" value="Aggiungi" />
-                        </fieldset>
-                    </div>
-                </div>
+                    <hr />
+                    <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
+
+                </fieldset>
+
             </form>
         </div>
     </div>
+    <hr/><br/>
 
     <table class="table table-striped">
         <thead>

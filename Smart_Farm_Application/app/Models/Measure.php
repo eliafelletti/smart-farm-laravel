@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\GreenHouse;
-use App\Models\Technology;
+use App\Models\RealizedMeasure;
 
 class Measure extends Model
 {
@@ -35,9 +35,9 @@ class Measure extends Model
         return ($this)->belongsTo(GreenHouse::class, 'id_serra', 'id');
     }
 
-    public function tecnologie() : BelongsToMany
+    public function misure_realizzate() : HasMany
     {
-        return ($this)->belongsToMany(Technology::class, 'realized_measures', 'id_misura', 'id_tecnologia');
+        return ($this)->hasMany(RealizedMeasure::class);
     }
 
 }

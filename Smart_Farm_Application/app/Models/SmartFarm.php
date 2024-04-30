@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Owner;
 use App\Models\GreenHouse;
+use App\Models\UsedTechnology;
 
 class SmartFarm extends Model
 {
@@ -39,6 +40,11 @@ class SmartFarm extends Model
     public function serre() : HasMany
     {
         return ($this)->hasMany(GreenHouse::class);
+    }
+
+    public function tecnologie_utilizzate() : HasMany
+    {
+        return ($this)->hasMany(UsedTechnology::class);
     }
 
 }

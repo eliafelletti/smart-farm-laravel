@@ -3,7 +3,7 @@
 @section('content')
     <h1>Aziende fornitrici</h1>
     <hr>
-    <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end">Inserisci nuova azienda fornitrice</a>
+    <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end">Creazione nuova azienda fornitrice</a>
     <div style="clear:both;"></div>
     <hr>
 

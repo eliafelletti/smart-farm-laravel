@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SupplierCompany;
-use App\Models\Measure;
+use App\Models\RealizedMeasure;
+use App\Models\UsedTechnology;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Technology extends Model
 {
@@ -30,9 +31,14 @@ class Technology extends Model
         return ($this)->belongsTo(SupplierCompany::class, 'id_azienda_fornitrice', 'id');
     }
 
-    public function misure() : BelongsToMany
+    public function misure_realizzate() : HasMany
     {
-        return ($this)->belongsToMany(Measure::class, 'realized_measures', 'id_tecnologia', 'id_misura');
+        return ($this)->hasMany(RealizedMeasure::class);
+    }
+
+    public function tecnologie_utilizzate() : HasMany
+    {
+        return ($this)->hasMany(UsedTechnology::class);
     }
 
 }

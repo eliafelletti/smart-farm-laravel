@@ -60,7 +60,13 @@
                                 <a class="nav-link" aria-current="page" href="{{ url('/realized_measure') }}">{{ __('Misure Realizzate') }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{ url('/used_technology') }}">{{ __('Tecnologie Utilizzate') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ url('/owner') }}">{{ __('Proprietari') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{ url('/realized_crop') }}">{{ __('Raccolti Realizzati') }}</a>
                             </li>
                         </ul>
                     @endif

@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\SmartFarm;
+use App\Models\RealizedCrop;
 
 class Owner extends Model
 {
@@ -35,6 +37,11 @@ class Owner extends Model
     {
         //(Model_di_riferimento)
         return ($this)->hasOne(SmartFarm::class);
+    }
+
+    public function realizedCrops(): HasMany
+    {
+        return $this->hasMany(RealizedCrop::class);
     }
 
 }

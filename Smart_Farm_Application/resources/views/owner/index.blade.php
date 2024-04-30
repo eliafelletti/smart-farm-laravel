@@ -2,10 +2,11 @@
 
 @section('content')
     <h1>Proprietari</h1>
-    <hr>
-    <a href="{{ url('owner/create') }}" class="btn btn-primary float-end">Inserisci nuovo proprietario</a>
+    <hr/>
+
+    <a href="{{ url('owner/create') }}" class="btn btn-primary float-end">Creazione nuovo proprietario</a>
     <div style="clear:both;"></div>
-    <hr>
+    <hr/>
 
     <table class="table table-striped">
         <thead>
