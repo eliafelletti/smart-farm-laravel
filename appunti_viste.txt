@@ -13,7 +13,7 @@ Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-f
                         CRU su propietario, 
                         R misure, tecnologie utilizzate e colture;
 Vista fornitore     ->  CRU su azienda fornitrice,
-                        R su tecnologie e utilizza.
+                        R su tecnologie e tecnologie utilizzate.
 
 Level:
 0 -> ADMIN

@@ -40,7 +40,11 @@
                 <th scope="col">CAP</th>
                 <th scope="col">Ultima modifica</th>
                 <th scope="col"></th>
-                <th scope="col"></th>
+
+                @if ( Auth::user()->level == 0 )
+                    <th scope="col"></th>
+                @endif
+
             </tr>
         </thead>
         <tbody>
@@ -90,10 +94,14 @@
                     <td>
                         <a href='{{ url("owner/$owner->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
                     </td>
-                    <td>
-                        <a href='{{ url("owner/$owner->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $owner->id }}">Elimina</a>
-                        <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
-                    </td>
+
+                    @if ( Auth::user()->level == 0 )
+                        <td>
+                            <a href='{{ url("owner/$owner->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $owner->id }}">Elimina</a>
+                            <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
+                        </td>
+                    @endif
+
                 </tr>
             @endif
         </tbody>
