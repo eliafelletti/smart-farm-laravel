@@ -86,6 +86,8 @@
                 <td id="{{ $rMeasure->id }}_tec" hidden="true">{{ $rMeasure->id_tecnologia }}</td>
                 <!-- Colonna nascosta contenente id della misura -->
                 <td id="{{ $rMeasure->id }}_mis" hidden="true">{{ $rMeasure->id_misura }}</td>
+                <!-- Colonna nascosta contenente level user -->
+                <td id="level" hidden="true">{{ Auth::user()->level }}</td>
                 
                 <td>{{ $rMeasure->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
@@ -126,12 +128,17 @@
             },
             success: function(response){
                 console.log(response);
+                
+                var level = $('#level').text();
 
-                var newColId = $('<td/>', {text: response.data.id});
+                if( level == '0'){
+                    var newColId = $('<td/>', {text: response.data.id});
+                }
                 var newColTec = $('<td/>', {text: nome_tecnologia});
                 var newColMisura = $('<td/>', {text: nome_misura});
                 var newColIDTec = $('<td/>', {text: response.data.id_tecnologia}).attr('hidden', true).attr('id', response.data.id + "_tec");
                 var newColIDMis = $('<td/>', {text: response.data.id_misura}).attr('hidden', true).attr('id', response.data.id + "_mis");
+                var newColLevel = $('<td/>', {text: level}).attr('hidden', true).attr('id', "level");
 
                 var date = new Date(response.data.updated_at);
                 var time = new Date();
@@ -159,15 +166,28 @@
                 var newColUpdate = $('<td/>', {text: ''}).append(actionUpdate);
 
                 var newRow = $('<tr/>').attr('data-id', response.data.id);
-                newRow.append(newColId)
+                if( level == '0' ){
+                    newRow.append(newColId)
                         .append(newColTec)
                         .append(newColMisura)
                         .append(newColIDTec)
                         .append(newColIDMis)
+                        .append(newColLevel)
                         .append(newColData)
                         .append(newColModifica)
                         .append(newColDelete)
                         .append(newColUpdate);
+                }else if( level == '1' ){
+                    newRow.append(newColTec)
+                        .append(newColMisura)
+                        .append(newColIDTec)
+                        .append(newColIDMis)
+                        .append(newColLevel)
+                        .append(newColData)
+                        .append(newColModifica)
+                        .append(newColDelete)
+                        .append(newColUpdate);
+                }
 
                 $('tbody').append(newRow);
 
@@ -207,17 +227,33 @@
 
         let id = $(this).attr('data-id');
         let token = $('input[name="_token"]').val();
+        let level = $('#level').text();
+        let id_tecnologia = '';
+        let id_misura = '';
 
-        // Estrazione della linea corrente
-        var row = $(this).closest("tr");
-        // Selezione del nome della tecnologia corrente
-        var tecnologia = row.find("td:eq(1)").text();
-        // Selezione del nome della misura corrente
-        var misura = row.find("td:eq(2)").text();
-        // Selezione dell'id della tecnologia corrente
-        var id_tecnologia = row.find("td:eq(3)").text().trim();
-        // Selezione dell'id della misura corrente
-        var id_misura = row.find("td:eq(4)").text().trim();
+        if( level == '0' ){
+            // Estrazione della linea corrente
+            var row = $(this).closest("tr");
+            // Selezione del nome della tecnologia corrente
+            var tecnologia = row.find("td:eq(1)").text();
+            // Selezione del nome della misura corrente
+            var misura = row.find("td:eq(2)").text();
+            // Selezione dell'id della tecnologia corrente
+            id_tecnologia = row.find("td:eq(3)").text().trim();
+            // Selezione dell'id della misura corrente
+            id_misura = row.find("td:eq(4)").text().trim();
+        }else if( level == '1' ){
+            // Estrazione della linea corrente
+            var row = $(this).closest("tr");
+            // Selezione del nome della tecnologia corrente
+            var tecnologia = row.find("td:eq(0)").text();
+            // Selezione del nome della misura corrente
+            var misura = row.find("td:eq(1)").text();
+            // Selezione dell'id della tecnologia corrente
+            id_tecnologia = row.find("td:eq(2)").text().trim();
+            // Selezione dell'id della misura corrente
+            id_misura = row.find("td:eq(3)").text().trim();
+        }
 
         // Set dei valori già esistenti
         $('#id_tecnologia').val(id_tecnologia);
@@ -238,6 +274,7 @@
         let id_misura = $('#id_misura').val();
         let nome_misura = $('#id_misura option[value="' + id_misura + '"]').text();
         let token = $('input[name="_token"]').val();
+        let level = $('#level').text();
         
         $.ajax({
             type: "PATCH",
@@ -261,8 +298,17 @@
                 $('#id_misura').val('');
 
                 // Aggiornamento con nuovi valori
-                $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_tecnologia);
-                $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(nome_misura);
+                if( level == '0' ){
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_tecnologia);
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(nome_misura);
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(3)').text(id_tecnologia);
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(4)').text(id_misura);
+                }else if( level == '1' ){
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(0)').text(nome_tecnologia);
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_misura);
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(id_tecnologia);
+                    $('tr[data-id="' + response.data.id + '"]').find('td:eq(3)').text(id_misura);
+                }
             },
             error: function(response, status){
                 console.log('error');

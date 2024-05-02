@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SupplierCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class SupplierCompanyController extends Controller
 {
@@ -23,9 +24,15 @@ class SupplierCompanyController extends Controller
      */
     public function index()
     {
-        $supplier_companies = SupplierCompany::all();
+        if ( Auth::user()->level == 0 ){
+            $supplier_companies = SupplierCompany::all();
 
-        return view('supplier_company.index', compact('supplier_companies'));
+            return view('supplier_company.index', compact('supplier_companies'));
+        }else if( Auth::user()->level == 2 ){
+            $supplier_company = SupplierCompany::where('mail', Auth::user()->email)->first();
+
+            return view('supplier_company.index', compact('supplier_company'));
+        } 
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\SmartFarm;
 use App\Models\Technology;
 use App\Models\UsedTechnology;
 use App\Models\Owner;
+use App\Models\SupplierCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -27,6 +28,22 @@ class UsedTechnologyController extends Controller
             $owner = Owner::where('mail', Auth::user()->email)->first();
             $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
             $usedTechnologies = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
+
+            return view('used_technology.index', compact('usedTechnologies'));
+        }else if( Auth::user()->level == 2 ){
+            // Seleziono l'azienda fornitrice loggata
+            $supplier_company = SupplierCompany::where('mail', Auth::user()->email)->first();
+            // Seleziono le tecnologie dell'azienda fornitrice loggata
+            $technologies = Technology::where('id_azienda_fornitrice', $supplier_company->id)->get();
+
+            // Seleziono tutti gli id delle tecnologie dell'azienda fornitrice loggata
+            $idTechs = [];
+            foreach($technologies as $tech){
+                array_push($idTechs, $tech->id);
+            }
+
+            // Seleziono le tecnologie dell'azienda fornitrice loggata usate nelle smart-farm
+            $usedTechnologies = UsedTechnology::whereIn('id_tecnologia', $idTechs)->get()->sortBy('id_smart_farm');
 
             return view('used_technology.index', compact('usedTechnologies'));
         }

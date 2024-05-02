@@ -1,16 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Aziende fornitrici</h1>
+    @if ( Auth::user()->level == 0 )
+        <h1>Aziende fornitrici</h1>
+    @elseif ( Auth::user()->level == 2 )
+        <h1>I Tuoi Dati</h1>
+    @endif
     <hr>
-    <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end">Creazione nuova azienda fornitrice</a>
+
+    @if ( Auth::user()->level == 0 )
+        <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end">Creazione nuova azienda fornitrice</a>
+    @elseif ( Auth::user()->level == 2 )
+        @if( empty($supplier_company) )
+            <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end">Creazione nuovo profilo</a>
+        @else
+            <a href="{{ url('supplier_company/create') }}" class="btn btn-primary float-end disabled">Creazione nuovo profilo</a>
+        @endif
+    @endif
     <div style="clear:both;"></div>
     <hr>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                @if ( Auth::user()->level == 0 )
+                    <th scope="col">#</th>
+                @endif
+
                 <th scope="col">Nome</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telefono</th>
@@ -21,10 +37,14 @@
                 <th scope="col">CAP</th>
                 <th scope="col">Ultima modifica</th>
                 <th scope="col"></th>
-                <th scope="col"></th>
+
+                @if ( Auth::user()->level == 0 )
+                    <th scope="col"></th>
+                @endif
             </tr>
         </thead>
         <tbody>
+            @if ( Auth::user()->level == 0 )
             @foreach ($supplier_companies as $company)
                 <tr data-id="{{ $company->id }}">
                     <td>{{ $company->id }}</td>
@@ -46,6 +66,34 @@
                     </td>
                 </tr>
             @endforeach
+            @elseif( Auth::user()->level == 2 )
+                <tr data-id="{{ $supplier_company->id }}">
+                    @if ( Auth::user()->level == 0 )
+                        <td>{{ $supplier_company->id }}</td>
+                    @endif
+
+                    <td>{{ $supplier_company->nome }}</td>
+                    <td>{{ $supplier_company->mail }}</td>
+                    <td>{{ $supplier_company->telefono }}</td>   
+                    <td>{{ $supplier_company->fax }}</td>   
+                    <td>{{ $supplier_company->via }}</td>
+                    <td>{{ $supplier_company->civico }}</td>
+                    <td>{{ $supplier_company->citta }}</td>
+                    <td>{{ $supplier_company->cap }}</td>
+                    <td>{{ $supplier_company->updated_at->format('d/m/Y H:i:s') }}</td>
+                    <td>
+                        <a href='{{ url("supplier_company/$supplier_company->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                    </td>
+
+                    @if ( Auth::user()->level == 0 )
+                    <td>
+                        <a href='{{ url("supplier_company/$supplier_company->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $company->id }}">Elimina</a>
+                        <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
+                    </td>
+                    @endif
+
+                </tr>
+            @endif
         </tbody>
     </table>
 

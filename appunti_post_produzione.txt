@@ -1,0 +1,5 @@
+Vista Owner:
+- automatizzazione misure realizzate, con rimozione CUD => diventa R.
+
+Vista SupplierCompany:
+- raggruppamento tecnologie con listato smart-farm in tecnologie utilizzate.

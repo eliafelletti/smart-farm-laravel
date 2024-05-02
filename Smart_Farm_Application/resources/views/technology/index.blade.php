@@ -36,6 +36,14 @@
                     </select>
                     <div class="form-text">Inserisci la tipologia della tecnologia che potrà essere usata in serra</div>
 
+                    <label for="id_azienda_fornitrice" class="form-label mt-3">Azienda Fornitrice</label>
+                    <select id="id_azienda_fornitrice" name="id_azienda_fornitrice" class="form-control">
+                        @foreach($supplierCompanies as $sComp)
+                            <option value="{{ $sComp->id }}">{{ $sComp->nome }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-text">Inserisci l'azienda fornitrice della tecnologia che potrà essere usata in serra</div>
+
                     <hr />
                     <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
 
@@ -246,6 +254,7 @@
                     $('tr[data-id="'+response.data.id+'"]').find('td:eq(1)').text(nome);
                     $('tr[data-id="'+response.data.id+'"]').find('td:eq(2)').text(tipologia);
                     $('tr[data-id="'+response.data.id+'"]').find('td:eq(3)').text(nome_azienda_fornitrice);
+                    $('tr[data-id="'+response.data.id+'"]').find('td:eq(4)').text(id_azienda_fornitrice);
                 },
                 error: function(response, status){
                     console.log('error');

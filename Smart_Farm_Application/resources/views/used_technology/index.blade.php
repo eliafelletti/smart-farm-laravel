@@ -269,6 +269,8 @@
                 // Aggiornamento con nuovi valori
                 $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_tecnologia);
                 $('tr[data-id="' + response.data.id + '"]').find('td:eq(2)').text(nome_smart_farm);
+                $('tr[data-id="' + response.data.id + '"]').find('td:eq(3)').text(id_tecnologia);
+                $('tr[data-id="' + response.data.id + '"]').find('td:eq(4)').text(id_smart_farm);
             },
             error: function(response, status){
                 console.log('error');

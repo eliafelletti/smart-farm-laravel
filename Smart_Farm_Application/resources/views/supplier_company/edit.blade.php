@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Modifica azienda fornitrice</h1>
+    @if( Auth::user()->level == 0 )
+        <h1>Modifica azienda fornitrice</h1>
+    @elseif ( Auth::user()->level == 2 )
+        <h1>Modifica profilo</h1>
+    @endif
     <hr>
 
     @if ($errors->any())
