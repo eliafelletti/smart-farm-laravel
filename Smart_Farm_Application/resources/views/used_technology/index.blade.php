@@ -14,77 +14,95 @@
     </div>
 @endif
 
-<div class="row">
-    <div class="col-md-6">
-        <form action="{{ route('used_technology.store') }}" method="POST">
-            {{ csrf_field() }}
-            
-            <fieldset>
+@if ( Auth::user()->level == 0 )
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{ route('used_technology.store') }}" method="POST">
+                {{ csrf_field() }}
                 
-                <legend>Informazioni tecnologie utilizzate</legend>
-                
-                <label for="id_tecnologia" class="form-label mt-3">Tecnologia di riferimento</label>
-                <select id="id_tecnologia" name="id_tecnologia" class="form-control">
-                    @foreach($technologies as $tech)
-                        <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
-                    @endforeach
-                </select>
-                <div class="form-text">Inserisci la tecnologia associata ad una determinata smart-farm</div>
+                <fieldset>
+                    
+                    <legend>Informazioni tecnologie utilizzate</legend>
+                    
+                    <label for="id_tecnologia" class="form-label mt-3">Tecnologia di riferimento</label>
+                    <select id="id_tecnologia" name="id_tecnologia" class="form-control">
+                        @foreach($technologies as $tech)
+                            <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-text">Inserisci la tecnologia associata ad una determinata smart-farm</div>
 
-                <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di riferimento</label>
-                <select id="id_smart_farm" name="id_smart_farm" class="form-control">
-                    @foreach($smartFarms as $smFarm)
-                        <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
-                    @endforeach
-                </select>
-                <div class="form-text">Inserisci la smart-farm di cui si vuole registare la tecnologia utilizzata</div>
+                    <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di riferimento</label>
+                    <select id="id_smart_farm" name="id_smart_farm" class="form-control">
+                        @foreach($smartFarms as $smFarm)
+                            <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-text">Inserisci la smart-farm di cui si vuole registare la tecnologia utilizzata</div>
 
-                <hr />
-                <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
+                    <hr />
+                    <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
 
-            </fieldset>
+                </fieldset>
 
-        </form> 
+            </form> 
+        </div>
     </div>
-</div>
-<hr/><br/>
+    <hr/><br/>
+@endif
 
 <table class="table table-striped">
 
     <thead>
         <tr>
-            <th scope="col">#</th>
+            @if ( Auth::user()->level == 0 )
+                <th scope="col">#</th>
+            @endif
+
             <th scope="col">Tecnologia</th>
             <th scope="col">Smart-Farm</th>
             <th scope="col">Ultima modifica</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            
+            @if ( Auth::user()->level == 0 )
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            @endif
+
         </tr>
     </thead>
 
     <tbody>
         @foreach($usedTechnologies as $uTech)
             <tr data-id='{{ $uTech->id }}'>
-                <td>{{ $uTech->id }}</td>
+                @if ( Auth::user()->level == 0 )
+                    <td>{{ $uTech->id }}</td>
+                @endif
+
                 <td>{{ $uTech->tecnologia->nome }}</td>
                 <td>{{ $uTech->smart_farm->nome }}</td>
 
-                <!-- Colonna nascosta contenente id della tecnologia -->
-                <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia }}</td>
-                <!-- Colonna nascosta contenente id della misura -->
-                <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm }}</td>
+                @if ( Auth::user()->level == 0 )
+                    <!-- Colonna nascosta contenente id della tecnologia -->
+                    <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia }}</td>
+                    <!-- Colonna nascosta contenente id della misura -->
+                    <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm }}</td>
+                @endif
                 
                 <td>{{ $uTech->updated_at->format('d/m/Y H:i:s') }}</td>
-                <td>
-                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
-                </td>
-                <td>
-                    <a href='{{ url("/realized_measure/$uTech->id/destroy") }}' data-id="{{ $uTech->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
-                </td>
+                
+                @if ( Auth::user()->level == 0 )
+                    <td>
+                        <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
+                    </td>
+                    <td>
+                        <a href='{{ url("/realized_measure/$uTech->id/destroy") }}' data-id="{{ $uTech->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
+                    </td>
+                @endif
+
             </tr>
         @endforeach
     </tbody>

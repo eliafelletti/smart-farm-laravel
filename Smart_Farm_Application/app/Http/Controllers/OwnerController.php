@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Owner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class OwnerController extends Controller
 {
@@ -23,9 +24,15 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        $owners = Owner::all();
+        if ( Auth::user()->level == 0 ){
+            $owners = Owner::all();
 
-        return view('owner.index', compact('owners'));
+            return view('owner.index', compact('owners'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+
+            return view('owner.index', compact('owner'));
+        }
     }
 
     /**

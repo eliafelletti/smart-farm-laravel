@@ -6,8 +6,10 @@ use App\Models\RealizedCrop;
 use App\Models\Owner;
 use App\Models\GreenHouse;
 use App\Models\Cultivation;
+use App\Models\SmartFarm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class RealizedCropController extends Controller
 {
@@ -16,9 +18,16 @@ class RealizedCropController extends Controller
      */
     public function index()
     {
-        $realized_crops = RealizedCrop::all();
+        if ( Auth::user()->level == 0 ){
+            $realized_crops = RealizedCrop::all();
 
-        return view('realized_crops.index', compact('realized_crops'));
+            return view('realized_crops.index', compact('realized_crops'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $realized_crops = RealizedCrop::where('id_proprietario', $owner->id)->get();
+
+            return view('realized_crops.index', compact('realized_crops'));
+        }
     }
 
     /**
@@ -26,11 +35,20 @@ class RealizedCropController extends Controller
      */
     public function create()
     {
-        $owners = Owner::all();
-        $green_houses = GreenHouse::all();
         $cultivations = Cultivation::all();
 
-        return view('realized_crops.create', compact('owners','green_houses','cultivations'));
+        if ( Auth::user()->level == 0 ){
+            $owners = Owner::all();
+            $green_houses = GreenHouse::all();
+
+            return view('realized_crops.create', compact('owners','green_houses','cultivations'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+            $green_houses = GreenHouse::where('id_smart_farm', $smartFarm->id)->get();
+
+            return view('realized_crops.create', compact('owner','green_houses','cultivations'));
+        }
     }
 
     /**
@@ -73,11 +91,20 @@ class RealizedCropController extends Controller
      */
     public function edit(RealizedCrop $realizedCrop)
     {
-        $owners = Owner::all();
-        $green_houses = GreenHouse::all();
         $cultivations = Cultivation::all();
 
-        return view('realized_crops.edit', compact('realizedCrop','owners','green_houses','cultivations'));
+        if ( Auth::user()->level == 0 ){
+            $owners = Owner::all();
+            $green_houses = GreenHouse::all();
+
+            return view('realized_crops.edit', compact('realizedCrop','owners','green_houses','cultivations'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+            $green_houses = GreenHouse::where('id_smart_farm', $smartFarm->id)->get();
+
+            return view('realized_crops.edit', compact('realizedCrop','owner','green_houses','cultivations'));
+        }        
     }
 
     /**

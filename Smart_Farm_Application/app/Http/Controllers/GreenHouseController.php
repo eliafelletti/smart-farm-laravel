@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GreenHouse;
 use App\Models\SmartFarm;
+use App\Models\Owner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -25,28 +26,15 @@ class GreenHouseController extends Controller
      */
     public function index()
     {
-        $greenHouses = GreenHouse::all();
-        $smartFarms = SmartFarm::all();
-
         if ( Auth::user()->level == 0 ){
-            
+            $greenHouses = GreenHouse::all();
+            $smartFarms = SmartFarm::all();
+
             return view('green_house.index', compact('greenHouses', 'smartFarms'));
         }else if( Auth::user()->level == 1 ){
-            $smartFarm = null;
-            $gHouses = [];
-
-            foreach($smartFarms as $sFarm){
-                if( $sFarm->proprietario()->where('mail', Auth::user()->mail) ){
-                    $smartFarm = $sFarm;
-                }
-            }
-
-            foreach($greenHouses as $gHouse){
-                if( GreenHouse::with(['smart_farm', 'smart_farm.proprietario'])->where('mail', Auth::user()->mail) ){
-                    array_push($gHouses, $gHouse);
-                }
-            }
-            $greenHouses = $gHouse;
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+            $greenHouses = GreenHouse::where('id_smart_farm', $smartFarm->id)->get();
 
             return view('green_house.index', compact('greenHouses', 'smartFarm'));
         }   

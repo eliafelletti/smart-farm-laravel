@@ -58,9 +58,13 @@
 
                 <label for="id_proprietario" class="form-label mt-3">Proprietario</label>
                 <select id="id_proprietario" name="id_proprietario" class="form-control">
-                    @foreach($owners as $owner)
+                    @if ( Auth::user()->level == 0 )
+                        @foreach($owners as $owner)
+                            <option value="{{ $owner->id }}" @selected( $owner->id == $smartFarm->id_proprietario )>{{ $owner->nome }} {{ $owner->cognome }}</option>
+                        @endforeach
+                    @elseif ( Auth::user()->level == 1 )
                         <option value="{{ $owner->id }}" @selected( $owner->id == $smartFarm->id_proprietario )>{{ $owner->nome }} {{ $owner->cognome }}</option>
-                    @endforeach
+                    @endif
                 </select>
                 <div class="form-text">Inserisci il proprietario della smart-farm</div>
 

@@ -20,7 +20,10 @@
 
     <thead>
         <tr>
-            <th scope="col">#</th>
+            @if ( Auth::user()->level == 0 )
+                <th scope="col">#</th>
+            @endif
+
             <th scope="col">Nome</th>
             <th scope="col">Dimensione [m2]</th>
             <th scope="col">Telefono</th>
@@ -62,7 +65,10 @@
             @endforeach
         @elseif ( Auth::user()->level == 1 )
             <tr data-id="{{ $smartFarm->id }}">
-                <td>{{ $smartFarm->id }}</td>      
+                @if ( Auth::user()->level == 0 )
+                    <td>{{ $smartFarm->id }}</td>     
+                @endif 
+                
                 <td>{{ $smartFarm->nome }}</td>
                 <td>{{ $smartFarm->dimensione }}</td>
                 <td>{{ $smartFarm->telefono }}</td>

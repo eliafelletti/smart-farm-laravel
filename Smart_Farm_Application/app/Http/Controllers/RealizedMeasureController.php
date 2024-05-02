@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Measure;
 use App\Models\Technology;
 use App\Models\RealizedMeasure;
+use App\Models\Owner;
+use App\Models\SmartFarm;
+use App\Models\GreenHouse;
+use App\Models\UsedTechnology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class RealizedMeasureController extends Controller
 {
@@ -15,13 +20,35 @@ class RealizedMeasureController extends Controller
      */
     public function index()
     {
-        $realizedMeasures = RealizedMeasure::all();
-        
-        $technologies = Technology::all();
+        if ( Auth::user()->level == 0 ){
+            $realizedMeasures = RealizedMeasure::all();
+            $technologies = Technology::all();
+            $measures = Measure::all();
 
-        $measures = Measure::all();
+            return view('realized_measure.index', compact('realizedMeasures', 'technologies', 'measures'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+            $greenHouses = GreenHouse::where('id_smart_farm', $smartFarm->id)->get();
 
-        return view('realized_measure.index', compact('realizedMeasures', 'technologies', 'measures'));
+            $usedTechnologies = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
+
+            $idGreenHouses = [];
+            foreach($greenHouses as $gHouse){
+                array_push($idGreenHouses, $gHouse->id);
+            }
+
+            $measures = Measure::whereIn('id_serra', $idGreenHouses)->get();
+
+            $idMeasures = [];
+            foreach($measures as $measure){
+                array_push($idMeasures, $measure->id);
+            }
+
+            $realizedMeasures = RealizedMeasure::whereIn('id_misura', $idMeasures)->get();
+
+            return view('realized_measure.index', compact('realizedMeasures', 'usedTechnologies', 'measures'));
+        }
     }
 
     /**

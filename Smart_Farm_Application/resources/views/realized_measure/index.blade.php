@@ -25,9 +25,15 @@
                 
                 <label for="id_tecnologia" class="form-label mt-3">Tecnologia di riferimento</label>
                 <select id="id_tecnologia" name="id_tecnologia" class="form-control">
-                    @foreach($technologies as $tech)
-                        <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
-                    @endforeach
+                    @if ( Auth::user()->level == 0 )
+                        @foreach($technologies as $tech)
+                            <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
+                        @endforeach
+                    @elseif ( Auth::user()->level == 1 )
+                        @foreach($usedTechnologies as $tech)
+                            <option value="{{ $tech->id_tecnologia }}">{{ $tech->tecnologia->nome }}</option>
+                        @endforeach
+                    @endif
                 </select>
                 <div class="form-text">Inserisci la tecnologia con cui è stata effettuata la misura</div>
 
@@ -53,7 +59,10 @@
 
     <thead>
         <tr>
-            <th scope="col">#</th>
+            @if ( Auth::user()->level == 0 )
+                <th scope="col">#</th>
+            @endif
+
             <th scope="col">Tecnologia</th>
             <th scope="col">Misura</th>
             <th scope="col">Ultima modifica</th>
@@ -66,7 +75,10 @@
     <tbody>
         @foreach($realizedMeasures as $rMeasure)
             <tr data-id='{{ $rMeasure->id }}'>
-                <td>{{ $rMeasure->id }}</td>
+                @if ( Auth::user()->level == 0 )
+                    <td>{{ $rMeasure->id }}</td>
+                @endif
+
                 <td>{{ $rMeasure->tecnologia->nome }}</td>
                 <td>{{ $rMeasure->misura->id }} [{{ $rMeasure->misura->serra->smart_farm->nome }} ({{ $rMeasure->misura->id_serra }})]</td>
 

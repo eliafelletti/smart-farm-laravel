@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\SmartFarm;
 use App\Models\Technology;
 use App\Models\UsedTechnology;
+use App\Models\Owner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class UsedTechnologyController extends Controller
 {
@@ -15,13 +17,19 @@ class UsedTechnologyController extends Controller
      */
     public function index()
     {
-        $usedTechnologies = UsedTechnology::all();
+        if ( Auth::user()->level == 0 ){
+            $usedTechnologies = UsedTechnology::all();
+            $technologies = Technology::all();
+            $smartFarms = SmartFarm::all();
 
-        $technologies = Technology::all();
+            return view('used_technology.index', compact('usedTechnologies', 'technologies', 'smartFarms'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+            $usedTechnologies = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
 
-        $smartFarms = SmartFarm::all();
-
-        return view('used_technology.index', compact('usedTechnologies', 'technologies', 'smartFarms'));
+            return view('used_technology.index', compact('usedTechnologies'));
+        }
     }
 
     /**

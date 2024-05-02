@@ -9,9 +9,9 @@ All'interno del progetto, sarà possibile distinguere i diversi utenti attravers
 questo nella table users messa a disposizione dal tool di autenticazione di Laravel.
 
 Vista admin         ->  CRUD completa su tutte le relazioni;
-Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sui raccolti realizzati, sulle colture e su misure realizzate,
+Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sui raccolti realizzati e su misure realizzate,
                         CRU su propietario, 
-                        R su tecnologie, misure e tecnologie utilizzate;
+                        R misure, tecnologie utilizzate e colture;
 Vista fornitore     ->  CRU su azienda fornitrice,
                         R su tecnologie e utilizza.
 

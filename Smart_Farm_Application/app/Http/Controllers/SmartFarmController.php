@@ -25,18 +25,15 @@ class SmartFarmController extends Controller
      */
     public function index()
     {
-        $smartFarms = SmartFarm::all();
-
         if ( Auth::user()->level == 0 ){
-            
+            $smartFarms = SmartFarm::all();
+
             return view('smart_farm.index', compact('smartFarms'));
         }else if( Auth::user()->level == 1 ){
-            foreach($smartFarms as $smartFarm){
-                if( $smartFarm->proprietario()->where('mail', Auth::user()->mail) ){
-                    
-                    return view('smart_farm.index', compact('smartFarm'));
-                }
-            }
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+            $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+
+            return view('smart_farm.index', compact('smartFarm'));
         }
     }
 
@@ -45,9 +42,15 @@ class SmartFarmController extends Controller
      */
     public function create()
     {
-        $owners = Owner::all();
+        if ( Auth::user()->level == 0 ){
+            $owners = Owner::all();
 
-        return view('smart_farm.create', compact('owners'));
+            return view('smart_farm.create', compact('owners'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+
+            return view('smart_farm.create', compact('owner'));
+        }
     }
 
     /**
@@ -93,9 +96,15 @@ class SmartFarmController extends Controller
      */
     public function edit(SmartFarm $smartFarm)
     {
-        $owners = Owner::all();
+        if ( Auth::user()->level == 0 ){
+            $owners = Owner::all();
 
-        return view('smart_farm.edit', compact('smartFarm', 'owners'));
+            return view('smart_farm.edit', compact('smartFarm', 'owners'));
+        }else if( Auth::user()->level == 1 ){
+            $owner = Owner::where('mail', Auth::user()->email)->first();
+
+            return view('smart_farm.edit', compact('smartFarm', 'owner'));
+        }
     }
 
     /**

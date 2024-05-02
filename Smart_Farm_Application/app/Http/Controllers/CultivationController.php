@@ -23,7 +23,7 @@ class CultivationController extends Controller
      */
     public function index()
     {
-        $cultivations = Cultivation::all();
+        $cultivations = Cultivation::all()->sortBy('tipologia');
         
         return view('cultivation.index', compact('cultivations'));
     }

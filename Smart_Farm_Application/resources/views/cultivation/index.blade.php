@@ -14,58 +14,73 @@
     </div>
 @endif
 
-<div class="row">
-    <div class="col-md-6">
-        <form action="{{ route('cultivation.store') }}" method="POST">
-            {{ csrf_field() }}
-            
-            <fieldset>
+@if ( Auth::user()->level == 0 )
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{ route('cultivation.store') }}" method="POST">
+                {{ csrf_field() }}
                 
-                <legend>Informazioni coltura</legend>
-                
-                <label for="tipologia" class="form-label mt-3">Tipologia</label>
-                <input type="text" id="tipologia" name="tipologia" class="form-control" value="{{ old('tipologia') }}">
-                <div class="form-text">Inserisci la tipologia della coltura</div>
+                <fieldset>
+                    
+                    <legend>Informazioni coltura</legend>
+                    
+                    <label for="tipologia" class="form-label mt-3">Tipologia</label>
+                    <input type="text" id="tipologia" name="tipologia" class="form-control" value="{{ old('tipologia') }}">
+                    <div class="form-text">Inserisci la tipologia della coltura</div>
 
-                <hr />
-                <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />	
+                    <hr />
+                    <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />	
 
-            </fieldset>
+                </fieldset>
 
-        </form> 
+            </form> 
+        </div>
     </div>
-</div>
-<hr/><br/>
+    <hr/><br/>
+@endif
 
 <table class="table table-striped">
 
     <thead>
         <tr>
-            <th scope="col">#</th>
+            @if ( Auth::user()->level == 0 )
+                <th scope="col">#</th>
+            @endif
+
             <th scope="col">Tipologia</th>
             <th scope="col">Ultima modifica</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+
+            @if ( Auth::user()->level == 0 )
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            @endif
         </tr>
     </thead>
 
     <tbody>
         @foreach ($cultivations as $cltvs)
             <tr data-id='{{ $cltvs->id }}'>
-                <td>{{ $cltvs->id }}</td>      
+                @if ( Auth::user()->level == 0 )
+                    <td>{{ $cltvs->id }}</td>      
+                @endif
+
                 <td>{{ $cltvs->tipologia }}</td>
                 
                 <td>{{ $cltvs->updated_at->format('d/m/Y H:i:s') }}</td>
-                <td>
-                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $cltvs->id }}">Modifica</a>
-                </td>
-                <td>
-                    <a href='{{ url("/cultivation/$cltvs->id/destroy") }}' data-id="{{ $cltvs->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm btn-update" data-id="{{ $cltvs->id }}" hidden="true">Applica modifiche</a>
-                </td>
+
+                @if ( Auth::user()->level == 0 )    
+                    <td>
+                        <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $cltvs->id }}">Modifica</a>
+                    </td>
+                    <td>
+                        <a href='{{ url("/cultivation/$cltvs->id/destroy") }}' data-id="{{ $cltvs->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm btn-update" data-id="{{ $cltvs->id }}" hidden="true">Applica modifiche</a>
+                    </td>
+                @endif
+
             </tr>
         @endforeach
     </tbody>

@@ -25,9 +25,13 @@
 
                     <label for="id_proprietario" class="form-label mt-3">Proprietario</label>
                     <select id="id_proprietario" name="id_proprietario" class="form-control" value="{{ old('id_proprietario') }}">
-                        @foreach($owners as $owner)
+                        @if ( Auth::user()->level == 0 )
+                            @foreach($owners as $owner)
+                                <option value="{{ $owner->id }}">{{ $owner->nome }} {{ $owner->cognome }}</option>
+                            @endforeach
+                        @elseif ( Auth::user()->level == 1 )
                             <option value="{{ $owner->id }}">{{ $owner->nome }} {{ $owner->cognome }}</option>
-                        @endforeach
+                        @endif
                     </select>
                     <div class="form-text">Inserisci il proprietario</div>
 

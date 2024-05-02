@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Creazione nuovo proprietario</h1>
+    @if ( Auth::user()->level == 0 )
+        <h1>Creazione nuovo proprietario</h1>
+    @elseif ( Auth::user()->level == 1 )
+        <h1>Creazione nuovo profilo</h1>
+    @endif
     <hr>
 
     @if ($errors->any())
