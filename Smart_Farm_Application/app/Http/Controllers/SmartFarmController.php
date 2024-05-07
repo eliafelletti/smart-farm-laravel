@@ -17,7 +17,11 @@ class SmartFarmController extends Controller
      */
     public function __construct()
     {
+        session([ 
+            "levels_smart_farm" => [0, 1]
+        ]);
         $this->middleware('auth');
+        $this->middleware('authorization:smart_farm');
     }
 
     /**

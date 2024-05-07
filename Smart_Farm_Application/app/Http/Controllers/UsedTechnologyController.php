@@ -14,6 +14,20 @@ use Auth;
 class UsedTechnologyController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        session([ 
+            "levels_u_tech" => [0, 1, 2]
+        ]);
+        $this->middleware('auth');
+        $this->middleware('authorization:u_tech');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()

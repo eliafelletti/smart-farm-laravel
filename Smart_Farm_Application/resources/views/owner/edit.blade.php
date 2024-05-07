@@ -53,8 +53,13 @@
                     <div class="form-text">Inserisci il telefono del proprietario</div>
 
                     <label for="mail" class="form-label mt-3">Email</label>
-                    <input type="email" id="mail" name="mail" class="form-control" value="{{ $owner->mail }}">
-                    <div class="form-text">Inserisci l'email del proprietario</div>
+                    @if ( Auth::user()->level == 1 )
+                        <input type="email" id="mail" name="mail" class="form-control" value="{{ $owner->mail }}" disabled>
+                        <div class="form-text">Email del proprietario</div>
+                    @elseif ( Auth::user()->level == 0 )
+                        <input type="email" id="mail" name="mail" class="form-control" value="{{ $owner->mail }}">
+                        <div class="form-text">Inserisici l'email del proprietario</div>
+                    @endif
 
                     <label for="via" class="form-label mt-3">Via</label>
                     <input type="text" id="via" name="via" class="form-control" value="{{ $owner->via }}">

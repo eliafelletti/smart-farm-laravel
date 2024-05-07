@@ -3,3 +3,6 @@ Vista Owner:
 
 Vista SupplierCompany:
 - raggruppamento tecnologie con listato smart-farm in tecnologie utilizzate.
+
+Vista Owner&SupplierCompany:
+- verificare possibilità descritta in "appunti_mail.txt".

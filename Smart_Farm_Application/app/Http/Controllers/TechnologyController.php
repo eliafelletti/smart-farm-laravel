@@ -6,6 +6,7 @@ use App\Models\SupplierCompany;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class TechnologyController extends Controller
 {
@@ -16,7 +17,11 @@ class TechnologyController extends Controller
      */
     public function __construct()
     {
+        session([ 
+            "levels_tech" => [0, 2]
+        ]);
         $this->middleware('auth');
+        $this->middleware('authorization:tech');
     }
 
     /**
@@ -24,10 +29,19 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        $technologies = Technology::all();
-        $supplierCompanies = SupplierCompany::all();
+        if ( Auth::user()->level == 0 ){
+            $technologies = Technology::all();
+            $supplierCompanies = SupplierCompany::all();
 
-        return view('technology.index', compact('technologies', 'supplierCompanies'));
+            return view('technology.index', compact('technologies', 'supplierCompanies'));
+        }else if( Auth::user()->level == 2 ){
+            // Seleziono l'azienda fornitrice loggata
+            $supplier_company = SupplierCompany::where('mail', Auth::user()->email)->first();
+            // Seleziono le tecnologie dell'azienda fornitrice loggata
+            $technologies = Technology::where('id_azienda_fornitrice', $supplier_company->id)->get();
+
+            return view('technology.index', compact('technologies'));
+        }
     }
 
     /**

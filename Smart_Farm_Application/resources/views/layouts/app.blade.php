@@ -64,9 +64,13 @@
                                 </li>
                             @endif
 
-                            @if ( Auth::user()->level == 0 || Auth::user()->level == 2 )
+                            @if ( Auth::user()->level == 0 )
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/technology') }}">{{ __('Tecnologie') }}</a>
+                                </li>
+                            @elseif ( Auth::user()->level == 2 )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/technology') }}">{{ __('Tecnologie Proprietarie') }}</a>
                                 </li>
                             @endif
                             

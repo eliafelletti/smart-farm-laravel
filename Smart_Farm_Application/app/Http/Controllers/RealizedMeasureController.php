@@ -16,6 +16,20 @@ use Auth;
 class RealizedMeasureController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        session([ 
+            "levels_r_measure" => [0, 1]
+        ]);
+        $this->middleware('auth');
+        $this->middleware('authorization:r_measure');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()

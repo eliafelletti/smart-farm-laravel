@@ -18,7 +18,11 @@ class MeasureController extends Controller
      */
     public function __construct()
     {
+        session([ 
+            "levels_measure" => [0, 1]
+        ]);
         $this->middleware('auth');
+        $this->middleware('authorization:measure');
     }
 
     /**

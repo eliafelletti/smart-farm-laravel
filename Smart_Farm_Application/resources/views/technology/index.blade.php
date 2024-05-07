@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Tecnologie</h1>
+    @if ( Auth::user()->level == 0 )
+        <h1>Tecnologie</h1>
+    @elseif ( Auth::user()->level == 2 )
+        <h1>Tecnologie Proprietarie</h1>
+    @endif
     <hr/>
 
     @if ($errors->any())
@@ -14,81 +18,102 @@
         </div>
     @endif
     
-    <div class="row">
-		<div class="col-md-6">
-            <form action="{{ route('technology.store') }}" method="POST">
-                {{ csrf_field() }}
+    @if ( Auth::user()->level == 0 )
+        <div class="row">
+            <div class="col-md-6">
+                <form action="{{ route('technology.store') }}" method="POST">
+                    {{ csrf_field() }}
 
-                <fieldset>
-                    <legend> Informazioni tecnologie </legend>
+                    <fieldset>
+                        <legend> Informazioni tecnologie </legend>
 
-                    <label for="technology-name" class="form-label mt-3">Nome tecnologia</label>
-                    <input type="text" name="nome" id="technology-name"  class="form-control" value="{{ old('nome') }}">
-                    <div class="form-text">Inserisci il nome della tecnologia che potrà essere usata in serra</div>
+                        <label for="technology-name" class="form-label mt-3">Nome tecnologia</label>
+                        <input type="text" name="nome" id="technology-name"  class="form-control" value="{{ old('nome') }}">
+                        <div class="form-text">Inserisci il nome della tecnologia che potrà essere usata in serra</div>
 
-                    <label for="technology-type" class="form-label mt-3">Tipologia tecnologia</label>
-                    <select id="technology-type" name="tipologia" class="form-control">
-                        <option value="CO2">CO2</option>
-                        <option value="Irrigazione">Irrigazione</option>
-                        <option value="Luminosità">Luminosità</option>
-                        <option value="Temperatura">Temperatura</option>
-                        <option value="Umidità">Umidità</option>
-                    </select>
-                    <div class="form-text">Inserisci la tipologia della tecnologia che potrà essere usata in serra</div>
+                        <label for="technology-type" class="form-label mt-3">Tipologia tecnologia</label>
+                        <select id="technology-type" name="tipologia" class="form-control">
+                            <option value="CO2">CO2</option>
+                            <option value="Irrigazione">Irrigazione</option>
+                            <option value="Luminosità">Luminosità</option>
+                            <option value="Temperatura">Temperatura</option>
+                            <option value="Umidità">Umidità</option>
+                        </select>
+                        <div class="form-text">Inserisci la tipologia della tecnologia che potrà essere usata in serra</div>
 
-                    <label for="id_azienda_fornitrice" class="form-label mt-3">Azienda Fornitrice</label>
-                    <select id="id_azienda_fornitrice" name="id_azienda_fornitrice" class="form-control">
-                        @foreach($supplierCompanies as $sComp)
-                            <option value="{{ $sComp->id }}">{{ $sComp->nome }}</option>
-                        @endforeach
-                    </select>
-                    <div class="form-text">Inserisci l'azienda fornitrice della tecnologia che potrà essere usata in serra</div>
+                        <label for="id_azienda_fornitrice" class="form-label mt-3">Azienda Fornitrice</label>
+                        <select id="id_azienda_fornitrice" name="id_azienda_fornitrice" class="form-control">
+                            @foreach($supplierCompanies as $sComp)
+                                <option value="{{ $sComp->id }}">{{ $sComp->nome }}</option>
+                            @endforeach
+                        </select>
+                        <div class="form-text">Inserisci l'azienda fornitrice della tecnologia che potrà essere usata in serra</div>
 
-                    <hr />
-                    <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
+                        <hr />
+                        <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
 
-                </fieldset>
+                    </fieldset>
 
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-    <hr/><br/>
+        <hr/><br/>
+    @endif
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                @if ( Auth::user()->level == 0 )
+                    <th scope="col">#</th>
+                @endif
+
                 <th scope="col">Nome</th>
                 <th scope="col">Tipologia</th>
-                <th scope="col">Azienda Fornitrice</th>
+
+                @if ( Auth::user()->level == 0 )
+                    <th scope="col">Azienda Fornitrice</th>
+                @endif
+
                 <th scope="col">Ultima modifica</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+
+                @if ( Auth::user()->level == 0 )
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                @endif
             </tr>
         </thead>
         <tbody>
             @foreach ($technologies as $technology)
                 <tr data-id="{{ $technology->id }}">
-                    <td>{{ $technology->id }}</td>
+                    @if ( Auth::user()->level == 0 )
+                        <td>{{ $technology->id }}</td>
+                    @endif
+
                     <td>{{ $technology->nome }}</td>
                     <td>{{ $technology->tipologia }}</td>
-                    <td>{{ $technology->azienda_fornitrice->nome }}</td>
+
+                    @if ( Auth::user()->level == 0 )
+                        <td>{{ $technology->azienda_fornitrice->nome }}</td>
+                    @endif
 
                     <!-- Colonna nascosta contenente id della azienda fornitrice -->
                     <td id="{{ $technology->id }}" hidden="true">{{ $technology->azienda_fornitrice->id }}</td>
 
                     <td>{{ $technology->updated_at->format('d/m/Y H:i:s') }}</td>
-                    <td>
-                        <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $technology->id }}">Modifica</a>
-                    </td>
-                    <td>
-                        <a href='{{ url("technology/$technology->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $technology->id }}">Elimina</a>
-                        <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
-                    </td>
-                    <td>
-                        <a class="btn btn-primary btn-sm btn-update" data-id="{{ $technology->id }}" hidden="true">Applica modifiche</a>
-                    </td>
+
+                    @if ( Auth::user()->level == 0 )
+                        <td>
+                            <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $technology->id }}">Modifica</a>
+                        </td>
+                        <td>
+                            <a href='{{ url("technology/$technology->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $technology->id }}">Elimina</a>
+                            <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm btn-update" data-id="{{ $technology->id }}" hidden="true">Applica modifiche</a>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

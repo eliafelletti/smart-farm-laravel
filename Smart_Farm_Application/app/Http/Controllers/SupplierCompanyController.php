@@ -16,7 +16,11 @@ class SupplierCompanyController extends Controller
      */
     public function __construct()
     {
+        session([ 
+            "levels_s_company" => [0, 2]
+        ]);
         $this->middleware('auth');
+        $this->middleware('authorization:s_company');
     }
 
     /**

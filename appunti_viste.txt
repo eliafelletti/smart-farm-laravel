@@ -8,7 +8,8 @@ sull'utilizzo delle tecnologie proprietarie.
 All'interno del progetto, sarà possibile distinguere i diversi utenti attraverso un atributo 'livello',
 questo nella table users messa a disposizione dal tool di autenticazione di Laravel.
 
-Vista admin         ->  CRUD completa su tutte le relazioni;
+Vista admin         ->  CRUD completa su tutte le relazioni meno una,
+			R su misure;
 Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sui raccolti realizzati e su misure realizzate,
                         CRU su propietario, 
                         R misure, tecnologie utilizzate e colture;

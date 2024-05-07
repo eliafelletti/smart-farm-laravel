@@ -15,7 +15,11 @@ class CultivationController extends Controller
      */
     public function __construct()
     {
+        session([ 
+            "levels_cultivation" => [0, 1]
+        ]);
         $this->middleware('auth');
+        $this->middleware('authorization:cultivation');
     }
 
     /**

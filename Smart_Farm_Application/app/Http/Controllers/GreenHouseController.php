@@ -18,7 +18,11 @@ class GreenHouseController extends Controller
      */
     public function __construct()
     {
+        session([ 
+            "levels_green_house" => [0, 1]
+        ]);
         $this->middleware('auth');
+        $this->middleware('authorization:green_house');
     }
 
     /**

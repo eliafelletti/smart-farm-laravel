@@ -14,6 +14,20 @@ use Auth;
 class RealizedCropController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        session([ 
+            "levels_crop" => [0, 1]
+        ]);
+        $this->middleware('auth');
+        $this->middleware('authorization:crop');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
