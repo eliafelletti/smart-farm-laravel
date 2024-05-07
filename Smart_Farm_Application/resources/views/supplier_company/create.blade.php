@@ -36,7 +36,7 @@
                         <input type="email" id="mail" name="mail" class="form-control" value="{{ old('mail') }}">
                         <div class="form-text">Inserisci l'email dell'azienda fornitrice</div>
                     @elseif ( Auth::user()->level == 2 )
-                        <input type="email" id="mail" name="mail" class="form-control" value="{{ Auth::user()->email }}" disabled>
+                        <input type="email" id="mail" name="mail" class="form-control" value="{{ Auth::user()->email }}" readonly>
                         <div class="form-text">Email dell'azienda fornitrice</div>
                     @endif
 

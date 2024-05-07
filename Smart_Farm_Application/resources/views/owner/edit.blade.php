@@ -54,7 +54,7 @@
 
                     <label for="mail" class="form-label mt-3">Email</label>
                     @if ( Auth::user()->level == 1 )
-                        <input type="email" id="mail" name="mail" class="form-control" value="{{ $owner->mail }}" disabled>
+                        <input type="email" id="mail" name="mail" class="form-control" value="{{ $owner->mail }}" readonly>
                         <div class="form-text">Email del proprietario</div>
                     @elseif ( Auth::user()->level == 0 )
                         <input type="email" id="mail" name="mail" class="form-control" value="{{ $owner->mail }}">
