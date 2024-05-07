@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('technologies', function (Blueprint $table) {
             $table->unsignedBigInteger('id_azienda_fornitrice')->after('tipologia')->nullable();
 
-            $table->foreign('id_azienda_fornitrice')->references('id')->on('supplier_companies');
+            $table->foreign('id_azienda_fornitrice')->references('id')->on('supplier_companies')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

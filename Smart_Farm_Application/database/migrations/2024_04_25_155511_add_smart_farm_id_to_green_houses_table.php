@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('green_houses', function (Blueprint $table) {
             $table->unsignedBigInteger('id_smart_farm')->after('numero_piante')->nullable();
 
-            $table->foreign('id_smart_farm')->references('id')->on('smart_farms');
+            $table->foreign('id_smart_farm')->references('id')->on('smart_farms')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

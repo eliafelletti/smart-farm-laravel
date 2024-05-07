@@ -22,9 +22,9 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('id_proprietario')->references('id')->on('owners');
-            $table->foreign('id_serra')->references('id')->on('green_houses');
-            $table->foreign('id_coltura')->references('id')->on('cultivations');
+            $table->foreign('id_proprietario')->references('id')->on('owners')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('id_serra')->references('id')->on('green_houses')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('id_coltura')->references('id')->on('cultivations')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

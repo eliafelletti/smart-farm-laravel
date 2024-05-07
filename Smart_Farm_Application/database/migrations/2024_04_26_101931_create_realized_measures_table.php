@@ -19,8 +19,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('id_tecnologia')->references('id')->on('technologies');
-            $table->foreign('id_misura')->references('id')->on('measures');
+            $table->foreign('id_tecnologia')->references('id')->on('technologies')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('id_misura')->references('id')->on('measures')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

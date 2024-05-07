@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nome');
             $table->float('dimensione');
             $table->string('telefono');
-            $table->string('mail');
+            $table->string('mail')->unique();
             $table->string('via');
             $table->string('civico');
             $table->string('citta');

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('level')->after('password');
             /*
-            Level:
-            0 -> ADMIN
-            1 -> OWNER
-            2 -> SUPPLIER COMPANY
+                Level:
+                0 -> ADMIN
+                1 -> OWNER
+                2 -> SUPPLIER COMPANY
             */
         });
     }

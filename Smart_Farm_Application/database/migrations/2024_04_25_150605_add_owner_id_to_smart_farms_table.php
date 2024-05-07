@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('smart_farms', function (Blueprint $table) {
             $table->unsignedBigInteger('id_proprietario')->after('cap')->nullable();
 
-            $table->foreign('id_proprietario')->references('id')->on('owners');
+            $table->foreign('id_proprietario')->references('id')->on('owners')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 

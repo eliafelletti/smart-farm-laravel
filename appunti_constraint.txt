@@ -1,0 +1,2 @@
+Appunti Constraint
+All'eliminazione di un owner, da parte dell'admin, corrisponde l'eliminazione dello user corrispondente.

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('data_nascita');
             $table->string('luogo_nascita');
             $table->string('telefono');
-            $table->string('mail');
+            $table->string('mail')->unique();
             $table->string('via');
             $table->string('civico');
             $table->string('citta');

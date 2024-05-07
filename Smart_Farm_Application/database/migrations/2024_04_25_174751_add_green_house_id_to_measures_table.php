@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('measures', function (Blueprint $table) {
             $table->unsignedBigInteger('id_serra')->after('luminosita')->nullable();
 
-            $table->foreign('id_serra')->references('id')->on('green_houses');
+            $table->foreign('id_serra')->references('id')->on('green_houses')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 
