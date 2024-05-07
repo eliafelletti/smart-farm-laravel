@@ -85,8 +85,8 @@ CREATE TABLE `green_houses` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `green_houses_id_smart_farm_foreign` (`id_smart_farm`),
-  CONSTRAINT `green_houses_id_smart_farm_foreign` FOREIGN KEY (`id_smart_farm`) REFERENCES `smart_farms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `green_houses_id_smart_farm_foreign` FOREIGN KEY (`id_smart_farm`) REFERENCES `smart_farms` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `green_houses` (
 
 LOCK TABLES `green_houses` WRITE;
 /*!40000 ALTER TABLE `green_houses` DISABLE KEYS */;
-INSERT INTO `green_houses` VALUES (25,'45',8,'2024-04-25 07:48:12','2024-04-25 07:48:12'),(26,'35',9,'2024-04-25 07:48:17','2024-05-02 09:55:01'),(27,'15',8,'2024-04-25 07:48:21','2024-04-25 07:48:21'),(45,'35',9,'2024-04-25 15:50:01','2024-05-02 16:14:05');
+INSERT INTO `green_houses` VALUES (25,'45',8,'2024-04-25 07:48:12','2024-04-25 07:48:12'),(26,'35',9,'2024-04-25 07:48:17','2024-05-02 09:55:01'),(27,'15',8,'2024-04-25 07:48:21','2024-04-25 07:48:21'),(45,'35',9,'2024-04-25 15:50:01','2024-05-02 16:14:05'),(54,'36',11,'2024-05-07 16:37:21','2024-05-07 16:37:21');
 /*!40000 ALTER TABLE `green_houses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `measures` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `measures_id_serra_foreign` (`id_serra`),
-  CONSTRAINT `measures_id_serra_foreign` FOREIGN KEY (`id_serra`) REFERENCES `green_houses` (`id`)
+  CONSTRAINT `measures_id_serra_foreign` FOREIGN KEY (`id_serra`) REFERENCES `green_houses` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -145,7 +145,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_reset_tokens_table',1),(3,'2014_10_12_100000_create_password_resets_table',1),(4,'2019_08_19_000000_create_failed_jobs_table',1),(5,'2019_12_14_000001_create_personal_access_tokens_table',1),(6,'2024_04_11_073727_create_smart_farms_table',2),(21,'2024_04_11_075127_create_cultivations_table',3),(22,'2024_04_11_075433_create_green_houses_table',3),(23,'2024_04_11_075950_create_owners_table',3),(24,'2024_04_11_083021_create_technologies_table',3),(25,'2024_04_11_083204_create_supplier_companies_table',3),(26,'2024_04_11_083617_create_measures_table',3),(27,'2024_04_11_090139_add_level_column_to_users_table',3),(28,'2024_04_25_150605_add_owner_id_to_smart_farms_table',4),(29,'2024_04_25_155511_add_smart_farm_id_to_green_houses_table',5),(30,'2024_04_25_170853_add_supplier_company_id_to_technologies_table',6),(31,'2024_04_25_174751_add_green_house_id_to_measures_table',7),(33,'2024_04_26_101931_create_realized_measures_table',8),(35,'2024_04_30_122633_create_used_technologies_table',9),(36,'2024_04_30_145822_create_realized_crops_table',10);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_reset_tokens_table',1),(3,'2014_10_12_100000_create_password_resets_table',1),(4,'2019_08_19_000000_create_failed_jobs_table',1),(5,'2019_12_14_000001_create_personal_access_tokens_table',1),(6,'2024_04_11_073727_create_smart_farms_table',2),(21,'2024_04_11_075127_create_cultivations_table',3),(22,'2024_04_11_075433_create_green_houses_table',3),(23,'2024_04_11_075950_create_owners_table',3),(24,'2024_04_11_083021_create_technologies_table',3),(25,'2024_04_11_083204_create_supplier_companies_table',3),(26,'2024_04_11_083617_create_measures_table',3),(27,'2024_04_11_090139_add_level_column_to_users_table',3),(37,'2024_04_25_150605_add_owner_id_to_smart_farms_table',4),(38,'2024_04_25_155511_add_smart_farm_id_to_green_houses_table',4),(39,'2024_04_25_170853_add_supplier_company_id_to_technologies_table',4),(40,'2024_04_25_174751_add_green_house_id_to_measures_table',4),(41,'2024_04_26_101931_create_realized_measures_table',4),(42,'2024_04_30_122633_create_used_technologies_table',4),(43,'2024_04_30_145822_create_realized_crops_table',4);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `owners` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `owners` (
 
 LOCK TABLES `owners` WRITE;
 /*!40000 ALTER TABLE `owners` DISABLE KEYS */;
-INSERT INTO `owners` VALUES (3,'FLLLEI02R17E410W','Elia','Felletti','2002-10-17','Lagosanto','3383971808','elia.felletti@mail.com','Via Zappaterra','345','Ferrara','44122','2024-04-25 07:58:35','2024-04-25 07:58:35'),(4,'MCCDRA02T31D548R','Dario','Macchi','2002-12-31','Ferrara','3772158909','dario.macchi@mail.com','Via Tizio','6','Sempronio','12345','2024-04-25 13:13:18','2024-04-30 10:24:01');
+INSERT INTO `owners` VALUES (3,'FLLLEI02R17E410W','Elia','Felletti','2002-10-17','Lagosanto','3383971808','elia.felletti@mail.com','Via Zappaterra','345','Ferrara','44122','2024-04-25 07:58:35','2024-04-25 07:58:35'),(4,'MCCDRA02T31D548R','Dario','Macchi','2002-12-31','Ferrara','3772158909','dario.macchi@mail.com','Via Tizio','6','Sempronio','12345','2024-04-25 13:13:18','2024-05-07 14:58:58');
 /*!40000 ALTER TABLE `owners` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,10 +296,10 @@ CREATE TABLE `realized_crops` (
   KEY `realized_crops_id_proprietario_foreign` (`id_proprietario`),
   KEY `realized_crops_id_serra_foreign` (`id_serra`),
   KEY `realized_crops_id_coltura_foreign` (`id_coltura`),
-  CONSTRAINT `realized_crops_id_coltura_foreign` FOREIGN KEY (`id_coltura`) REFERENCES `cultivations` (`id`),
-  CONSTRAINT `realized_crops_id_proprietario_foreign` FOREIGN KEY (`id_proprietario`) REFERENCES `owners` (`id`),
-  CONSTRAINT `realized_crops_id_serra_foreign` FOREIGN KEY (`id_serra`) REFERENCES `green_houses` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `realized_crops_id_coltura_foreign` FOREIGN KEY (`id_coltura`) REFERENCES `cultivations` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `realized_crops_id_proprietario_foreign` FOREIGN KEY (`id_proprietario`) REFERENCES `owners` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `realized_crops_id_serra_foreign` FOREIGN KEY (`id_serra`) REFERENCES `green_houses` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -308,7 +308,7 @@ CREATE TABLE `realized_crops` (
 
 LOCK TABLES `realized_crops` WRITE;
 /*!40000 ALTER TABLE `realized_crops` DISABLE KEYS */;
-INSERT INTO `realized_crops` VALUES (2,3,25,58,'2024-04-30','2024-06-30',NULL,'2024-04-30 13:10:20','2024-04-30 13:10:20'),(3,4,26,59,'2024-04-30','2024-07-30',NULL,'2024-04-30 13:11:21','2024-05-02 12:53:19'),(4,4,45,58,'2024-05-02','2024-07-02',NULL,'2024-05-02 12:53:50','2024-05-02 12:53:50');
+INSERT INTO `realized_crops` VALUES (1,3,25,58,'2024-04-30','2024-06-30',NULL,'2024-05-07 16:08:03','2024-05-07 16:08:03'),(2,4,26,59,'2024-04-30','2024-07-30',NULL,'2024-05-07 16:08:25','2024-05-07 16:08:25'),(3,4,45,58,'2024-05-02','2024-07-02',NULL,'2024-05-07 16:08:48','2024-05-07 16:08:48');
 /*!40000 ALTER TABLE `realized_crops` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,9 +328,9 @@ CREATE TABLE `realized_measures` (
   PRIMARY KEY (`id`),
   KEY `realized_measures_id_tecnologia_foreign` (`id_tecnologia`),
   KEY `realized_measures_id_misura_foreign` (`id_misura`),
-  CONSTRAINT `realized_measures_id_misura_foreign` FOREIGN KEY (`id_misura`) REFERENCES `measures` (`id`),
-  CONSTRAINT `realized_measures_id_tecnologia_foreign` FOREIGN KEY (`id_tecnologia`) REFERENCES `technologies` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `realized_measures_id_misura_foreign` FOREIGN KEY (`id_misura`) REFERENCES `measures` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `realized_measures_id_tecnologia_foreign` FOREIGN KEY (`id_tecnologia`) REFERENCES `technologies` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,7 +339,7 @@ CREATE TABLE `realized_measures` (
 
 LOCK TABLES `realized_measures` WRITE;
 /*!40000 ALTER TABLE `realized_measures` DISABLE KEYS */;
-INSERT INTO `realized_measures` VALUES (4,2,31,'2024-04-26 10:27:46','2024-04-26 10:27:46'),(5,3,31,'2024-04-26 10:27:53','2024-04-26 10:27:53'),(6,4,31,'2024-04-26 10:27:58','2024-04-26 10:27:58'),(7,5,31,'2024-04-26 10:28:05','2024-04-26 10:28:05'),(8,6,31,'2024-04-26 10:28:10','2024-04-26 10:28:10'),(9,2,32,'2024-04-30 10:13:08','2024-04-30 10:15:38'),(10,3,32,'2024-04-30 10:14:40','2024-04-30 10:14:40'),(11,4,32,'2024-04-30 10:15:06','2024-04-30 10:15:06'),(12,5,32,'2024-04-30 10:15:16','2024-04-30 10:15:16'),(14,6,32,'2024-04-30 10:15:50','2024-04-30 10:15:50'),(15,12,34,'2024-05-02 13:45:58','2024-05-02 13:45:58'),(16,3,34,'2024-05-02 13:46:06','2024-05-02 13:46:06'),(17,4,34,'2024-05-02 13:46:13','2024-05-02 13:46:13'),(18,5,34,'2024-05-02 13:46:26','2024-05-02 13:46:26'),(19,6,34,'2024-05-02 13:46:32','2024-05-02 13:46:32'),(20,12,35,'2024-05-02 13:46:44','2024-05-02 14:04:47'),(21,3,35,'2024-05-02 13:46:51','2024-05-02 13:46:51'),(22,4,35,'2024-05-02 13:46:59','2024-05-02 13:46:59'),(23,5,35,'2024-05-02 13:47:04','2024-05-02 13:47:04'),(29,6,35,'2024-05-02 16:32:04','2024-05-02 16:32:04');
+INSERT INTO `realized_measures` VALUES (1,2,31,'2024-05-07 16:09:28','2024-05-07 16:09:28'),(2,3,31,'2024-05-07 16:09:40','2024-05-07 16:09:40'),(3,4,31,'2024-05-07 16:09:48','2024-05-07 16:09:48'),(4,5,31,'2024-05-07 16:09:54','2024-05-07 16:09:54'),(5,6,31,'2024-05-07 16:10:05','2024-05-07 16:10:05'),(6,2,32,'2024-05-07 16:11:02','2024-05-07 16:11:02'),(7,3,32,'2024-05-07 16:11:05','2024-05-07 16:11:05'),(8,4,32,'2024-05-07 16:11:09','2024-05-07 16:11:09'),(9,5,32,'2024-05-07 16:11:13','2024-05-07 16:11:13'),(10,6,32,'2024-05-07 16:11:17','2024-05-07 16:11:17'),(11,12,34,'2024-05-07 16:11:36','2024-05-07 16:11:36'),(12,3,34,'2024-05-07 16:11:41','2024-05-07 16:11:41'),(13,4,34,'2024-05-07 16:11:50','2024-05-07 16:11:50'),(14,5,34,'2024-05-07 16:11:54','2024-05-07 16:11:54'),(15,6,34,'2024-05-07 16:11:59','2024-05-07 16:11:59'),(16,12,35,'2024-05-07 16:12:22','2024-05-07 16:12:22'),(17,3,35,'2024-05-07 16:12:31','2024-05-07 16:12:31'),(18,4,35,'2024-05-07 16:12:35','2024-05-07 16:12:35'),(19,5,35,'2024-05-07 16:12:39','2024-05-07 16:12:39'),(20,6,35,'2024-05-07 16:12:44','2024-05-07 16:13:02');
 /*!40000 ALTER TABLE `realized_measures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,8 +365,8 @@ CREATE TABLE `smart_farms` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `smart_farms_id_proprietario_foreign` (`id_proprietario`),
-  CONSTRAINT `smart_farms_id_proprietario_foreign` FOREIGN KEY (`id_proprietario`) REFERENCES `owners` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `smart_farms_id_proprietario_foreign` FOREIGN KEY (`id_proprietario`) REFERENCES `owners` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,7 +375,7 @@ CREATE TABLE `smart_farms` (
 
 LOCK TABLES `smart_farms` WRITE;
 /*!40000 ALTER TABLE `smart_farms` DISABLE KEYS */;
-INSERT INTO `smart_farms` VALUES (8,'Smart-Farm_1',200.10,'3491234567','smartfarm.1@mail.com','Via Fantomatica','10','Fantasma','12345',3,'2024-04-25 07:46:15','2024-04-25 07:46:15'),(9,'Smart-Farm_2',150.50,'3491237654','smartfarm.2@mail.com','Via Tizio','6','Sempronio','12346',4,'2024-04-25 07:47:09','2024-04-25 07:47:09');
+INSERT INTO `smart_farms` VALUES (8,'Smart-Farm_1',200.10,'3491234567','smartfarm.1@mail.com','Via Fantomatica','10','Fantasma','12345',3,'2024-04-25 07:46:15','2024-04-25 07:46:15'),(9,'Smart-Farm_2',150.50,'3491237654','smartfarm.2@mail.com','Via Tizio','6','Sempronio','12346',4,'2024-04-25 07:47:09','2024-04-25 07:47:09'),(11,'Smart-Farm_3',150.00,'3456789012','smartfarm.3@mail.com','Tunisina','67','Tunisi','34567',NULL,'2024-05-07 16:37:13','2024-05-07 16:37:13');
 /*!40000 ALTER TABLE `smart_farms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +399,7 @@ CREATE TABLE `supplier_companies` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -408,7 +408,7 @@ CREATE TABLE `supplier_companies` (
 
 LOCK TABLES `supplier_companies` WRITE;
 /*!40000 ALTER TABLE `supplier_companies` DISABLE KEYS */;
-INSERT INTO `supplier_companies` VALUES (2,'Azienda_1','azienda1@mail.com','3491237659','023491237659','Via Roma','10','Roma','12346','2024-04-25 07:50:14','2024-05-02 14:44:53'),(3,'Azienda_2','azienda2@mail.com','3774567890',NULL,'Via Firenze','9','Firenze','09876','2024-04-25 07:51:14','2024-05-02 14:45:02');
+INSERT INTO `supplier_companies` VALUES (2,'Azienda_1','azienda1@mail.com','3491237659','023491237659','Via Roma','10','Roma','12346','2024-04-25 07:50:14','2024-05-07 15:04:10'),(3,'Azienda_2','azienda2@mail.com','3774567890',NULL,'Via Firenze','9','Firenze','09876','2024-04-25 07:51:14','2024-05-02 14:45:02');
 /*!40000 ALTER TABLE `supplier_companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -428,7 +428,7 @@ CREATE TABLE `technologies` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `technologies_id_azienda_fornitrice_foreign` (`id_azienda_fornitrice`),
-  CONSTRAINT `technologies_id_azienda_fornitrice_foreign` FOREIGN KEY (`id_azienda_fornitrice`) REFERENCES `supplier_companies` (`id`)
+  CONSTRAINT `technologies_id_azienda_fornitrice_foreign` FOREIGN KEY (`id_azienda_fornitrice`) REFERENCES `supplier_companies` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -458,9 +458,9 @@ CREATE TABLE `used_technologies` (
   PRIMARY KEY (`id`),
   KEY `used_technologies_id_tecnologia_foreign` (`id_tecnologia`),
   KEY `used_technologies_id_smart_farm_foreign` (`id_smart_farm`),
-  CONSTRAINT `used_technologies_id_smart_farm_foreign` FOREIGN KEY (`id_smart_farm`) REFERENCES `smart_farms` (`id`),
-  CONSTRAINT `used_technologies_id_tecnologia_foreign` FOREIGN KEY (`id_tecnologia`) REFERENCES `technologies` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `used_technologies_id_smart_farm_foreign` FOREIGN KEY (`id_smart_farm`) REFERENCES `smart_farms` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `used_technologies_id_tecnologia_foreign` FOREIGN KEY (`id_tecnologia`) REFERENCES `technologies` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,7 +469,7 @@ CREATE TABLE `used_technologies` (
 
 LOCK TABLES `used_technologies` WRITE;
 /*!40000 ALTER TABLE `used_technologies` DISABLE KEYS */;
-INSERT INTO `used_technologies` VALUES (1,2,8,'2024-04-30 12:46:01','2024-04-30 12:48:46'),(3,3,8,'2024-04-30 12:46:37','2024-04-30 12:46:37'),(4,4,8,'2024-04-30 12:46:43','2024-04-30 12:46:43'),(5,5,8,'2024-04-30 12:46:48','2024-04-30 12:46:48'),(6,6,8,'2024-04-30 12:46:54','2024-04-30 12:46:54'),(7,12,9,'2024-04-30 12:46:59','2024-04-30 12:46:59'),(8,3,9,'2024-04-30 12:47:03','2024-04-30 12:47:03'),(9,4,9,'2024-04-30 12:47:09','2024-04-30 12:47:09'),(10,5,9,'2024-04-30 12:47:18','2024-04-30 12:47:18'),(12,6,9,'2024-04-30 12:48:57','2024-04-30 12:48:57');
+INSERT INTO `used_technologies` VALUES (1,2,8,'2024-05-07 16:13:39','2024-05-07 16:13:39'),(2,3,8,'2024-05-07 16:13:43','2024-05-07 16:13:43'),(3,4,8,'2024-05-07 16:13:48','2024-05-07 16:13:48'),(4,5,8,'2024-05-07 16:13:52','2024-05-07 16:13:52'),(5,6,8,'2024-05-07 16:13:57','2024-05-07 16:13:57'),(6,12,9,'2024-05-07 16:14:04','2024-05-07 16:14:04'),(7,3,9,'2024-05-07 16:14:08','2024-05-07 16:14:08'),(8,4,9,'2024-05-07 16:14:11','2024-05-07 16:14:11'),(9,5,9,'2024-05-07 16:14:14','2024-05-07 16:14:14'),(10,6,9,'2024-05-07 16:14:18','2024-05-07 16:14:18');
 /*!40000 ALTER TABLE `used_technologies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,7 +492,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -514,4 +514,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-07 16:33:38
+-- Dump completed on 2024-05-07 19:29:44
