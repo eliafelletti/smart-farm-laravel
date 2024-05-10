@@ -22,6 +22,7 @@ class SmartFarmController extends Controller
         ]);
         $this->middleware('auth');
         $this->middleware('authorization:smart_farm');
+        $this->middleware('owner_profile');
     }
 
     /**

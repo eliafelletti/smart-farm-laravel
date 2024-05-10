@@ -22,6 +22,7 @@ class TechnologyController extends Controller
         ]);
         $this->middleware('auth');
         $this->middleware('authorization:tech');
+        $this->middleware('supplier_cp_profile');
     }
 
     /**

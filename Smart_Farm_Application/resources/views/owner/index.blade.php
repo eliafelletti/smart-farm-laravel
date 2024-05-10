@@ -73,7 +73,7 @@
                         </td>
                     </tr>
                 @endforeach
-            @elseif ( Auth::user()->level == 1 )
+            @elseif ( Auth::user()->level == 1 && !empty($owner) )
                 <tr data-id="{{ $owner->id }}">
                     @if ( Auth::user()->level == 0 )
                         <td>{{ $owner->id }}</td>
@@ -122,9 +122,9 @@
                     '_token': token
                 },
                 success: function (response) {
-                    $('tr[data-id="'+response.data.id+'"]').remove();
-                }
-                ,error: function(event){
+                    $('tr[data-id="'+response.data[0].id+'"]').remove();
+                },
+                error: function(event){
                     console.log('error');
                 }
             });

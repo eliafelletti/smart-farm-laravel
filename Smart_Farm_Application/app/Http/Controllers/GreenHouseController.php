@@ -23,6 +23,8 @@ class GreenHouseController extends Controller
         ]);
         $this->middleware('auth');
         $this->middleware('authorization:green_house');
+        $this->middleware('owner_profile');
+        $this->middleware('owner_smart_farm');
     }
 
     /**

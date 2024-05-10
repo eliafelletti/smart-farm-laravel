@@ -29,7 +29,7 @@
                 <td>{{ $measure->co2 }}</td>
                 <td>{{ $measure->irrigazione }}</td>
                 <td>{{ $measure->luminosita }}</td>
-                <td>{{ $measure->serra->smart_farm->nome }} [{{ $measure->id_serra }}]</td>
+                <td>{{ $measure->serra->smart_farm->nome ?? 'No Serra' }} [{{ $measure->id_serra ?? '' }}]</td>
             </tr>
         @endforeach
     </tbody>

@@ -8,10 +8,14 @@
 @endif
 <hr/>
 
-@if ( empty($smartFarm) )
+@if ( Auth::user()->level == 0 )
     <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end">Creazione nuova smart-farm</a>
-@else
-    <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end disabled">Creazione nuova smart-farm</a>
+@elseif ( Auth::user()->level == 1 )
+    @if ( empty($smartFarm) )
+        <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end">Creazione nuova smart-farm</a>
+    @else
+        <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end disabled">Creazione nuova smart-farm</a>
+    @endif
 @endif
 <div style="clear:both;"></div>
 <hr/>
@@ -52,7 +56,7 @@
                     <td>{{ $smFarm->civico }}</td>      
                     <td>{{ $smFarm->citta }}</td>
                     <td>{{ $smFarm->cap }}</td>
-                    <td>{{ $smFarm->proprietario->nome }} {{ $smFarm->proprietario->cognome }}</td>
+                    <td>{{ $smFarm->proprietario->nome ?? "No owner" }} {{ $smFarm->proprietario->cognome ?? "" }}</td>
 
                     <td>{{ $smFarm->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
@@ -63,7 +67,7 @@
                     </td>
                 </tr>
             @endforeach
-        @elseif ( Auth::user()->level == 1 )
+        @elseif ( Auth::user()->level == 1 && !empty($smartFarm) )
             <tr data-id="{{ $smartFarm->id }}">
                 @if ( Auth::user()->level == 0 )
                     <td>{{ $smartFarm->id }}</td>     
@@ -77,7 +81,7 @@
                 <td>{{ $smartFarm->civico }}</td>      
                 <td>{{ $smartFarm->citta }}</td>
                 <td>{{ $smartFarm->cap }}</td>
-                <td>{{ $smartFarm->proprietario->nome }} {{ $smartFarm->proprietario->cognome }}</td>
+                <td>{{ $smartFarm->proprietario->nome ?? "No owner" }} {{ $smartFarm->proprietario->cognome ?? "" }}</td>
 
                 <td>{{ $smartFarm->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
@@ -108,7 +112,8 @@ $('.btn-elimina').bind('click', function(event){
                 '_token': token
             },
             success: function(response){
-                $('tr[data-id="' + response.data.id + '"]').remove();
+                //$('tr[data-id="' + response.data.id + '"]').remove();
+                document.location.reload();
             },
             error: function(response, status){
                 console.log('error');

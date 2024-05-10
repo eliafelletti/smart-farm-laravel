@@ -4,15 +4,15 @@
 <h1>Tecnologie Utilizzate</h1>
 <hr/>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
+<div class="alert alert-danger" hidden="true">
+    @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
-@endif
+    @endif
+</div>
 
 @if ( Auth::user()->level == 0 )
     <div class="row">
@@ -79,14 +79,14 @@
                     <td>{{ $uTech->id }}</td>
                 @endif
 
-                <td>{{ $uTech->tecnologia->nome }}</td>
-                <td>{{ $uTech->smart_farm->nome }}</td>
+                <td>{{ $uTech->tecnologia->nome ?? 'No Tecnologia' }}</td>
+                <td>{{ $uTech->smart_farm->nome ?? 'No Smart-Farm' }}</td>
 
                 @if ( Auth::user()->level == 0 )
                     <!-- Colonna nascosta contenente id della tecnologia -->
-                    <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia }}</td>
+                    <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia ?? 'No ID' }}</td>
                     <!-- Colonna nascosta contenente id della misura -->
-                    <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm }}</td>
+                    <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm ?? 'No ID' }}</td>
                 @endif
                 
                 <td>{{ $uTech->updated_at->format('d/m/Y H:i:s') }}</td>
@@ -179,9 +179,15 @@
 
                 $('#id_tecnologia').val('');
                 $('#id_smart_farm').val('');
+                $('.alert-danger').attr("hidden", true);
             },
             error: function(response, status){
                 console.log('error');
+
+                var response_ajax = $(response.responseText);
+
+                var alertContent = response_ajax.find('.alert-danger').html();
+                $('.alert-danger').attr("hidden", false).html(alertContent);
             }
         });
     });
@@ -200,6 +206,8 @@
                 '_token': token
             },
             success: function(response){
+                $('.alert-danger').attr("hidden", true);
+
                 $('tr[data-id="' + response.data.id + '"]').remove();
             },
             error: function(response, status){
@@ -233,6 +241,8 @@
         row.find('.btn-modifica').attr("hidden", true);
         row.find('.btn-update').attr("hidden", false);
         $('#btn-aggiungi').attr('disabled', true);
+
+        $('.alert-danger').attr("hidden", true);
     });
 
     $('tbody').on('click', '.btn-update', function(event){
@@ -246,13 +256,14 @@
         let token = $('input[name="_token"]').val();
         
         $.ajax({
-            type: "PATCH",
+            type: "POST",
             url: "/used_technology/" + id,
             dataType: "json",
             data: {
                 'id_tecnologia': id_tecnologia,
                 'id_smart_farm': id_smart_farm,
                 '_token': token,
+                '_method': 'PATCH',
             },
             success: function(response){
                 console.log(response);
@@ -265,6 +276,7 @@
                 // Svuotamento dei campi
                 $('#id_tecnologia').val('');
                 $('#id_smart_farm').val('');
+                $('.alert-danger').attr("hidden", true);
 
                 // Aggiornamento con nuovi valori
                 $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(nome_tecnologia);
@@ -274,6 +286,11 @@
             },
             error: function(response, status){
                 console.log('error');
+
+                var response_ajax = $(response.responseText);
+
+                var alertContent = response_ajax.find('.alert-danger').html();
+                $('.alert-danger').attr("hidden", false).html(alertContent);
             }
         });
     });

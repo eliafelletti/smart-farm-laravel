@@ -25,6 +25,9 @@ class UsedTechnologyController extends Controller
         ]);
         $this->middleware('auth');
         $this->middleware('authorization:u_tech');
+        $this->middleware('supplier_cp_profile');
+        $this->middleware('owner_profile');
+        $this->middleware('owner_smart_farm');
     }
 
     /**

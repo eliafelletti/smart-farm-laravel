@@ -64,5 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'authorization' => \App\Http\Middleware\EnsureUserHasLevel::class,
+        'owner_profile' => \App\Http\Middleware\EnsureOwnerHasProfile::class,
+        'owner_smart_farm' => \App\Http\Middleware\EnsureOwnerHasSmartFarm::class,
+        'supplier_cp_profile' => \App\Http\Middleware\EnsureSupplierCompanyHasProfile::class,
     ];
 }

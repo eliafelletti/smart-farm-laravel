@@ -27,6 +27,8 @@ class RealizedMeasureController extends Controller
         ]);
         $this->middleware('auth');
         $this->middleware('authorization:r_measure');
+        $this->middleware('owner_profile');
+        $this->middleware('owner_smart_farm');
     }
 
     /**

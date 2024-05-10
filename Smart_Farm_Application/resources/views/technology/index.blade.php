@@ -8,15 +8,15 @@
     @endif
     <hr/>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
+    <div class="alert alert-danger" hidden="true">
+        @if ($errors->any())
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
-        </div>
-    @endif
+        @endif
+    </div>
     
     @if ( Auth::user()->level == 0 )
         <div class="row">
@@ -94,11 +94,11 @@
                     <td>{{ $technology->tipologia }}</td>
 
                     @if ( Auth::user()->level == 0 )
-                        <td>{{ $technology->azienda_fornitrice->nome }}</td>
+                        <td>{{ $technology->azienda_fornitrice->nome ?? 'No Azienda Fornitrice' }}</td>
                     @endif
 
                     <!-- Colonna nascosta contenente id della azienda fornitrice -->
-                    <td id="{{ $technology->id }}" hidden="true">{{ $technology->azienda_fornitrice->id }}</td>
+                    <td id="{{ $technology->id }}" hidden="true">{{ $technology->azienda_fornitrice->id ?? 'No ID' }}</td>
 
                     <td>{{ $technology->updated_at->format('d/m/Y H:i:s') }}</td>
 
@@ -188,9 +188,16 @@
                     $('#technology-name').val('');
                     $('#technology-type').val('');
                     $('#id_azienda_fornitrice').val('');
+
+                    $('.alert-danger').attr("hidden", true);
                 },
                 error: function(response, status){
                     console.log('error');
+
+                    var response_ajax = $(response.responseText);
+
+                    var alertContent = response_ajax.find('.alert-danger').html();
+                    $('.alert-danger').attr("hidden", false).html(alertContent);
                 }
                 
             });
@@ -211,6 +218,8 @@
                 },
                 success: function (response) {
                     console.log(response);
+
+                    $('.alert-danger').attr("hidden", true);
                     
                     $('tr[data-id="'+response.data.id+'"]').remove();
                 },
@@ -241,6 +250,8 @@
             row.find('.btn-modifica').attr("hidden", true);
             row.find('.btn-update').attr("hidden", false);
             $('#btn-aggiungi').attr("disabled", true);
+
+            $('.alert-danger').attr("hidden", true);
         });
 
         $('tbody').on('click', '.btn-update', function(event) {
@@ -254,7 +265,7 @@
             let token = $('input[name="_token"]').val();
 
             $.ajax({
-                type: "PATCH",
+                type: "POST",
                 url: "/technology/"+id,
                 dataType: "json",
                 data: {
@@ -262,6 +273,7 @@
                     'tipologia': tipologia,
                     'id_azienda_fornitrice': id_azienda_fornitrice,
                     '_token': token,
+                    '_method': 'PATCH',
                 },
                 success: function (response) {
                     console.log(response);
@@ -274,6 +286,7 @@
                     $('#technology-name').val('');
                     $('#technology-type').val('');
                     $('#id_azienda_fornitrice').val('');
+                    $('.alert-danger').attr("hidden", true);
 
                     // aggiorno con i nuovi valori
                     $('tr[data-id="'+response.data.id+'"]').find('td:eq(1)').text(nome);
@@ -283,6 +296,11 @@
                 },
                 error: function(response, status){
                     console.log('error');
+
+                    var response_ajax = $(response.responseText);
+
+                    var alertContent = response_ajax.find('.alert-danger').html();
+                    $('.alert-danger').attr("hidden", false).html(alertContent);
                 }
             });
         });

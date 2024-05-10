@@ -25,6 +25,8 @@ class RealizedCropController extends Controller
         ]);
         $this->middleware('auth');
         $this->middleware('authorization:crop');
+        $this->middleware('owner_profile');
+        $this->middleware('owner_smart_farm');
     }
 
     /**

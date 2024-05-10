@@ -4,15 +4,15 @@
 <h1>Misure Realizzate</h1>
 <hr/>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
+<div class="alert alert-danger" hidden="true">
+    @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
-@endif
+    @endif
+</div>
 
 <div class="row">
     <div class="col-md-6">
@@ -80,10 +80,10 @@
                 @endif
 
                 <td>{{ $rMeasure->tecnologia->nome }}</td>
-                <td>{{ $rMeasure->misura->id }} [{{ $rMeasure->misura->serra->smart_farm->nome }} ({{ $rMeasure->misura->id_serra }})]</td>
+                <td>{{ $rMeasure->misura->id }} [{{ $rMeasure->misura->serra->smart_farm->nome ?? 'No Serra' }} ({{ $rMeasure->misura->id_serra ?? '' }})]</td>
 
                 <!-- Colonna nascosta contenente id della tecnologia -->
-                <td id="{{ $rMeasure->id }}_tec" hidden="true">{{ $rMeasure->id_tecnologia }}</td>
+                <td id="{{ $rMeasure->id }}_tec" hidden="true">{{ $rMeasure->id_tecnologia ?? 'No ID' }}</td>
                 <!-- Colonna nascosta contenente id della misura -->
                 <td id="{{ $rMeasure->id }}_mis" hidden="true">{{ $rMeasure->id_misura }}</td>
                 <!-- Colonna nascosta contenente level user -->
@@ -193,9 +193,15 @@
 
                 $('#id_tecnologia').val('');
                 $('#id_misura').val('');
+                $('.alert-danger').attr("hidden", true);
             },
             error: function(response, status){
                 console.log('error');
+
+                var response_ajax = $(response.responseText);
+
+                var alertContent = response_ajax.find('.alert-danger').html();
+                $('.alert-danger').attr("hidden", false).html(alertContent);
             }
         });
     });
@@ -214,6 +220,8 @@
                 '_token': token
             },
             success: function(response){
+                $('.alert-danger').attr("hidden", true);
+                
                 $('tr[data-id="' + response.data.id + '"]').remove();
             },
             error: function(response, status){
@@ -263,6 +271,8 @@
         row.find('.btn-modifica').attr("hidden", true);
         row.find('.btn-update').attr("hidden", false);
         $('#btn-aggiungi').attr('disabled', true);
+
+        $('.alert-danger').attr("hidden", true);
     });
 
     $('tbody').on('click', '.btn-update', function(event){
@@ -277,13 +287,14 @@
         let level = $('#level').text();
         
         $.ajax({
-            type: "PATCH",
+            type: "POST",
             url: "/realized_measure/" + id,
             dataType: "json",
             data: {
                 'id_tecnologia': id_tecnologia,
                 'id_misura': id_misura,
                 '_token': token,
+                '_method': 'PATCH',
             },
             success: function(response){
                 console.log(response);
@@ -296,6 +307,7 @@
                 // Svuotamento dei campi
                 $('#id_tecnologia').val('');
                 $('#id_misura').val('');
+                $('.alert-danger').attr("hidden", true);
 
                 // Aggiornamento con nuovi valori
                 if( level == '0' ){
@@ -312,6 +324,11 @@
             },
             error: function(response, status){
                 console.log('error');
+
+                var response_ajax = $(response.responseText);
+
+                var alertContent = response_ajax.find('.alert-danger').html();
+                $('.alert-danger').attr("hidden", false).html(alertContent);
             }
         });
     });

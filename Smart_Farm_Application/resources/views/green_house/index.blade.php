@@ -4,15 +4,15 @@
 <h1>Serre</h1>
 <hr/>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
+<div class="alert alert-danger" hidden="true">
+    @if ($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
-@endif
+    @endif
+</div>
 
 <div class="row">
     <div class="col-md-6">
@@ -68,10 +68,10 @@
             <tr data-id='{{ $gHouse->id }}'>
                 <td>{{ $gHouse->id }}</td>      
                 <td>{{ $gHouse->numero_piante }}</td>
-                <td>{{ $gHouse->smart_farm->nome }}</td>
+                <td>{{ $gHouse->smart_farm->nome ?? 'No Smart-Farm' }}</td>
 
                 <!-- Colonna nascosta contenente id della smart-farm -->
-                <td id="{{ $gHouse->id }}" hidden="true">{{ $gHouse->smart_farm->id }}</td>
+                <td id="{{ $gHouse->id }}" hidden="true">{{ $gHouse->smart_farm->id ?? 'No ID' }}</td>
                 
                 <td>{{ $gHouse->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
@@ -156,9 +156,15 @@
 
                 $('#numero_piante').val('');
                 $('#id_smart_farm').val('');
+                $('.alert-danger').attr("hidden", true);
             },
             error: function(response, status){
                 console.log('error');
+                
+                var response_ajax = $(response.responseText);
+
+                var alertContent = response_ajax.find('.alert-danger').html();
+                $('.alert-danger').attr("hidden", false).html(alertContent);
             }
         });
     });
@@ -177,6 +183,8 @@
                 '_token': token
             },
             success: function(response){
+                $('.alert-danger').attr("hidden", true);
+                
                 $('tr[data-id="' + response.data.id + '"]').remove();
             },
             error: function(response, status){
@@ -203,6 +211,7 @@
         // Set dei valori già esistenti
         $('#numero_piante').val(num_piante);
         $('#id_smart_farm').val(id_smart_farm);
+        $('.alert-danger').attr("hidden", true);
 
         // Modifica visibilità bottoni
         row.find('.btn-modifica').attr("hidden", true);
@@ -220,13 +229,14 @@
         let token = $('input[name="_token"]').val();
         
         $.ajax({
-            type: "PATCH",
+            type: "POST",
             url: "/green_house/" + id,
             dataType: "json",
             data: {
                 'numero_piante': num_piante,
                 'id_smart_farm': id_smart_farm,
                 '_token': token,
+                '_method': 'PATCH',
             },
             success: function(response){
                 console.log(response);
@@ -239,6 +249,7 @@
                 // Svuotamento dei campi
                 $('#numero_piante').val('');
                 $('#id_smart_farm').val('');
+                $('.alert-danger').attr("hidden", true);
 
                 // Aggiornamento con nuovi valori
                 $('tr[data-id="' + response.data.id + '"]').find('td:eq(1)').text(num_piante);
@@ -247,6 +258,11 @@
             },
             error: function(response, status){
                 console.log('error');
+
+                var response_ajax = $(response.responseText);
+
+                var alertContent = response_ajax.find('.alert-danger').html();
+                $('.alert-danger').attr("hidden", false).html(alertContent);
             }
         });
     });

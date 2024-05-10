@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Owner;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -132,11 +133,22 @@ class OwnerController extends Controller
      */
     public function destroy(Owner $owner)
     {
+        // Selezione dell'utente corrispondente all'$owner, in modo
+        // che quando l'admin elimina un owner elimina anche le sue
+        // credenziali
+        $user_to_delete = User::where('email', $owner->mail)->first();
+        
+        // Verifica che sia presente l'utente corrispondente 
+        if ( !empty($user_to_delete) ){
+            // Eliminazione utente
+            $user_to_delete->delete();
+        }
+        // Eliminazione $owner
         $owner->delete();
 
         return response()->json([
             'message'=>'Proprietario eliminato con successo',
-            'data'=>$owner
+            'data'=>[$owner, $user_to_delete]
         ], 200);
     }
 }

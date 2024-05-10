@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Raccolti Effettuati</h1>
+    <h1>Raccolti Realizzati</h1>
     <hr>
     <a href="{{ url('realized_crop/create') }}" class="btn btn-primary float-end">Creazione nuovo evento</a>
     <div style="clear:both;"></div>
@@ -25,9 +25,9 @@
             @foreach ($realized_crops as $crop)
                 <tr data-id="{{ $crop->id }}">
                     <td>{{ $crop->id }}</td>
-                    <td>{{ $crop->owner->nome }} {{ $crop->owner->cognome }}</td>
-                    <td>{{ $crop->green_house->smart_farm->nome }} [{{ $crop->green_house->id }}]</td>
-                    <td>{{ $crop->cultivation->tipologia }}</td>   
+                    <td>{{ $crop->owner->nome ?? 'No Owner' }} {{ $crop->owner->cognome ?? '' }}</td>
+                    <td>{{ $crop->green_house->smart_farm->nome ?? 'No Serra' }} [{{ $crop->green_house->id ?? '' }}]</td>
+                    <td>{{ $crop->cultivation->tipologia ?? 'No Coltura' }}</td>   
                     <td>{{ $crop->data_semina->format('d/m/Y') }}</td>   
                     <td>{{ $crop->data_raccolta_teorica->format('d/m/Y') }}</td>
                     @if ($crop->data_raccolta_effettiva == '')
@@ -56,7 +56,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "/realized_crop/"+id+"/destroy",
+                url: "/realized_crop/" + id + "/destroy",
                 dataType: "json",
                 data: {
                     '_token': token

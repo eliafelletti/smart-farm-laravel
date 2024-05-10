@@ -46,13 +46,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/smart_farm') }}">{{ __('Smart-Farms') }}</a>
                                 </li>
-                            @elseif ( Auth::user()->level == 1 )
+                            @elseif ( Auth::user()->level == 1 && !empty($owner_nav) )
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/smart_farm') }}">{{ __('Smart-Farm') }}</a>
                                 </li>
                             @endif
 
-                            @if ( Auth::user()->level == 0 || Auth::user()->level == 1 )
+                            @if ( Auth::user()->level == 0 || ( Auth::user()->level == 1 && !empty($owner_nav) && !empty($smart_farm_nav) ) )
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/green_house') }}">{{ __('Serre') }}</a>
                                 </li>
@@ -68,13 +68,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/technology') }}">{{ __('Tecnologie') }}</a>
                                 </li>
-                            @elseif ( Auth::user()->level == 2 )
+                            @elseif ( Auth::user()->level == 2 && !empty($supplier_cp_nav) )
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/technology') }}">{{ __('Tecnologie Proprietarie') }}</a>
                                 </li>
                             @endif
                             
-                            @if ( Auth::user()->level == 0 || Auth::user()->level == 1 )
+                            @if ( Auth::user()->level == 0 || ( Auth::user()->level == 1 && !empty($owner_nav) && !empty($smart_farm_nav) ) )
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/measure') }}">{{ __('Misure') }}</a>
                                 </li>
@@ -83,9 +83,11 @@
                                 </li>
                             @endif
 
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{{ url('/used_technology') }}">{{ __('Tecnologie Utilizzate') }}</a>
-                            </li>
+                            @if ( Auth::user()->level == 0 || ( Auth::user()->level == 1 && !empty($owner_nav) && !empty($smart_farm_nav) ) || ( Auth::user()->level == 2 && !empty($supplier_cp_nav) ) )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/used_technology') }}">{{ __('Tecnologie Utilizzate') }}</a>
+                                </li>
+                            @endif
 
                             @if ( Auth::user()->level == 0 )
                                 <li class="nav-item">

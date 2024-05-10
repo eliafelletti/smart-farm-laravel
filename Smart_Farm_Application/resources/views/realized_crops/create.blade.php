@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Inserisci nuovo evento</h1>
+    <h1>Creazione nuovo evento</h1>
     <hr>
 
     @if ($errors->any())

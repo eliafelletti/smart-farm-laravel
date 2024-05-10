@@ -66,7 +66,7 @@
                     </td>
                 </tr>
             @endforeach
-            @elseif( Auth::user()->level == 2 )
+            @elseif( Auth::user()->level == 2 && !empty($supplier_company) )
                 <tr data-id="{{ $supplier_company->id }}">
                     @if ( Auth::user()->level == 0 )
                         <td>{{ $supplier_company->id }}</td>
@@ -112,7 +112,7 @@
                     '_token': token
                 },
                 success: function (response) {
-                    $('tr[data-id="'+response.data.id+'"]').remove();
+                    $('tr[data-id="'+response.data[0].id+'"]').remove();
                 },
                 error: function(event){
                     console.log('error');

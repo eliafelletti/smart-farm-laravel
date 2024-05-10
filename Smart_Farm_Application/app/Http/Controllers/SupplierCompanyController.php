@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SupplierCompany;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -126,11 +127,22 @@ class SupplierCompanyController extends Controller
      */
     public function destroy(SupplierCompany $supplierCompany)
     {
+        // Selezione dell'utente corrispondente alla $supplierCompany,
+        //in modo che quando l'admin elimina una supplierCompany elimina
+        // anche le sue credenziali
+        $supp_cp_to_delete = User::where('email', $supplierCompany->mail)->first();
+
+        // Verifica che sia presente l'utente corrispondente 
+        if ( !empty($supp_cp_to_delete) ){
+            // Eliminazione utente
+            $supp_cp_to_delete->delete();
+        }
+        // Eliminazione $supplierCompany
         $supplierCompany->delete();
 
         return response()->json([
             'message'=>'Azienda fornitrice eliminata con successo',
-            'data'=>$supplierCompany
+            'data'=>[$supplierCompany, $supp_cp_to_delete]
         ], 200);
     }
 }
