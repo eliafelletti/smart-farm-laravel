@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\GreenHouse;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Measure>
@@ -16,13 +17,21 @@ class MeasureFactory extends Factory
      */
     public function definition(): array
     {
+        $greenHouses = GreenHouse::all();
+
+        $greenHousesID = [];
+        foreach( $greenHouses as $gHouse ){
+            array_push($greenHousesID, $gHouse->id);
+        }
+
         return [
             "timestamp" => fake()->dateTimeInInterval('now', '+1 days', 'Europe/San_Marino'),
             "temperatura" => fake()->randomFloat(2, 15.00, 24.00),
             "umidita" => fake()->randomFloat(2, 50.00, 70.00),
             "co2" => fake()->numberBetween(800, 1200),
             "irrigazione" => fake()->numberBetween(150, 250),
-            "luminosita" => fake()->numberBetween(20000, 50000)
+            "luminosita" => fake()->numberBetween(20000, 50000),
+            "id_serra" => fake()->randomElement($greenHousesID),
         ];
     }
 }
