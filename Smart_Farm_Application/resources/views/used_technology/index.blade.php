@@ -72,40 +72,56 @@
         </tr>
     </thead>
 
-    <tbody>
-        @foreach($usedTechnologies as $uTech)
-            <tr data-id='{{ $uTech->id }}'>
-                @if ( Auth::user()->level == 0 )
-                    <td>{{ $uTech->id }}</td>
-                @endif
+    @if ( Auth::user()->level != 2 )
+        <tbody>
+            @foreach($usedTechnologies as $uTech)
+                <tr data-id='{{ $uTech->id }}'>
+                    @if ( Auth::user()->level == 0 )
+                        <td>{{ $uTech->id }}</td>
+                    @endif
 
-                <td>{{ $uTech->tecnologia->nome ?? 'No Tecnologia' }}</td>
-                <td>{{ $uTech->smart_farm->nome ?? 'No Smart-Farm' }}</td>
+                    <td>{{ $uTech->tecnologia->nome ?? 'No Tecnologia' }}</td>
+                    <td>{{ $uTech->smart_farm->nome ?? 'No Smart-Farm' }}</td>
 
-                @if ( Auth::user()->level == 0 )
-                    <!-- Colonna nascosta contenente id della tecnologia -->
-                    <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia ?? 'No ID' }}</td>
-                    <!-- Colonna nascosta contenente id della misura -->
-                    <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm ?? 'No ID' }}</td>
-                @endif
-                
-                <td>{{ $uTech->updated_at->format('d/m/Y H:i:s') }}</td>
-                
-                @if ( Auth::user()->level == 0 )
-                    <td>
-                        <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
-                    </td>
-                    <td>
-                        <a href='{{ url("/realized_measure/$uTech->id/destroy") }}' data-id="{{ $uTech->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-primary btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
-                    </td>
-                @endif
+                    @if ( Auth::user()->level == 0 )
+                        <!-- Colonna nascosta contenente id della tecnologia -->
+                        <td id="{{ $uTech->id }}_tec" hidden="true">{{ $uTech->id_tecnologia ?? 'No ID' }}</td>
+                        <!-- Colonna nascosta contenente id della misura -->
+                        <td id="{{ $uTech->id }}_sFarm" hidden="true">{{ $uTech->id_smart_farm ?? 'No ID' }}</td>
+                    @endif
+                    
+                    <td>{{ $uTech->updated_at->format('d/m/Y H:i:s') }}</td>
+                    
+                    @if ( Auth::user()->level == 0 )
+                        <td>
+                            <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
+                        </td>
+                        <td>
+                            <a href='{{ url("/realized_measure/$uTech->id/destroy") }}' data-id="{{ $uTech->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
+                        </td>
+                    @endif
 
-            </tr>
-        @endforeach
-    </tbody>
+                </tr>
+            @endforeach
+        </tbody>
+    @else
+        <tbody>
+            @foreach($usedTechnologies as $technologyId => $technologyData)
+                <tr data-id='{{ $technologyId }}'>
+                    <td>{{ $technologyData['nome'] ?? 'No Tecnologia' }}</td>
+                    <td>
+                        @foreach($technologyData['smart_farms'] as $smartFarm)
+                            {{ $smartFarm ?? 'No Smart-Farm' }}<br/>
+                        @endforeach
+                    </td>
+                    <td>{{ $technologyData['updated_at'] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    @endif
 
 </table>
 <br/>

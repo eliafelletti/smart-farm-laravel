@@ -62,6 +62,34 @@ class UsedTechnologyController extends Controller
             // Seleziono le tecnologie dell'azienda fornitrice loggata usate nelle smart-farm
             $usedTechnologies = UsedTechnology::whereIn('id_tecnologia', $idTechs)->get()->sortBy('id_smart_farm');
 
+            // Array associativo vuoto che conterrà dati in forma id_tecnologia => [dati_tecnologia]
+            $techInSmartFarm = [];
+
+            foreach ($usedTechnologies as $uTech) {
+                // Seleziono le informazioni della tecnologia corrente
+                $techID = $uTech->tecnologia->id;
+                $techNome = $uTech->tecnologia->nome;
+                $smartFarmNome = $uTech->smart_farm->nome;
+                $updatedAt = $uTech->updated_at->format('d/m/Y H:i:s');
+                
+                // Controllo che la tecnologia corrente non sia già stata inserita 
+                if ( !isset($techInSmartFarm[$techID]) ) {
+                    // Set di una nuova tecnologia
+                    $techInSmartFarm[$techID] = [
+                        'nome' => $techNome,
+                        'updated_at' => $updatedAt,
+                        'smart_farms' => [],
+                    ];
+                }
+            
+                // Aggiunta del nome della smartFarm, all'interno dell'array che contiene
+                // i nomi delle smartFarm che utilizzano la tecnologia corrente
+                array_push($techInSmartFarm[$techID]['smart_farms'], $smartFarmNome);
+            }
+
+            // Sovrascrivo nome variabile di ritorno
+            $usedTechnologies = $techInSmartFarm;
+
             return view('used_technology.index', compact('usedTechnologies'));
         }
     }
