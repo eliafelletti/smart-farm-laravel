@@ -47,8 +47,6 @@ class RealizedMeasureController extends Controller
             $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
             $greenHouses = GreenHouse::where('id_smart_farm', $smartFarm->id)->get();
 
-            $usedTechnologies = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
-
             $idGreenHouses = [];
             foreach($greenHouses as $gHouse){
                 array_push($idGreenHouses, $gHouse->id);
@@ -63,7 +61,35 @@ class RealizedMeasureController extends Controller
 
             $realizedMeasures = RealizedMeasure::whereIn('id_misura', $idMeasures)->get();
 
-            return view('realized_measure.index', compact('realizedMeasures', 'usedTechnologies', 'measures'));
+            // Array associativo vuoto che conterrà dati in forma id_misura => [dati_misura]
+            $techInMeasure = [];
+
+            foreach ($realizedMeasures as $rMeasure) {
+                // Seleziono le informazioni della misura realizzata corrente
+                $measureID = $rMeasure->id_misura;
+                $techNome = $rMeasure->tecnologia->nome;
+                $measureNome = $rMeasure->id_misura . "[" . $rMeasure->misura->serra->smart_farm->nome . " (" . $rMeasure->misura->id_serra . ")]";
+                $updatedAt = $rMeasure->updated_at->format('d/m/Y H:i:s');
+                
+                // Controllo che la misura realizzata corrente non sia già stata inserita 
+                if ( !isset($techInMeasure[$measureID]) ) {
+                    // Set di una nuova misura
+                    $techInMeasure[$measureID] = [
+                        'misura' => $measureNome,
+                        'updated_at' => $updatedAt,
+                        'technologies' => [],
+                    ];
+                }
+            
+                // Aggiunta del nome della tecnologia, all'interno dell'array che contiene
+                // i nomi delle tecnologie utilizzate nella misurazione corrente
+                array_push($techInMeasure[$measureID]['technologies'], $techNome);
+            }
+
+            // Sovrascrivo nome variabile di ritorno
+            $realizedMeasures = $techInMeasure;
+
+            return view('realized_measure.index', compact('realizedMeasures'));
         }
     }
 
@@ -154,5 +180,32 @@ class RealizedMeasureController extends Controller
             'message' => 'deleted',
             'data' => $realizedMeasure
         ], 200);
+    }
+
+    /**
+     * Create and store five entries for each new measure.
+     */
+    public function store_factory_data()
+    {
+        $last_realized_measure = RealizedMeasure::latest('created_at')->first();
+        $last_valid_timestamp = $last_realized_measure->created_at;
+
+        $new_measures = Measure::where('created_at', '>', $last_valid_timestamp)->get();
+
+        foreach( $new_measures as $new_measure ){
+            $gHouse = GreenHouse::where('id', $new_measure->id_serra)->first();
+            $smartFarm = SmartFarm::where('id', $gHouse->id_smart_farm)->first();
+
+            $usedTechs = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
+
+            foreach( $usedTechs as $tech ){
+                $values = [
+                    "id_tecnologia" => $tech->id_tecnologia,
+                    "id_misura" => $new_measure->id
+                ];
+
+                RealizedMeasure::create($values);
+            }
+        }
     }
 }
