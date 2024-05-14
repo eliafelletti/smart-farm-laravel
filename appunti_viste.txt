@@ -10,9 +10,9 @@ questo nella table users messa a disposizione dal tool di autenticazione di Lara
 
 Vista admin         ->  CRUD completa su tutte le relazioni meno una,
 			R su misure;
-Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sui raccolti realizzati e su misure realizzate,
+Vista propietario   ->  CRUD completa sulle proprie serre, sulla propria smart-farm, sui raccolti realizzati,
                         CRU su propietario, 
-                        R misure, tecnologie utilizzate e colture;
+                        R misure, misure realizzate, tecnologie utilizzate e colture;
 Vista fornitore     ->  CRU su azienda fornitrice,
                         R su tecnologie e tecnologie utilizzate.
 

@@ -1,6 +1,7 @@
 Funzionalità E-mail
 La possibilità di utilizzare questa funzionalità nasce dal fatto che nella vista azienda fornitrice dovrebbe essere possibile
-inserire nuove tecnologie, mentre nella vista owner dovrebbe essere visibile un "catalogo" delle nuove teconologie aggiornate
-disponibili. Nel caso in cui l'owner voglia migliorare le tecnologie della propria smart-farm deve contattare l'admin, via mail,
+inserire nuove tecnologie, via mail contattando l'admin; mentre nella vista owner dovrebbe essere visibile un "catalogo" delle
+nuove teconologie aggiornate disponibili.
+Nel caso in cui l'owner voglia migliorare le tecnologie della propria smart-farm deve contattare l'admin, via mail,
 per fare in modo che avvengano le modifiche desiderate. Ad un miglioramento delle proprie tecnologie corrisponde un aumento di 
 prezzo mensile.
