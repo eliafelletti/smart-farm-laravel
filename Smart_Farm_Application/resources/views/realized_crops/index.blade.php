@@ -47,6 +47,14 @@
         </tbody>
     </table>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card p-3">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+
     <script type="application/javascript">
         $('.btn-elimina').bind('click',function(event) {
             event.preventDefault();
@@ -70,4 +78,24 @@
             });
         });
     </script>
+
+    @push('scripts')
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+
+        <script> 
+            document.addEventListener('DOMContentLoaded', function () {
+                var calendarEl = document.getElementById('calendar');
+                
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    events: @json($events),
+                    themeSystem: 'bootstrap5',
+                    headerToolbar: {left: 'title', right: 'prev,next today'},
+                    defaultAllDay: true,
+                });
+
+                calendar.render();
+            });
+        </script>
+    @endpush    
 @endsection

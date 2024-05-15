@@ -42,7 +42,18 @@ class RealizedCropController extends Controller
             $owner = Owner::where('mail', Auth::user()->email)->first();
             $realized_crops = RealizedCrop::where('id_proprietario', $owner->id)->get();
 
-            return view('realized_crops.index', compact('realized_crops'));
+            //Full Calendar
+            $events = [];
+ 
+            foreach ($realized_crops as $realized_crop) {
+                $events[] = [
+                    'title' => $realized_crop->id_serra . ' - ' . $realized_crop->cultivation->tipologia,
+                    'start' => $realized_crop->data_semina,
+                    'end' => $realized_crop->data_raccolta_effettiva ?? $realized_crop->data_raccolta_teorica,
+                ];
+            }
+
+            return view('realized_crops.index', compact('realized_crops', 'events'));
         }
     }
 
