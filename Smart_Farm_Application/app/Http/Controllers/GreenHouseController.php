@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GreenHouse;
 use App\Models\SmartFarm;
 use App\Models\Owner;
+use App\Models\Measure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -133,5 +134,37 @@ class GreenHouseController extends Controller
             'message' => 'deleted',
             'data' => $greenHouse
         ], 200);
+    }
+
+
+    /**
+     * Monitor greenhouse parameters
+     */
+    public function monitor(GreenHouse $greenHouse){
+        $labels = Measure::select('timestamp')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get();
+        $labels_display = [];
+        foreach ($labels as $label) {
+            $label = $label->timestamp;
+            array_push($labels_display, ['timestamp' => $label]);
+        }
+
+        $data_temperatura = [
+            'labels' => $labels_display,
+            'data' => Measure::select('temperatura')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+        ];
+
+        $data_umidita = [
+            'data' => Measure::select('umidita')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+        ];
+
+        $data_luminosita = [
+            'data' => Measure::select('luminosita')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+        ];
+
+        $data_co2 = [
+            'data' => Measure::select('co2')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+        ];
+
+        return view('green_house.monitor', compact('greenHouse', 'data_temperatura', 'data_umidita', 'data_luminosita', 'data_co2'));
     }
 }

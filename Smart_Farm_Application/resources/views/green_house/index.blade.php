@@ -75,7 +75,8 @@
                 
                 <td>{{ $gHouse->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
-                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $gHouse->id }}">Modifica</a>
+                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $gHouse->id }}">Modifica</a><br /><br />
+                    <a href='{{ url("/green_house/$gHouse->id/monitor") }}' data-id="{{ $gHouse->id }}" class="btn btn-primary btn-sm btn-monitora">Monitora</a>
                 </td>
                 <td>
                     <a href='{{ url("/green_house/$gHouse->id/destroy") }}' data-id="{{ $gHouse->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
@@ -91,7 +92,7 @@
 <br/>
 
 <script type="application/javascript">
-
+    
     $('#btn-aggiungi').bind('click', function(event){
         event.preventDefault();
 

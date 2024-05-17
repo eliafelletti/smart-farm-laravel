@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\GreenHouse;
 use App\Models\RealizedMeasure;
+use Carbon\Carbon;
 
 class Measure extends Model
 {
@@ -28,6 +29,14 @@ class Measure extends Model
         "created_at" => "datetime:Y-m-d",
         "updated_at" => "datetime:Y-m-d"
     ];
+
+    protected $dates = ["timestamp"];
+
+    public function getYourTimestampFieldAttribute($value)
+    {
+        // $value è il valore grezzo del campo timestamp dal database
+        return Carbon::parse($value)->format('d/m/Y H:i:s');
+    }
 
     public function serra() : BelongsTo
     {
