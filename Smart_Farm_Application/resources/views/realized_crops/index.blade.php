@@ -45,9 +45,9 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table><br/>
 
-    <div class="row">
+    <div class="row" data-bs-theme="light">
         <div class="col-md-12">
             <div class="card p-3">
                 <div id="calendar"></div>
@@ -92,6 +92,9 @@
                     themeSystem: 'bootstrap5',
                     headerToolbar: {left: 'title', right: 'prev,next today'},
                     defaultAllDay: true,
+                    locale: 'it',
+                    firstDay: 1,
+                    buttonText: {today: 'Oggi'},
                 });
 
                 calendar.render();

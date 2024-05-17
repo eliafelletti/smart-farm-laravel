@@ -2,3 +2,13 @@ main{
     padding-left: 30px;
     padding-right: 30px;
 }
+
+a.fc-daygrid-day-number{
+    text-decoration: none;
+    color: #222;
+}
+  
+a.fc-col-header-cell-cushion{
+    text-decoration: none;
+    color: #222;
+}
