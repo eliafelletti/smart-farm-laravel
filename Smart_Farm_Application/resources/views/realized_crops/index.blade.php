@@ -53,7 +53,7 @@
                 <div id="calendar"></div>
             </div>
         </div>
-    </div>
+    </div><br/>
 
     <script type="application/javascript">
         $('.btn-elimina').bind('click',function(event) {

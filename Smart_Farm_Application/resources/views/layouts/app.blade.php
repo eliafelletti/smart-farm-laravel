@@ -138,6 +138,11 @@
                                     </button>
                                     <ul class="dropdown-menu" style="">
                                         <li>
+                                            <a class="dropdown-item" href="{{ url('/home') }}">
+                                                {{ __('Home') }}
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a class="dropdown-item" href="{{ url('/logout') }}">
                                                 {{ __('Logout') }}
                                             </a>
