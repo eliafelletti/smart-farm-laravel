@@ -34,7 +34,7 @@ class GreenHouseController extends Controller
     public function index()
     {
         if ( Auth::user()->level == 0 ){
-            $greenHouses = GreenHouse::all();
+            $greenHouses = GreenHouse::all()->sortBy('id_smart_farm');
             $smartFarms = SmartFarm::all();
 
             return view('green_house.index', compact('greenHouses', 'smartFarms'));
@@ -146,6 +146,7 @@ class GreenHouseController extends Controller
             $smartFarm = SmartFarm::where("id_proprietario", $owner->id)->first();
         }
 
+        // Verifica che l'admin non tenti di monitorare alcuna serra
         if ( !empty($smartFarm) ){
             // Verifica che la serra appartenga all'owner loggato
             if ( $smartFarm->id != $greenHouse->id_smart_farm ){

@@ -456,10 +456,6 @@
                 break;
         }
         
-        $('.btn-close').on('click', function(){
-            enlargedChart.destroy();
-        });
-
         var enlargedChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -516,6 +512,10 @@
         });
 
         $('#staticBackdrop').modal('show');
+
+        $('.btn-close').on('click', function(){
+            enlargedChart.destroy();
+        });
 
     });
 
