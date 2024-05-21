@@ -46,7 +46,7 @@ class MeasureController extends Controller
                 array_push($idGreenHouses, $gHouse->id);
             }
 
-            $measures = Measure::whereIn('id_serra', $idGreenHouses)->get();
+            $measures = Measure::whereIn('id_serra', $idGreenHouses)->orderBy('id_serra')->orderBy('timestamp')->get();
 
             return view('measure.index', compact('measures'));
         }
