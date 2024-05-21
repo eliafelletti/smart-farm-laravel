@@ -226,6 +226,7 @@
         // Modifica visibilità bottoni
         row.find('.btn-modifica').attr("hidden", true);
         row.find('.btn-update').attr("hidden", false);
+        row.find('.btn-monitora').addClass("disabled").attr("aria-disabled", true);
         $('#btn-aggiungi').attr('disabled', true);
     });
 
@@ -255,6 +256,7 @@
                 $('.btn-modifica').attr("hidden",false);
                 $('.btn-update').attr("hidden",true);
                 $('#btn-aggiungi').attr('disabled', false);
+                $('.btn-monitora').removeClass("disabled").attr("aria-disabled", false);
 
                 // Svuotamento dei campi
                 $('#numero_piante').val('');

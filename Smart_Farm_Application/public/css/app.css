@@ -12,3 +12,7 @@ a.fc-col-header-cell-cushion{
     text-decoration: none;
     color: #222;
 }
+
+.modal-width{
+    max-width: 90% !important;
+}

@@ -50,7 +50,7 @@
     @if ( Auth::user()->level == 1 )
         <div class="row" data-bs-theme="light">
             <div class="col-md-12">
-                <div class="card p-3">
+                <div class="card border-secondary p-3">
                     <div id="calendar"></div>
                 </div>
             </div>
