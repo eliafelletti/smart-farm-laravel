@@ -37,7 +37,7 @@ class RealizedMeasureController extends Controller
     public function index()
     {
         if ( Auth::user()->level == 0 ){
-            $realizedMeasures = RealizedMeasure::all();
+            $realizedMeasures = RealizedMeasure::all()->sortBy('id_misura');
             $technologies = Technology::all();
             $measures = Measure::all();
 
@@ -59,7 +59,7 @@ class RealizedMeasureController extends Controller
                 array_push($idMeasures, $measure->id);
             }
 
-            $realizedMeasures = RealizedMeasure::whereIn('id_misura', $idMeasures)->get();
+            $realizedMeasures = RealizedMeasure::whereIn('id_misura', $idMeasures)->orderBy('id_misura')->get();
 
             // Array associativo vuoto che conterrà dati in forma id_misura => [dati_misura]
             $techInMeasure = [];

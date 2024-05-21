@@ -33,7 +33,7 @@ class MeasureController extends Controller
     public function index()
     {
         if ( Auth::user()->level == 0 ){
-            $measures = Measure::all()->sortBy('timestamp');
+            $measures = Measure::all()->sortBy(['id_serra', 'timestamp']);
 
             return view('measure.index', compact('measures'));
         }else if( Auth::user()->level == 1 ){
