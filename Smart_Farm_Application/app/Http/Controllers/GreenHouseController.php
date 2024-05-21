@@ -141,30 +141,44 @@ class GreenHouseController extends Controller
      * Monitor greenhouse parameters
      */
     public function monitor(GreenHouse $greenHouse){
-        $labels = Measure::select('timestamp')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get();
-        $labels_display = [];
-        foreach ($labels as $label) {
-            $label = $label->timestamp;
-            array_push($labels_display, ['timestamp' => $label]);
+        $owner = Owner::where("mail", Auth::user()->email)->first();
+        if ( !empty($owner) ){
+            $smartFarm = SmartFarm::where("id_proprietario", $owner->id)->first();
         }
 
-        $data_temperatura = [
-            'labels' => $labels_display,
-            'data' => Measure::select('temperatura')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
-        ];
+        if ( !empty($smartFarm) ){
+            // Verifica che la serra appartenga all'owner loggato
+            if ( $smartFarm->id != $greenHouse->id_smart_farm ){
+                return redirect('/green_house');
+            }else{
+                $labels = Measure::select('timestamp')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get();
+                $labels_display = [];
+                foreach ($labels as $label) {
+                    $label = $label->timestamp;
+                    array_push($labels_display, ['timestamp' => $label]);
+                }
 
-        $data_umidita = [
-            'data' => Measure::select('umidita')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
-        ];
+                $data_temperatura = [
+                    'labels' => $labels_display,
+                    'data' => Measure::select('temperatura')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+                ];
 
-        $data_luminosita = [
-            'data' => Measure::select('luminosita')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
-        ];
+                $data_umidita = [
+                    'data' => Measure::select('umidita')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+                ];
 
-        $data_co2 = [
-            'data' => Measure::select('co2')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
-        ];
+                $data_luminosita = [
+                    'data' => Measure::select('luminosita')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+                ];
 
-        return view('green_house.monitor', compact('greenHouse', 'data_temperatura', 'data_umidita', 'data_luminosita', 'data_co2'));
+                $data_co2 = [
+                    'data' => Measure::select('co2')->where('id_serra', $greenHouse->id)->orderBy('timestamp')->get(),
+                ];
+
+                return view('green_house.monitor', compact('greenHouse', 'data_temperatura', 'data_umidita', 'data_luminosita', 'data_co2'));
+            }
+        }else{
+            return redirect('/green_house');
+        }
     }
 }

@@ -70,7 +70,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Temperatura',
+                label: ' Temperatura',
                 data: temperature,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 1)',
@@ -126,7 +126,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Umidità',
+                label: ' Umidità',
                 data: umidita,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 1)',
@@ -182,7 +182,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Luminosità',
+                label: ' Luminosità',
                 data: luminosita,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 1)',
@@ -238,7 +238,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Anidride Carbonica (Co2)',
+                label: ' Anidride Carbonica (Co2)',
                 data: co2,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 1)',

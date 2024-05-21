@@ -139,8 +139,17 @@
                         .attr('data-id', response.data.id)
                         .attr('hidden', true);
 
+                /* CREAZIONE BOTTONE MONITORA */
+                var actionMonitor = $('<a/>', { role: 'button', text: 'Monitora' })
+                            .addClass('btn btn-primary btn-sm btn-monitora')
+                            .attr('data-id', response.data.id)
+                            .attr("href", "http://localhost:8000/green_house/" + response.data.id + "/monitor");
+
+                var br1 = document.createElement("BR");
+                var br2 = document.createElement("BR"); 
+
                 var newColDelete = $('<td/>', {text: ''}).append(actionDelete);
-                var newColModifica = $('<td/>', {text: ''}).append(actionModifica);
+                var newColModificaMonitor = $('<td/>', {text: ''}).append(actionModifica).append(br1, br2).append(actionMonitor);
                 var newColUpdate = $('<td/>', {text: ''}).append(actionUpdate);
 
                 var newRow = $('<tr/>').attr('data-id', response.data.id);
@@ -149,7 +158,7 @@
                         .append(newColSmartFarm)
                         .append(newColIDSmartFarm)
                         .append(newColData)
-                        .append(newColModifica)
+                        .append(newColModificaMonitor)
                         .append(newColDelete)
                         .append(newColUpdate);
 

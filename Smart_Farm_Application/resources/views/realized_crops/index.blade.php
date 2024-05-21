@@ -47,13 +47,15 @@
         </tbody>
     </table><br/>
 
-    <div class="row" data-bs-theme="light">
-        <div class="col-md-12">
-            <div class="card p-3">
-                <div id="calendar"></div>
+    @if ( Auth::user()->level == 1 )
+        <div class="row" data-bs-theme="light">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <div id="calendar"></div>
+                </div>
             </div>
-        </div>
-    </div><br/>
+        </div><br/>
+    @endif
 
     <script type="application/javascript">
         $('.btn-elimina').bind('click',function(event) {
@@ -79,26 +81,28 @@
         });
     </script>
 
-    @push('scripts')
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+    @if ( Auth::user()->level == 1 )
+        @push('scripts')
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
-        <script> 
-            document.addEventListener('DOMContentLoaded', function () {
-                var calendarEl = document.getElementById('calendar');
-                
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    events: @json($events),
-                    themeSystem: 'bootstrap5',
-                    headerToolbar: {left: 'title', right: 'prev,next today'},
-                    defaultAllDay: true,
-                    locale: 'it',
-                    firstDay: 1,
-                    buttonText: {today: 'Oggi'},
+            <script> 
+                document.addEventListener('DOMContentLoaded', function () {
+                    var calendarEl = document.getElementById('calendar');
+                    
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        events: @json($events),
+                        themeSystem: 'bootstrap5',
+                        headerToolbar: {left: 'title', right: 'prev,next today'},
+                        defaultAllDay: true,
+                        locale: 'it',
+                        firstDay: 1,
+                        buttonText: {today: 'Oggi'},
+                    });
+
+                    calendar.render();
                 });
-
-                calendar.render();
-            });
-        </script>
-    @endpush    
+            </script>
+        @endpush   
+    @endif 
 @endsection
