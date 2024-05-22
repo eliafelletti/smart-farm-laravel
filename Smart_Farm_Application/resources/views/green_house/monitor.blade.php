@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Dashboard monitoring serra {{ $greenHouse->id }}</h1>
+<h2 class="fs-5">Visualizzazione delle sole ultime 10 misurazioni</h2>
 <hr/>
 
 <a role="button" id="refresh" class="btn btn-primary float-end">
