@@ -126,6 +126,36 @@
 </table>
 <br/>
 
+@if ( Auth::user()->level == 1 )
+    <h2>Catalogo</h2>
+    <h3 class="fs-5">Tecnologie disponibili per l'upgrade</h3>
+    <hr/>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Tecnologia</th>
+                <th scope="col">Tipologia</th>
+                <th scope="col">Azienda Fornitrice</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach($catalogue as $item)
+                <tr data-id='{{ $item->id }}'>
+                    <td>{{ $item->nome }}</td>
+                    <td>{{ $item->tipologia }}</td>
+                    <td>{{ $item->azienda_fornitrice->nome }}</td>
+                    <td>
+                        <a href='#' class="btn btn-primary btn-sm btn-upgrade" data-id="{{ $item->id }}">Upgrade</a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endif
+
 <script type="application/javascript">
 
     $('#btn-aggiungi').bind('click', function(event){

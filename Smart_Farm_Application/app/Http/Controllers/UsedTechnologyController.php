@@ -46,7 +46,14 @@ class UsedTechnologyController extends Controller
             $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
             $usedTechnologies = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
 
-            return view('used_technology.index', compact('usedTechnologies'));
+            $idUsedTechs = [];
+            foreach($usedTechnologies as $uTech){
+                array_push($idUsedTechs, $uTech->id_tecnologia);
+            }
+
+            $catalogue = Technology::whereNotIn('id', $idUsedTechs)->get();
+
+            return view('used_technology.index', compact('usedTechnologies', 'catalogue'));
         }else if( Auth::user()->level == 2 ){
             // Seleziono l'azienda fornitrice loggata
             $supplier_company = SupplierCompany::where('mail', Auth::user()->email)->first();
