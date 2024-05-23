@@ -265,6 +265,9 @@
             $('#btn-aggiungi').attr("disabled", true);
 
             $('.alert-danger').attr("hidden", true);
+
+            // Scroll to top
+            document.documentElement.scrollTop = 0;
         });
 
         $('tbody').on('click', '.btn-update', function(event) {

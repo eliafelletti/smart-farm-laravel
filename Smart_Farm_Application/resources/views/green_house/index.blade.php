@@ -228,6 +228,9 @@
         row.find('.btn-update').attr("hidden", false);
         row.find('.btn-monitora').addClass("disabled").attr("aria-disabled", true);
         $('#btn-aggiungi').attr('disabled', true);
+
+        // Scroll to top
+        //document.documentElement.scrollTop = 0;
     });
 
     $('tbody').on('click', '.btn-update', function(event){
