@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-22T14:00:05.776Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0" etag="OvG3hmZ9m2udPQ-QqgSU" version="24.4.6" type="google">
+<mxfile host="app.diagrams.net" modified="2024-05-23T08:21:22.804Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0" etag="Gx9tq2ZzfNMfXk3jZ8Xg" version="24.4.6" type="google">
   <diagram name="Pagina-1" id="h-XZIu9ZyFfSefOGW6M7">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -652,7 +652,7 @@
         <mxCell id="cReCU7W4gzofw8iwazJV-151" value="(1, n)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="-370" y="520" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="cReCU7W4gzofw8iwazJV-152" value="RICHIESTE" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="cReCU7W4gzofw8iwazJV-152" value="&lt;div&gt;RICHIESTE UTENTI&lt;br&gt;&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="414" y="880" width="100" height="40" as="geometry" />
         </mxCell>
         <mxCell id="cReCU7W4gzofw8iwazJV-153" value="Tipologia_mittente" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">

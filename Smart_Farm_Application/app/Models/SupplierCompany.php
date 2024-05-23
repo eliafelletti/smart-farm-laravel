@@ -32,4 +32,9 @@ class SupplierCompany extends Model
         return ($this)->hasMany(Technology::class);
     }
 
+    public function richieste() : HasMany
+    {
+        return $this->hasMany(UserRequest::class);
+    }
+
 }

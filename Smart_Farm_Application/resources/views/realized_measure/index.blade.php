@@ -67,9 +67,10 @@
 
             <th scope="col">Tecnologia</th>
             <th scope="col">Misura</th>
-            <th scope="col">Ultima modifica</th>
 
             @if ( Auth::user()->level == 0 )
+                <th scope="col">Ultima modifica</th>
+
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -114,7 +115,6 @@
                         @endforeach
                     </td>
                     <td>{{ $measureData['misura'] ?? 'No Serra' }}</td>
-                    <td>{{ $measureData['updated_at'] }}</td>
                 </tr>
             @endforeach
         </tbody>

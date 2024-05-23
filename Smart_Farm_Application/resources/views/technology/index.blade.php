@@ -119,6 +119,19 @@
         </tbody>
     </table>
 
+    @if ( Auth::user()->level == 2 )
+        <br/>
+
+        <h2>Nuove Tecnologie</h2><hr/>
+        <h3 class="fs-5">Disponibilità di proporre nuove tecnologie per la piattaforma</h3><br/>
+
+        @if ( !$dangling_req )
+            <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-req">Proponi</a>
+        @else
+            <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-req disabled" aria-disabled="true">Proponi</a>
+        @endif
+    @endif
+
     <script type="application/javascript">
         $('#btn-aggiungi').bind('click',function(event){
             event.preventDefault();

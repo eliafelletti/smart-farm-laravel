@@ -94,6 +94,16 @@
 
                             @if ( Auth::user()->level == 0 )
                                 <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/user_request') }}">{{ __('Richieste Utenti') }}</a>
+                                </li>
+                            @elseif ( ( Auth::user()->level == 1 && !empty($owner_nav) && !empty($smart_farm_nav) ) || ( Auth::user()->level == 2 && !empty($supplier_cp_nav) ) )
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ url('/user_request') }}">{{ __('Richieste Inviate') }}</a>
+                                </li>
+                            @endif
+
+                            @if ( Auth::user()->level == 0 )
+                                <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ url('/supplier_company') }}">{{ __('Aziende Fornitrici') }}</a>
                                 </li>
                             @elseif ( Auth::user()->level == 2 )

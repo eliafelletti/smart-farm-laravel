@@ -7,6 +7,7 @@ use App\Models\Technology;
 use App\Models\UsedTechnology;
 use App\Models\Owner;
 use App\Models\SupplierCompany;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -44,6 +45,8 @@ class UsedTechnologyController extends Controller
         }else if( Auth::user()->level == 1 ){
             $owner = Owner::where('mail', Auth::user()->email)->first();
             $smartFarm = SmartFarm::where('id_proprietario', $owner->id)->first();
+
+            // Creazione catalogo
             $usedTechnologies = UsedTechnology::where('id_smart_farm', $smartFarm->id)->get();
 
             $idUsedTechs = [];
@@ -51,9 +54,20 @@ class UsedTechnologyController extends Controller
                 array_push($idUsedTechs, $uTech->id_tecnologia);
             }
 
-            $catalogue = Technology::whereNotIn('id', $idUsedTechs)->get();
+            $catalogue = Technology::whereNotIn('id', $idUsedTechs)->orderBy("nome")->get();
 
-            return view('used_technology.index', compact('usedTechnologies', 'catalogue'));
+            // Verifica richieste pendenti
+            $requests = UserRequest::where('id_proprietario', $owner->id)->get();
+            
+            $dangling_req = false;
+            foreach($requests as $request){
+                if ( $request->completata == false ){
+                    $dangling_req = true;
+                    break;
+                }
+            }
+
+            return view('used_technology.index', compact('usedTechnologies', 'catalogue', 'dangling_req'));
         }else if( Auth::user()->level == 2 ){
             // Seleziono l'azienda fornitrice loggata
             $supplier_company = SupplierCompany::where('mail', Auth::user()->email)->first();

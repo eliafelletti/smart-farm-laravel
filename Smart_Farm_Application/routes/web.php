@@ -41,6 +41,8 @@ Route::resource('green_house', App\Http\Controllers\GreenHouseController::class)
 
 Route::get('/green_house/{green_house}/destroy', [App\Http\Controllers\GreenHouseController::class, 'destroy']);
 
+Route::get('/green_house/{green_house}/monitor', [App\Http\Controllers\GreenHouseController::class, 'monitor']);
+
 Route::resource('/owner', App\Http\Controllers\OwnerController::class)->except('destroy');
 
 Route::get('/owner/{owner}/destroy', [App\Http\Controllers\OwnerController::class, 'destroy']);
@@ -65,4 +67,6 @@ Route::resource('/realized_crop', App\Http\Controllers\RealizedCropController::c
 
 Route::get('/realized_crop/{realized_crop}/destroy', [App\Http\Controllers\RealizedCropController::class, 'destroy']);
 
-Route::get('/green_house/{green_house}/monitor', [App\Http\Controllers\GreenHouseController::class, 'monitor']);
+Route::resource('/user_request', App\Http\Controllers\UserRequestController::class)->except('destroy');
+
+Route::get('/user_request/{user_request}/destroy', [App\Http\Controllers\UserRequestController::class, 'destroy']);

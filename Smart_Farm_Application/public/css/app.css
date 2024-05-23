@@ -16,3 +16,7 @@ a.fc-col-header-cell-cushion{
 .modal-width{
     max-width: 90% !important;
 }
+
+.show-textarea{
+    white-space: pre-wrap;
+}

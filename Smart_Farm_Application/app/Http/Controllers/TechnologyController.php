@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SupplierCompany;
 use App\Models\Technology;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -41,7 +42,18 @@ class TechnologyController extends Controller
             // Seleziono le tecnologie dell'azienda fornitrice loggata
             $technologies = Technology::where('id_azienda_fornitrice', $supplier_company->id)->get();
 
-            return view('technology.index', compact('technologies'));
+            // Verifica richieste pendenti
+            $requests = UserRequest::where('id_azienda_fornitrice', $supplier_company->id)->get();
+            
+            $dangling_req = false;
+            foreach($requests as $request){
+                if ( $request->completata == false ){
+                    $dangling_req = true;
+                    break;
+                }
+            }
+
+            return view('technology.index', compact('technologies', 'dangling_req'));
         }
     }
 

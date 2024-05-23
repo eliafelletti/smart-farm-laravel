@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\SmartFarm;
 use App\Models\RealizedCrop;
+use App\Models\UserRequest;
 
 class Owner extends Model
 {
@@ -42,6 +43,11 @@ class Owner extends Model
     public function realizedCrops(): HasMany
     {
         return $this->hasMany(RealizedCrop::class);
+    }
+
+    public function richieste() : HasMany
+    {
+        return $this->hasMany(UserRequest::class);
     }
 
 }

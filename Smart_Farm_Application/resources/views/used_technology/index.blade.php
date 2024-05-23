@@ -131,13 +131,19 @@
     <h3 class="fs-5">Tecnologie disponibili per l'upgrade</h3>
     <hr/>
 
+    @if ( !$dangling_req )
+        <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-upgrade">Upgrade</a>
+    @else
+        <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-upgrade disabled" aria-disabled="true">Upgrade</a>
+    @endif
+    <hr/>
+
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Tecnologia</th>
                 <th scope="col">Tipologia</th>
                 <th scope="col">Azienda Fornitrice</th>
-                <th scope="col"></th>
             </tr>
         </thead>
 
@@ -146,14 +152,11 @@
                 <tr data-id='{{ $item->id }}'>
                     <td>{{ $item->nome }}</td>
                     <td>{{ $item->tipologia }}</td>
-                    <td>{{ $item->azienda_fornitrice->nome }}</td>
-                    <td>
-                        <a href='#' class="btn btn-primary btn-sm btn-upgrade" data-id="{{ $item->id }}">Upgrade</a>
-                    </td>
+                    <td>{{ $item->azienda_fornitrice->nome ?? 'No SupplierCompany' }}</td>
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table><br/>
 @endif
 
 <script type="application/javascript">

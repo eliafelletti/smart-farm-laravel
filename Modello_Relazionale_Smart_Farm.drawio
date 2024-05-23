@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-22T13:59:26.819Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0" etag="y_1zzAbV_bp8ldZ-ZDfu" version="24.4.0" type="google">
+<mxfile host="app.diagrams.net" modified="2024-05-23T08:21:07.534Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0" etag="Je7613iH9SLM-JDu5l5U" version="24.4.6" type="google">
   <diagram name="Pagina-1" id="kWANNxBSDEEBjo0Rkt6e">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -955,7 +955,7 @@
         <mxCell id="TTveHkIsy43uFk2HxXzd-168" value="ID_proprietario" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-617.22" y="1439.9999999999998" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="-lqVIbOnNEoy4AwX2__O-1" value="RICHIESTE" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="-lqVIbOnNEoy4AwX2__O-1" value="RICHIESTE UTENTI" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="414" y="880" width="100" height="40" as="geometry" />
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-2" value="Tipologia_mittente" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
@@ -1051,7 +1051,7 @@
             <mxPoint x="-235" y="816" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="-lqVIbOnNEoy4AwX2__O-28" value="RICHIESTE" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="-lqVIbOnNEoy4AwX2__O-28" value="RICHIESTE UTENTI" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="-737.22" y="1980" width="97.22" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-29" value="&lt;u&gt;ID&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
@@ -1060,27 +1060,30 @@
         <mxCell id="-lqVIbOnNEoy4AwX2__O-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;curved=1;" edge="1" parent="1" source="-lqVIbOnNEoy4AwX2__O-30" target="zaglH3tZrSQI9U6VAKBM-162">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-317" y="2070" />
-              <mxPoint x="430" y="2070" />
+              <mxPoint x="-197" y="2080" />
+              <mxPoint x="430" y="2080" />
               <mxPoint x="430" y="1750" />
               <mxPoint x="-680" y="1750" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-30" value="ID_proprietario" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-377.22" y="2010" width="120" height="40" as="geometry" />
+          <mxGeometry x="-257.22" y="2010" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;curved=1;" edge="1" parent="1" source="-lqVIbOnNEoy4AwX2__O-31" target="zaglH3tZrSQI9U6VAKBM-179">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-31" value="ID_azienda_fornitrice" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-257.22" y="2010" width="137.22" height="40" as="geometry" />
+          <mxGeometry x="-137.22000000000003" y="2010" width="137.22" height="40" as="geometry" />
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-32" value="Descrizione" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-497.22" y="2010" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="-lqVIbOnNEoy4AwX2__O-33" value="Tipologia_mittente" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-617.22" y="2010" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="RzNJJPJB0K9z80UNGYwQ-1" value="Data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-377.22" y="2010" width="120" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
