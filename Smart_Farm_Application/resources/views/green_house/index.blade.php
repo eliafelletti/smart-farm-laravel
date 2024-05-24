@@ -203,34 +203,50 @@
         });
     });
 
-    $('tbody').on('click', '.btn-modifica', function(event){
-        event.preventDefault();
+    $(document).ready(function() {
+        $('tbody').on('click', '.btn-modifica', function(event){
+            event.preventDefault();
 
-        let id = $(this).attr('data-id');
-        let token = $('input[name="_token"]').val();
+            let id = $(this).attr('data-id');
+            let token = $('input[name="_token"]').val();
 
-        // Estrazione della linea corrente
-        var row = $(this).closest("tr");
-        // Selezione del numero di piante corrente
-        var num_piante = row.find("td:eq(1)").text();
-        // Selezione del nome della smart farm corrente
-        var smart_farm = row.find("td:eq(2)").text();
-        // Selezione dell'id della smart farm corrente
-        var id_smart_farm = row.find("td:eq(3)").text().trim();
+            // Estrazione della linea corrente
+            var row = $(this).closest("tr");
+            // Selezione del numero di piante corrente
+            var num_piante = row.find("td:eq(1)").text();
+            // Selezione del nome della smart farm corrente
+            var smart_farm = row.find("td:eq(2)").text();
+            // Selezione dell'id della smart farm corrente
+            var id_smart_farm = row.find("td:eq(3)").text().trim();
 
-        // Set dei valori già esistenti
-        $('#numero_piante').val(num_piante);
-        $('#id_smart_farm').val(id_smart_farm);
-        $('.alert-danger').attr("hidden", true);
+            // Set dei valori già esistenti
+            $('#numero_piante').val(num_piante);
+            $('#id_smart_farm').val(id_smart_farm);
+            $('.alert-danger').attr("hidden", true);
 
-        // Modifica visibilità bottoni
-        row.find('.btn-modifica').attr("hidden", true);
-        row.find('.btn-update').attr("hidden", false);
-        row.find('.btn-monitora').addClass("disabled").attr("aria-disabled", true);
-        $('#btn-aggiungi').attr('disabled', true);
+            // Modifica visibilità bottoni
+            row.find('.btn-modifica').attr("hidden", true);
+            row.find('.btn-update').attr("hidden", false);
+            row.find('.btn-monitora').addClass("disabled").attr("aria-disabled", true);
+            $('#btn-aggiungi').attr('disabled', true);
 
-        // Scroll to top
-        //document.documentElement.scrollTop = 0;
+            // Log di debug prima dello scroll
+            console.log("Before scroll - Document scrollHeight:", document.documentElement.scrollHeight);
+            console.log("Before scroll - Viewport height:", window.innerHeight);
+
+            // Scroll to top
+            setTimeout(function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+
+                // Log di debug dopo lo scroll
+                console.log("Scrolled to top");
+                console.log("After scroll - Document scrollTop:", document.documentElement.scrollTop);
+                console.log("After scroll - Body scrollTop:", document.body.scrollTop);
+            }, 2);  // Ritardo di 2ms
+        });
     });
 
     $('tbody').on('click', '.btn-update', function(event){

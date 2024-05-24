@@ -299,7 +299,7 @@
         $('.alert-danger').attr("hidden", true);
 
         // Scroll to top
-        document.documentElement.scrollTop = 0;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     $('tbody').on('click', '.btn-update', function(event){
