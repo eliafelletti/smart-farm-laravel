@@ -1,4 +1,9 @@
-main{
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+.main{
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -19,4 +24,56 @@ a.fc-col-header-cell-cushion{
 
 .show-textarea{
     white-space: pre-wrap;
+}
+
+.content {
+    min-height: 100%;
+    /* Compensare l'altezza del footer */
+    margin-bottom: -88px; /* Altezza del footer */
+}
+
+.content:after {
+    content: "";
+    display: block;
+    height: 88px; /* Altezza del footer */
+}
+
+.footer{
+    height: 88px;
+    margin-bottom: 0%;
+    position: relative;
+    clear: both;
+}
+
+.mycard{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mycard:hover{
+    transform: scale(1.01);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.nav-welcome{
+    height: 65px;
+    background-color: rgb(15, 65, 33, 1);
+}
+
+.nav-app{
+    height: 65px;
+}
+
+.footer-welcome{
+    height: 88px;
+    margin-bottom: 0%;
+    position: relative;
+    clear: both;
+    background-color: rgb(15, 65, 33, 1);
+}
+
+.welcome{
+    padding: 0px !important;
+    margin: 0px !important;
+    overflow-x: hidden;
 }

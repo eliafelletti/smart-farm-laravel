@@ -62,10 +62,6 @@
             <th scope="col">Tecnologia</th>
             <th scope="col">Smart-Farm</th>
 
-            @if ( Auth::user()->level == 0 )
-                <th scope="col">Proprietario</th>
-            @endif
-
             <th scope="col">Ultima modifica</th>
             
             @if ( Auth::user()->level == 0 )

@@ -30,10 +30,10 @@
 </head>
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-body-tertiary shadow-sm sticky-top">
+    <div id="app" class="content">
+        <nav class="navbar navbar-expand-md navbar-dark bg-body-tertiary shadow-sm sticky-top nav-app">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand fs-4" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -144,6 +144,9 @@
                             <li class="nav-item dropdown">
                                 <div class="dropdown">
                                     <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 20 20">
+                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                        </svg>
                                         {{ Auth::user()->name }}
                                     </button>
                                     <ul class="dropdown-menu" style="">
@@ -166,10 +169,14 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 main">
             @yield('content')
         </main>
     </div>
+
+    <footer class="py-4 bg-body-tertiary footer">
+        <p class="text-center text-body-secondary">© 2024 Farming-Evolution</p>
+    </footer>
 
     @stack('scripts')
 </body>

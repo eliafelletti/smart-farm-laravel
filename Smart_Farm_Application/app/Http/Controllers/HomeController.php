@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserRequest;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if ( Auth::user()->level == 0 ){
+            $user_requests = UserRequest::where('completata', '!=', 1)->get();
+            $num_unsatisfied_req = count($user_requests);
+
+            return view('home', compact('num_unsatisfied_req'));
+        }else{
+            return view('home');
+        }
     }
 
     /**
