@@ -9,12 +9,12 @@
     <hr/>
 
     @if ( Auth::user()->level == 0 )
-        <a href="{{ url('owner/create') }}" class="btn btn-primary float-end">Creazione nuovo proprietario</a>
+        <a href="{{ url('owner/create') }}" class="btn btn-success float-end">Creazione nuovo proprietario</a>
     @elseif ( Auth::user()->level == 1 )
         @if ( empty($owner) )
-            <a href="{{ url('owner/create') }}" class="btn btn-primary float-end">Creazione nuovo profilo</a>
+            <a href="{{ url('owner/create') }}" class="btn btn-success float-end">Creazione nuovo profilo</a>
         @else
-            <a href="{{ url('owner/create') }}" class="btn btn-primary float-end disabled">Creazione nuovo profilo</a>
+            <a href="{{ url('owner/create') }}" class="btn btn-success float-end disabled">Creazione nuovo profilo</a>
         @endif
     @endif
     <div style="clear:both;"></div>
@@ -65,7 +65,7 @@
                         <td>{{ $owner->cap }}</td>
                         <td>{{ $owner->updated_at->format('d/m/Y H:i:s') }}</td>
                         <td>
-                            <a href='{{ url("owner/$owner->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                            <a href='{{ url("owner/$owner->id/edit") }}' class="btn btn-success btn-sm">Modifica</a>
                         </td>
                         <td>
                             <a href='{{ url("owner/$owner->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $owner->id }}">Elimina</a>
@@ -92,7 +92,7 @@
                     <td>{{ $owner->cap }}</td>
                     <td>{{ $owner->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
-                        <a href='{{ url("owner/$owner->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                        <a href='{{ url("owner/$owner->id/edit") }}' class="btn btn-success btn-sm">Modifica</a>
                     </td>
 
                     @if ( Auth::user()->level == 0 )

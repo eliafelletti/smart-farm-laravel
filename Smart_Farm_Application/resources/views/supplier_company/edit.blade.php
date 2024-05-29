@@ -67,7 +67,7 @@
                     <div class="form-text">Inserisci il cap della sede dell'azienda fornitrice</div>
 
                     <hr />
-                    <input type="submit" class="btn btn-primary mb-3" value="Modifica" />	
+                    <input type="submit" class="btn btn-success mb-3" value="Modifica" />	
 
                 </fieldset>
 

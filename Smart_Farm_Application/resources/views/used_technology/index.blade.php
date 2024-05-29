@@ -27,7 +27,7 @@
                     <label for="id_tecnologia" class="form-label mt-3">Tecnologia di riferimento</label>
                     <select id="id_tecnologia" name="id_tecnologia" class="form-control">
                         @foreach($technologies as $tech)
-                            <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
+                            <option value="{{ $tech->id }}">{{ $tech->nome ?? 'No Tecnologia' }}</option>
                         @endforeach
                     </select>
                     <div class="form-text">Inserisci la tecnologia associata ad una determinata smart-farm</div>
@@ -35,13 +35,13 @@
                     <label for="id_smart_farm" class="form-label mt-3">Smart-Farm di riferimento</label>
                     <select id="id_smart_farm" name="id_smart_farm" class="form-control">
                         @foreach($smartFarms as $smFarm)
-                            <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
+                            <option value="{{ $smFarm->id }}">{{ $smFarm->nome ?? 'No Smart-Farm' }}</option>
                         @endforeach
                     </select>
                     <div class="form-text">Inserisci la smart-farm di cui si vuole registare la tecnologia utilizzata</div>
 
                     <hr />
-                    <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
+                    <input type="submit" id="btn-aggiungi" class="btn btn-success mb-3" value="Aggiungi" />
 
                 </fieldset>
 
@@ -95,13 +95,13 @@
                     
                     @if ( Auth::user()->level == 0 )
                         <td>
-                            <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
+                            <a class="btn btn-success btn-sm btn-modifica" data-id="{{ $uTech->id }}">Modifica</a>
                         </td>
                         <td>
                             <a href='{{ url("/realized_measure/$uTech->id/destroy") }}' data-id="{{ $uTech->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
+                            <a class="btn btn-success btn-sm btn-update" data-id="{{ $uTech->id }}" hidden="true">Applica modifiche</a>
                         </td>
                     @endif
 
@@ -133,9 +133,9 @@
     <hr/>
 
     @if ( !$dangling_req )
-        <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-upgrade">Upgrade</a>
+        <a href="{{ url('/user_request/create') }}" class="btn btn-success btn-sm btn-upgrade">Upgrade</a>
     @else
-        <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-upgrade disabled" aria-disabled="true">Upgrade</a>
+        <a href="{{ url('/user_request/create') }}" class="btn btn-success btn-sm btn-upgrade disabled" aria-disabled="true">Upgrade</a>
     @endif
     <hr/>
 
@@ -201,12 +201,12 @@
                 
                 /* CREAZIONE BOTTONE MODIFICA */
                 var actionModifica = $('<button/>', { role: 'button', text: 'Modifica' })
-                            .addClass('btn btn-primary btn-sm btn-modifica')
+                            .addClass('btn btn-success btn-sm btn-modifica')
                             .attr('data-id', response.data.id);
                 
                 /* CREAZIONE BOTTONE UPDATE */
                 var actionUpdate = $('<button/>', { role: 'button', text: 'Applica modifiche' })
-                        .addClass('btn btn-primary btn-sm btn-update')
+                        .addClass('btn btn-success btn-sm btn-update')
                         .attr('data-id', response.data.id)
                         .attr('hidden', true);
 

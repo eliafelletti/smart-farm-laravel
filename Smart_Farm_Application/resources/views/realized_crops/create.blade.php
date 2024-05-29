@@ -27,10 +27,10 @@
                     <select id="id_proprietario" name="id_proprietario" class="form-control" value="{{ old('id_proprietario') }}">
                         @if ( Auth::user()->level == 0 )
                             @foreach($owners as $owner)
-                                <option value="{{ $owner->id }}">{{ $owner->nome }} {{ $owner->cognome }}</option>
+                                <option value="{{ $owner->id }}">{{ $owner->nome ?? 'No Owner' }} {{ $owner->cognome ?? '' }}</option>
                             @endforeach
                         @elseif ( Auth::user()->level == 1 )
-                            <option value="{{ $owner->id }}">{{ $owner->nome }} {{ $owner->cognome }}</option>
+                            <option value="{{ $owner->id }}">{{ $owner->nome ?? 'No Owner' }} {{ $owner->cognome ?? '' }}</option>
                         @endif
                     </select>
                     <div class="form-text">Inserisci il proprietario</div>
@@ -38,7 +38,7 @@
                     <label for="id_serra" class="form-label mt-3">Serra</label>
                     <select id="id_serra" name="id_serra" class="form-control" value="{{ old('id_serra') }}">
                         @foreach($green_houses as $g_house)
-                            <option value="{{ $g_house->id }}">{{ $g_house->smart_farm->nome }} [{{ $g_house->id }}]</option>
+                            <option value="{{ $g_house->id }}">{{ $g_house->smart_farm->nome ?? 'No Serra' }} [{{ $g_house->id ?? '' }}]</option>
                         @endforeach
                     </select>
                     <div class="form-text">Inserisci la serra</div>
@@ -46,7 +46,7 @@
                     <label for="id_coltura" class="form-label mt-3">Coltura</label>
                     <select id="id_coltura" name="id_coltura" class="form-control" value="{{ old('id_coltura') }}">
                         @foreach($cultivations as $cultivation)
-                            <option value="{{ $cultivation->id }}">{{ $cultivation->tipologia }}</option>
+                            <option value="{{ $cultivation->id }}">{{ $cultivation->tipologia ?? 'No Coltura' }}</option>
                         @endforeach
                     </select>
                     <div class="form-text">Inserisci la coltura</div>
@@ -64,7 +64,7 @@
                     <div class="form-text">Inserisci la data di raccolta effettiva</div>
 
                     <hr />
-                    <input type="submit" class="btn btn-primary mb-3" value="Aggiungi" />	
+                    <input type="submit" class="btn btn-success mb-3" value="Aggiungi" />	
 
                 </fieldset>
 

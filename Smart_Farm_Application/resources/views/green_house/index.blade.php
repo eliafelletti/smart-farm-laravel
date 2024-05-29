@@ -31,16 +31,16 @@
                 <select id="id_smart_farm" name="id_smart_farm" class="form-control">
                     @if ( Auth::user()->level == 0 )
                         @foreach($smartFarms as $smFarm)
-                            <option value="{{ $smFarm->id }}">{{ $smFarm->nome }}</option>
+                            <option value="{{ $smFarm->id }}">{{ $smFarm->nome ?? 'No Smart-Farm' }}</option>
                         @endforeach
                     @elseif( Auth::user()->level == 1 )
-                        <option value="{{ $smartFarm->id }}">{{ $smartFarm->nome }}</option>
+                        <option value="{{ $smartFarm->id }}">{{ $smartFarm->nome ?? 'No Smart-Farm' }}</option>
                     @endif
                 </select>
                 <div class="form-text">Inserisci la smart-farm a cui appartiene la serra</div>
 
                 <hr />
-                <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />	
+                <input type="submit" id="btn-aggiungi" class="btn btn-success mb-3" value="Aggiungi" />	
 
             </fieldset>
 
@@ -75,14 +75,14 @@
                 
                 <td>{{ $gHouse->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
-                    <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $gHouse->id }}">Modifica</a><br /><br />
-                    <a href='{{ url("/green_house/$gHouse->id/monitor") }}' data-id="{{ $gHouse->id }}" class="btn btn-primary btn-sm btn-monitora">Monitora</a>
+                    <a class="btn btn-success btn-sm btn-modifica" data-id="{{ $gHouse->id }}">Modifica</a><br /><br />
+                    <a href='{{ url("/green_house/$gHouse->id/monitor") }}' data-id="{{ $gHouse->id }}" class="btn btn-success btn-sm btn-monitora">Monitora</a>
                 </td>
                 <td>
                     <a href='{{ url("/green_house/$gHouse->id/destroy") }}' data-id="{{ $gHouse->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
                 </td>
                 <td>
-                    <a class="btn btn-primary btn-sm btn-update" data-id="{{ $gHouse->id }}" hidden="true">Applica modifiche</a>
+                    <a class="btn btn-success btn-sm btn-update" data-id="{{ $gHouse->id }}" hidden="true">Applica modifiche</a>
                 </td>
             </tr>
         @endforeach
@@ -130,18 +130,18 @@
                 
                 /* CREAZIONE BOTTONE MODIFICA */
                 var actionModifica = $('<button/>', { role: 'button', text: 'Modifica' })
-                            .addClass('btn btn-primary btn-sm btn-modifica')
+                            .addClass('btn btn-success btn-sm btn-modifica')
                             .attr('data-id', response.data.id);
                 
                 /* CREAZIONE BOTTONE UPDATE */
                 var actionUpdate = $('<button/>', { role: 'button', text: 'Applica modifiche' })
-                        .addClass('btn btn-primary btn-sm btn-update')
+                        .addClass('btn btn-success btn-sm btn-update')
                         .attr('data-id', response.data.id)
                         .attr('hidden', true);
 
                 /* CREAZIONE BOTTONE MONITORA */
                 var actionMonitor = $('<a/>', { role: 'button', text: 'Monitora' })
-                            .addClass('btn btn-primary btn-sm btn-monitora')
+                            .addClass('btn btn-success btn-sm btn-monitora')
                             .attr('data-id', response.data.id)
                             .attr("href", "http://localhost:8000/green_house/" + response.data.id + "/monitor");
 

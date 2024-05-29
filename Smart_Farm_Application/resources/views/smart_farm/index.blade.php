@@ -9,12 +9,12 @@
 <hr/>
 
 @if ( Auth::user()->level == 0 )
-    <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end">Creazione nuova smart-farm</a>
+    <a href="{{ url('/smart_farm/create') }}" class="btn btn-success float-end">Creazione nuova smart-farm</a>
 @elseif ( Auth::user()->level == 1 )
     @if ( empty($smartFarm) )
-        <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end">Creazione nuova smart-farm</a>
+        <a href="{{ url('/smart_farm/create') }}" class="btn btn-success float-end">Creazione nuova smart-farm</a>
     @else
-        <a href="{{ url('/smart_farm/create') }}" class="btn btn-primary float-end disabled">Creazione nuova smart-farm</a>
+        <a href="{{ url('/smart_farm/create') }}" class="btn btn-success float-end disabled">Creazione nuova smart-farm</a>
     @endif
 @endif
 <div style="clear:both;"></div>
@@ -60,7 +60,7 @@
 
                     <td>{{ $smFarm->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
-                        <a href='{{ url("/smart_farm/$smFarm->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                        <a href='{{ url("/smart_farm/$smFarm->id/edit") }}' class="btn btn-success btn-sm">Modifica</a>
                     </td>
                     <td>
                         <a href='{{ url("/smart_farm/$smFarm->id/destroy") }}' data-id="{{ $smFarm->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
@@ -85,7 +85,7 @@
 
                 <td>{{ $smartFarm->updated_at->format('d/m/Y H:i:s') }}</td>
                 <td>
-                    <a href='{{ url("/smart_farm/$smartFarm->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                    <a href='{{ url("/smart_farm/$smartFarm->id/edit") }}' class="btn btn-success btn-sm">Modifica</a>
                 </td>
                 <td>
                     <a href='{{ url("/smart_farm/$smartFarm->id/destroy") }}' data-id="{{ $smartFarm->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>

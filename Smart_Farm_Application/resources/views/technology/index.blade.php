@@ -44,13 +44,13 @@
                         <label for="id_azienda_fornitrice" class="form-label mt-3">Azienda Fornitrice</label>
                         <select id="id_azienda_fornitrice" name="id_azienda_fornitrice" class="form-control">
                             @foreach($supplierCompanies as $sComp)
-                                <option value="{{ $sComp->id }}">{{ $sComp->nome }}</option>
+                                <option value="{{ $sComp->id }}">{{ $sComp->nome ?? 'No Azienda Fornitrice' }}</option>
                             @endforeach
                         </select>
                         <div class="form-text">Inserisci l'azienda fornitrice della tecnologia che potrà essere usata in serra</div>
 
                         <hr />
-                        <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
+                        <input type="submit" id="btn-aggiungi" class="btn btn-success mb-3" value="Aggiungi" />
 
                     </fieldset>
 
@@ -104,14 +104,14 @@
 
                     @if ( Auth::user()->level == 0 )
                         <td>
-                            <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $technology->id }}">Modifica</a>
+                            <a class="btn btn-success btn-sm btn-modifica" data-id="{{ $technology->id }}">Modifica</a>
                         </td>
                         <td>
                             <a href='{{ url("technology/$technology->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $technology->id }}">Elimina</a>
                             <!-- inserisco anche il data-id per sapere l'id della entry da elimiare -->
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-sm btn-update" data-id="{{ $technology->id }}" hidden="true">Applica modifiche</a>
+                            <a class="btn btn-success btn-sm btn-update" data-id="{{ $technology->id }}" hidden="true">Applica modifiche</a>
                         </td>
                     @endif
                 </tr>
@@ -126,9 +126,9 @@
         <h3 class="fs-5">Disponibilità di proporre nuove tecnologie per la piattaforma</h3><br/>
 
         @if ( !$dangling_req )
-            <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-req">Proponi</a>
+            <a href="{{ url('/user_request/create') }}" class="btn btn-success btn-sm btn-req">Proponi</a>
         @else
-            <a href="{{ url('/user_request/create') }}" class="btn btn-primary btn-sm btn-req disabled" aria-disabled="true">Proponi</a>
+            <a href="{{ url('/user_request/create') }}" class="btn btn-success btn-sm btn-req disabled" aria-disabled="true">Proponi</a>
         @endif
     @endif
 
@@ -174,12 +174,12 @@
 
                     /* CREO BOTTONE MODIFICA */
                     var actionModifica = $('<button/>', { role: 'button', text: 'Modifica' })
-                            .addClass('btn btn-primary btn-sm btn-modifica')
+                            .addClass('btn btn-success btn-sm btn-modifica')
                             .attr('data-id', response.data.id);
 
                     /* CREO BOTTONE UPDATE */
                     var actionUpdate = $('<button/>', { role: 'button', text: 'Applica modifiche' })
-                            .addClass('btn btn-primary btn-sm btn-update')
+                            .addClass('btn btn-success btn-sm btn-update')
                             .attr('data-id', response.data.id)
                             .attr('hidden', true);
 

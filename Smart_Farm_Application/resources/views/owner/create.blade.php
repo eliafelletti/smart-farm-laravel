@@ -77,7 +77,7 @@
                     <div class="form-text">Inserisci il cap della città di residenza del proprietario</div>
 
                     <hr />
-                    <input type="submit" class="btn btn-primary mb-3" value="Aggiungi" />	
+                    <input type="submit" class="btn btn-success mb-3" value="Aggiungi" />	
 
                 </fieldset>
             </form>

@@ -28,11 +28,11 @@
                     <select id="id_tecnologia" name="id_tecnologia" class="form-control">
                         @if ( Auth::user()->level == 0 )
                             @foreach($technologies as $tech)
-                                <option value="{{ $tech->id }}">{{ $tech->nome }}</option>
+                                <option value="{{ $tech->id }}">{{ $tech->nome ?? 'No Tecnologia' }}</option>
                             @endforeach
                         @elseif ( Auth::user()->level == 1 )
                             @foreach($usedTechnologies as $tech)
-                                <option value="{{ $tech->id_tecnologia }}">{{ $tech->tecnologia->nome }}</option>
+                                <option value="{{ $tech->id_tecnologia }}">{{ $tech->tecnologia->nome ?? 'No Tecnologia' }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -41,13 +41,13 @@
                     <label for="id_misura" class="form-label mt-3">Misura di riferimento</label>
                     <select id="id_misura" name="id_misura" class="form-control">
                         @foreach($measures as $measure)
-                            <option value="{{ $measure->id }}">{{ $measure->id }} [{{ $measure->serra->smart_farm->nome }} ({{ $measure->id_serra }})]</option>
+                            <option value="{{ $measure->id }}">{{ $measure->id }} [{{ $measure->serra->smart_farm->nome ?? 'No Serra' }} ({{ $measure->id_serra ?? '' }})]</option>
                         @endforeach
                     </select>
                     <div class="form-text">Inserisci la misura di cui si vuole registare la tecnologia utilizzata</div>
 
                     <hr />
-                    <input type="submit" id="btn-aggiungi" class="btn btn-primary mb-3" value="Aggiungi" />
+                    <input type="submit" id="btn-aggiungi" class="btn btn-success mb-3" value="Aggiungi" />
 
                 </fieldset>
 
@@ -94,13 +94,13 @@
                     <td>{{ $rMeasure->updated_at->format('d/m/Y H:i:s') }}</td>
 
                     <td>
-                        <a class="btn btn-primary btn-sm btn-modifica" data-id="{{ $rMeasure->id }}">Modifica</a>
+                        <a class="btn btn-success btn-sm btn-modifica" data-id="{{ $rMeasure->id }}">Modifica</a>
                     </td>
                     <td>
                         <a href='{{ url("/realized_measure/$rMeasure->id/destroy") }}' data-id="{{ $rMeasure->id }}" class="btn btn-danger btn-sm btn-elimina">Elimina</a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-sm btn-update" data-id="{{ $rMeasure->id }}" hidden="true">Applica modifiche</a>
+                        <a class="btn btn-success btn-sm btn-update" data-id="{{ $rMeasure->id }}" hidden="true">Applica modifiche</a>
                     </td>
                 </tr>
             @endforeach
@@ -164,12 +164,12 @@
                 
                 /* CREAZIONE BOTTONE MODIFICA */
                 var actionModifica = $('<button/>', { role: 'button', text: 'Modifica' })
-                            .addClass('btn btn-primary btn-sm btn-modifica')
+                            .addClass('btn btn-success btn-sm btn-modifica')
                             .attr('data-id', response.data.id);
                 
                 /* CREAZIONE BOTTONE UPDATE */
                 var actionUpdate = $('<button/>', { role: 'button', text: 'Applica modifiche' })
-                        .addClass('btn btn-primary btn-sm btn-update')
+                        .addClass('btn btn-success btn-sm btn-update')
                         .attr('data-id', response.data.id)
                         .attr('hidden', true);
 

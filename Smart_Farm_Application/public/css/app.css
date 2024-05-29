@@ -43,9 +43,12 @@ a.fc-col-header-cell-cushion{
     margin-bottom: 0%;
     position: relative;
     clear: both;
+    background-color: rgba(15, 65, 33, 1) !important;
 }
 
 .mycard{
+    /*border-color: rgba(15, 65, 33, 1) !important;*/
+    border-width: 2px !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -55,13 +58,31 @@ a.fc-col-header-cell-cushion{
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+.mycard-header{
+    /*border-color: rgba(15, 65, 33, 1) !important;*/
+    border-width: 2px !important;
+}
+
 .nav-welcome{
     height: 65px;
-    background-color: rgb(15, 65, 33, 1);
+    background-color: rgba(15, 65, 33, 1);
 }
 
 .nav-app{
     height: 65px;
+    background-color: rgba(15, 65, 33, 1) !important;
+}
+
+.nav-head{
+    color: #EEE !important;
+}
+
+.nav-text{
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.nav-text:hover{
+    color: rgba(255, 255, 255, 0.75) !important;
 }
 
 .footer-welcome{
@@ -69,11 +90,26 @@ a.fc-col-header-cell-cushion{
     margin-bottom: 0%;
     position: relative;
     clear: both;
-    background-color: rgb(15, 65, 33, 1);
+    background-color: rgba(15, 65, 33, 1);
+    color: #CCC;
 }
 
 .welcome{
     padding: 0px !important;
     margin: 0px !important;
     overflow-x: hidden;
+}
+
+.div-welcome{
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.div-welcome:hover{
+    transform: scale(1.01);
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.2);
+}
+
+.img-welcome{
+    border-radius: 50%;
 }

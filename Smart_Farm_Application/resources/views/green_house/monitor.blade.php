@@ -5,7 +5,7 @@
 <h2 class="fs-5">Visualizzazione delle sole ultime 10 misurazioni</h2>
 <hr/>
 
-<a role="button" id="refresh" class="btn btn-primary float-end">
+<a role="button" id="refresh" class="btn btn-success float-end">
     Aggiorna
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
         <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
@@ -137,8 +137,8 @@
             datasets: [{
                 label: '   Temperatura',
                 data: temperature,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(42, 179, 18, 1)',
+                backgroundColor: 'rgba(42, 179, 18, 0.5)',
                 borderWidth: 6,
                 fill: true
             }]
@@ -193,8 +193,8 @@
             datasets: [{
                 label: '   Umidità',
                 data: umidita,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(42, 179, 18, 1)',
+                backgroundColor: 'rgba(42, 179, 18, 0.5)',
                 borderWidth: 6,
                 fill: true
             }]
@@ -249,8 +249,8 @@
             datasets: [{
                 label: '   Luminosità',
                 data: luminosita,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(42, 179, 18, 1)',
+                backgroundColor: 'rgba(42, 179, 18, 0.5)',
                 borderWidth: 6,
                 fill: true
             }]
@@ -305,8 +305,8 @@
             datasets: [{
                 label: '   Anidride Carbonica (CO2)',
                 data: co2,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(42, 179, 18, 1)',
+                backgroundColor: 'rgba(42, 179, 18, 0.5)',
                 borderWidth: 6,
                 fill: true
             }]
@@ -361,8 +361,8 @@
             datasets: [{
                 label: '   Irrigazione',
                 data: irrigazione,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(42, 179, 18, 1)',
+                backgroundColor: 'rgba(42, 179, 18, 0.5)',
                 borderWidth: 6,
                 fill: true
             }]
@@ -464,8 +464,8 @@
                 datasets: [{
                     label: label_legend,
                     data: data,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(42, 179, 18, 1)',
+                    backgroundColor: 'rgba(42, 179, 18, 0.5)',
                     borderWidth: 6,
                     fill: true
                 }]

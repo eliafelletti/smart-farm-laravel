@@ -46,27 +46,38 @@
                 @if ( Auth::user()->level == 1 )
                     <label for="id_proprietario" class="form-label mt-3">Proprietario</label>
                     <select id="id_proprietario" name="id_proprietario" class="form-control">
-                        <option value="{{ $owner->id }}">{{ $owner->nome }} {{ $owner->cognome }}</option>
+                        <option value="{{ $owner->id }}">{{ $owner->nome ?? 'No Owner' }} {{ $owner->cognome ?? '' }}</option>
                     </select>
                     <div class="form-text">Proprietario richiedente</div>
                 @elseif ( Auth::user()->level == 2 )
                     <label for="id_azienda_fornitrice" class="form-label mt-3">Azienda Fornitrice</label>
                     <select id="id_azienda_fornitrice" name="id_azienda_fornitrice" class="form-control">
-                        <option value="{{ $supplierCp->id }}">{{ $supplierCp->nome }}</option>
+                        <option value="{{ $supplierCp->id }}">{{ $supplierCp->nome ?? 'No Azienda Fornitrice' }}</option>
                     </select>
                     <div class="form-text">Azienda Fornitrice richiedente</div>
                 @endif
 
                 <hr/>
-                <input type="submit" class="btn btn-primary mb-3" value="Invia Richiesta" />
+                @if ( $unsatisfied_u_req == true )
+                    <input type="submit" class="btn btn-success mb-3" value="Invia Richiesta" disabled/>
+                @else
+                    <input type="submit" class="btn btn-success mb-3" value="Invia Richiesta" />
+                @endif
 
             </fieldset>
 
         </form> 
     </div>
 
-    @if ( Auth::user()->level == 1 )
-        <div class="col-md-6">
+    <div class="col-md-6">
+        @if ( $unsatisfied_u_req == true )
+            <div class="alert alert-warning">
+                <h2 class="fs-4 alert-heading">Attenzione!</h2>
+                <p>Non è possibile effettuare una nuova richiesta perché una precedente è ancora in stato di elaborazione</p>
+            </div>
+        @endif
+
+        @if ( Auth::user()->level == 1 )
             <br/><h2 class="fs-5">Catalogo</h2>
             <table class="table table-striped">
                 <thead>
@@ -85,7 +96,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
-    @endif
+        @endif
+    </div>
 </div><br/>
 @endsection

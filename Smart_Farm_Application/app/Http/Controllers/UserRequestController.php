@@ -74,9 +74,29 @@ class UserRequestController extends Controller
 
                 $catalogue = Technology::whereNotIn('id', $idUsedTechs)->orderBy("nome")->get();
 
-                return view('user_request.create', compact('owner', 'catalogue'));
+                // Verifica UserRequests non completate
+                $unsatisfied_u_req = false;
+                $user_requests = UserRequest::where('id_proprietario', $owner->id,)->get();
+                foreach( $user_requests as $user_request ){
+                    if ( $user_request->completata != 1 ){
+                        $unsatisfied_u_req = true;
+                        break;
+                    }
+                }
+
+                return view('user_request.create', compact('owner', 'catalogue', 'unsatisfied_u_req'));
             }else{
-                return view('user_request.create', compact('supplierCp'));
+                // Verifica UserRequests non completate
+                $unsatisfied_u_req = false;
+                $user_requests = UserRequest::where('id_azienda_fornitrice', $supplierCp->id)->get();
+                foreach( $user_requests as $user_request ){
+                    if ( $user_request->completata != 1 ){
+                        $unsatisfied_u_req = true;
+                        break;
+                    }
+                }
+
+                return view('user_request.create', compact('supplierCp', 'unsatisfied_u_req'));
             }
         }else{
             redirect('/home');

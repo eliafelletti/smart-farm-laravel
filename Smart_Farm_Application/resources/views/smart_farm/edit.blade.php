@@ -60,16 +60,16 @@
                 <select id="id_proprietario" name="id_proprietario" class="form-control">
                     @if ( Auth::user()->level == 0 )
                         @foreach($owners as $owner)
-                            <option value="{{ $owner->id }}" @selected( $owner->id == $smartFarm->id_proprietario )>{{ $owner->nome }} {{ $owner->cognome }}</option>
+                            <option value="{{ $owner->id }}" @selected( $owner->id == $smartFarm->id_proprietario )>{{ $owner->nome ?? 'No Owner' }} {{ $owner->cognome ?? '' }}</option>
                         @endforeach
                     @elseif ( Auth::user()->level == 1 )
-                        <option value="{{ $owner->id }}" @selected( $owner->id == $smartFarm->id_proprietario )>{{ $owner->nome }} {{ $owner->cognome }}</option>
+                        <option value="{{ $owner->id }}" @selected( $owner->id == $smartFarm->id_proprietario )>{{ $owner->nome ?? 'No Owner' }} {{ $owner->cognome ?? '' }}</option>
                     @endif
                 </select>
                 <div class="form-text">Inserisci il proprietario della smart-farm</div>
 
                 <hr />
-                <input type="submit" class="btn btn-primary mb-3" value="Modifica" />	
+                <input type="submit" class="btn btn-success mb-3" value="Modifica" />	
 
             </fieldset>
 

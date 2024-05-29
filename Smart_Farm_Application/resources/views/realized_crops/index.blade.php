@@ -3,7 +3,7 @@
 @section('content')
     <h1>Raccolti Realizzati</h1>
     <hr>
-    <a href="{{ url('realized_crop/create') }}" class="btn btn-primary float-end">Creazione nuovo evento</a>
+    <a href="{{ url('realized_crop/create') }}" class="btn btn-success float-end">Creazione nuovo evento</a>
     <div style="clear:both;"></div>
     <hr>
 
@@ -36,7 +36,7 @@
                         <td>{{ $crop->data_raccolta_effettiva->format('d/m/Y') }}</td>
                     @endif
                     <td>
-                        <a href='{{ url("realized_crop/$crop->id/edit") }}' class="btn btn-primary btn-sm">Modifica</a>
+                        <a href='{{ url("realized_crop/$crop->id/edit") }}' class="btn btn-success btn-sm">Modifica</a>
                     </td>
                     <td>
                         <a href='{{ url("realized_crop/$crop->id/destroy") }}' class="btn btn-danger btn-sm btn-elimina" data-id="{{ $crop->id }}">Elimina</a>
@@ -92,6 +92,7 @@
                     var calendar = new FullCalendar.Calendar(calendarEl, {
                         initialView: 'dayGridMonth',
                         events: @json($events),
+                        eventColor: 'rgb(64, 133, 88)',
                         themeSystem: 'bootstrap5',
                         headerToolbar: {left: 'title', right: 'prev,next today'},
                         defaultAllDay: true,
