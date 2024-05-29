@@ -38,7 +38,7 @@ class UsedTechnologyController extends Controller
     {
         if ( Auth::user()->level == 0 ){
             $usedTechnologies = UsedTechnology::all();
-            $technologies = Technology::all();
+            $technologies = Technology::all()->sortBy('nome');
             $smartFarms = SmartFarm::all();
 
             return view('used_technology.index', compact('usedTechnologies', 'technologies', 'smartFarms'));
