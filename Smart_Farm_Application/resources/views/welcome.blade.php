@@ -259,7 +259,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="team-item rounded">
-                                    <img class="img-fluid img-welcome" src="https://placehold.co/200x200" alt="">
+                                    <img class="img-fluid img-welcome" src="{{ URL::asset('images/elia.jpg') }}" alt="">
                                     <div class="team-text"><br/>
                                         <h4 class="mb-0">Elia Felletti</h4>
                                         <p class="text-success">Co-Founder</p>
