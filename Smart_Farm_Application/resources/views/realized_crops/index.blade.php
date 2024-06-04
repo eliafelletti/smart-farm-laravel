@@ -72,7 +72,8 @@
                     '_token': token
                 },
                 success: function (response) {
-                    $('tr[data-id="'+response.data.id+'"]').remove();
+                    //$('tr[data-id="'+response.data.id+'"]').remove();
+                    document.location.reload();
                 },
                 error: function(event){
                     console.log('error');

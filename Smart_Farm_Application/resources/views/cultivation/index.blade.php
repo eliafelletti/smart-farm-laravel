@@ -203,6 +203,9 @@
         $('#btn-aggiungi').attr('disabled', true);
 
         $('.alert-danger').attr("hidden", true);
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     $('tbody').on('click', '.btn-update', function(event){
