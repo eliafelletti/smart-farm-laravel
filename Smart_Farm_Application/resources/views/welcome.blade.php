@@ -250,7 +250,7 @@
                         <div class="row g-4 text-center">
                             <div class="col-lg-6 col-md-6">
                                 <div class="team-item rounded">
-                                    <img class="img-fluid img-welcome" src="https://placehold.co/200x200" alt="">
+                                    <img class="img-fluid img-welcome" src="{{ URL::asset('images/Dario_Macchi.jpg') }}" alt="">
                                     <div class="team-text"><br/>
                                         <h4 class="mb-0">Dario Macchi</h4>
                                         <p class="text-success">Co-Founder</p>
@@ -259,7 +259,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="team-item rounded">
-                                    <img class="img-fluid img-welcome" src="{{ URL::asset('images/elia.jpg') }}" alt="">
+                                    <img class="img-fluid img-welcome" src="{{ URL::asset('images/Elia_Felletti.jpg') }}" alt="">
                                     <div class="team-text"><br/>
                                         <h4 class="mb-0">Elia Felletti</h4>
                                         <p class="text-success">Co-Founder</p>
