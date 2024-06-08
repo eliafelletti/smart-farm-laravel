@@ -188,7 +188,12 @@ class RealizedMeasureController extends Controller
     public function store_factory_data()
     {
         $last_realized_measure = RealizedMeasure::latest('created_at')->first();
-        $last_valid_timestamp = $last_realized_measure->created_at;
+
+        if ( empty($last_realized_measure) ){
+            $last_valid_timestamp = date_create("1970-01-01");
+        }else{
+            $last_valid_timestamp = $last_realized_measure->created_at;
+        }
 
         $new_measures = Measure::where('created_at', '>', $last_valid_timestamp)->get();
 
