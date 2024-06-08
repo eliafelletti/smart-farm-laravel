@@ -14,7 +14,7 @@ class MeasureSeeder extends Seeder
      */
     public function run(): void
     {
-        Measure::factory(10)->create();
+        Measure::factory(20)->create();
 
         // Invocazione $metodo di RealizedMeasureController
         $controller = new RealizedMeasureController();
