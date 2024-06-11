@@ -62,7 +62,7 @@ class RealizedCropController extends Controller
      */
     public function create()
     {
-        $cultivations = Cultivation::all();
+        $cultivations = Cultivation::all()->sortBy('tipologia');
 
         if ( Auth::user()->level == 0 ){
             $owners = Owner::all();

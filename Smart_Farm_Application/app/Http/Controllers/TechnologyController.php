@@ -32,7 +32,7 @@ class TechnologyController extends Controller
     public function index()
     {
         if ( Auth::user()->level == 0 ){
-            $technologies = Technology::all();
+            $technologies = Technology::all()->sortBy('nome');
             $supplierCompanies = SupplierCompany::all();
 
             return view('technology.index', compact('technologies', 'supplierCompanies'));
@@ -40,7 +40,7 @@ class TechnologyController extends Controller
             // Seleziono l'azienda fornitrice loggata
             $supplier_company = SupplierCompany::where('mail', Auth::user()->email)->first();
             // Seleziono le tecnologie dell'azienda fornitrice loggata
-            $technologies = Technology::where('id_azienda_fornitrice', $supplier_company->id)->get();
+            $technologies = Technology::where('id_azienda_fornitrice', $supplier_company->id)->orderBy('nome')->get();
 
             // Verifica richieste pendenti
             $requests = UserRequest::where('id_azienda_fornitrice', $supplier_company->id)->get();
