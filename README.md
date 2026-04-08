@@ -40,6 +40,13 @@ The system is architected to process and visualize data from field sensors, focu
 
 ---
 
+### 📅 Precision Crop Scheduling
+Beyond simple logging, the system implements a **Strategic Calendar** to manage complex agricultural timelines.
+- **Lifecycle Tracking:** Integrated visualization of sowing dates, theoretical harvest projections, and actual yield results.
+- **Performance Analytics:** Enables a direct visual comparison between planned and actual harvest dates, providing a critical tool for analyzing crop productivity and seasonal variances.
+
+---
+
 ## 🛠️ Tech Stack & Architecture
 This project follows the **MVC (Model-View-Controller)** design pattern to ensure scalability and clean code separation.
 
