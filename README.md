@@ -74,6 +74,53 @@ The repository is organized as follows to ensure a clear separation between docu
 ```
 
 ---
+## ⚙️ Local Installation
+
+Since this project utilizes CDNs for frontend libraries, the setup process is focused on the PHP backend and database configuration.
+
+### 1. Install Dependencies
+This project uses **Composer** to manage the Laravel framework and its internal libraries. This step is mandatory to recreate the `vendor` directory (the "engine" of the application).
+```bash
+composer install
+```
+
+### 2. Environment Configuration
+Laravel uses the `.env` file to manage local credentials and security settings.
+
+```bash
+# Create the local environment file from the provided template
+cp .env.example .env
+
+# Generate a unique Application Key (essential for session and data encryption)
+php artisan key:generate
+```
+*Note: Open the .env file in your editor and update the database section to match your local MySQL configuration.*
+
+### 3. Database Setup
+With the database configured in your `.env` file, you can now build the relational schema and populate it with the demo data (including the crops and sensor measures shown in the previews).
+
+```bash
+# Run migrations to create tables and seed the database with test data
+php artisan migrate --seed
+```
+> [!TIP]
+> **Alternative: Quick Data Import (SQL Dump)**
+> If you prefer an exact snapshot of the environment shown in the previews (including specific logs and historical sensor data), you can bypass migrations and seeders by importing the SQL dump provided in the repository:
+> 
+> ```bash
+> # Import the pre-configured dataset into your local MySQL database
+> mysql -u [username] -p [database_name] < ../database/smart_farm_dump.sql
+> ```
+
+### 4. Launch the Application
+Everything is ready! Start the local development server:
+
+```bash
+php artisan serve
+```
+The system will be accessible at: http://127.0.0.1:8000
+
+---
 
 ### 📄 License
 This project is for educational use only. All rights to the source code and documentation belong to the authors.
