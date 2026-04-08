@@ -51,7 +51,7 @@ Beyond simple logging, the system implements a **Strategic Calendar** to manage 
 This project follows the **MVC (Model-View-Controller)** design pattern to ensure scalability and clean code separation.
 
 - **Backend:** PHP 8.1 & Laravel 10 (utilizing Sanctum for auth and Guzzle for API interactions).
-- **Frontend:** Laravel UI with a responsive Bootstrap.
+- **Frontend:** Laravel Blade templates, Bootstrap 5, and jQuery for dynamic UI updates and AJAX interactions.
 - **Database:** MySQL with a complex relational schema.
 - **Tooling:** Git for version control, Composer for dependency management.
 
