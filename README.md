@@ -4,7 +4,7 @@
 [![PHP Version](https://img.shields.io/badge/PHP-8.1%2B-blue.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-**Farming Evolution** is a comprehensive IoT-ready agricultural management platform designed to digitize the entire farm lifecycle. Developed as a final project for the **Web Technologies** course during the **Bachelor's Degree in Computer Science**, this application provides a centralized dashboard for greenhouse monitoring, crop realization, and supplier logistics.
+**Farming Evolution** is a comprehensive IoT-ready agricultural management platform designed to digitalize the entire farm lifecycle. Developed as a final project for the **Web Technologies** course during the **Bachelor's Degree in Computer Science**, this application provides a centralized dashboard for greenhouse monitoring, crop realization, and supplier logistics.
 
 ---
 
